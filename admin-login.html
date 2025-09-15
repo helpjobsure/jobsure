@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Jobsure Login</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .login-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+      width: 350px;
+    }
+    .login-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+    input[type="text"], input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 5px;
+      background: #007bff;
+      color: #fff;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #0056b3;
+    }
+    .links {
+      text-align: center;
+      margin-top: 10px;
+    }
+    .links a {
+      text-decoration: none;
+      color: #007bff;
+      font-size: 14px;
+    }
+    .links a:hover {
+      text-decoration: underline;
+    }
+    #message {
+      display: none;
+      background: #f1f1f1;
+      padding: 10px;
+      margin-top: 10px;
+      border-radius: 5px;
+    }
+    #message p {
+      font-size: 14px;
+      margin: 5px 0;
+    }
+    .valid { color: green; }
+    .invalid { color: red; }
+    #errorMsg {
+      color: red;
+      font-size: 14px;
+      margin-top: 10px;
+      text-align: center;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-box">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="text" id="email" placeholder="Email / Admin ID" required><br>
+      
+      <input type="password" id="password" placeholder="Password" 
+        pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" 
+        title="Must contain at least one number, one uppercase and lowercase letter, and at least 8 characters" 
+        required><br>
+      
+      <!-- Show Password Checkbox -->
+      <input type="checkbox" onclick="togglePassword()"> Show Password
+      <br><br>
+      
+      <button type="submit">Login</button>
+    </form>
+
+    <!-- Error Message -->
+    <div id="errorMsg">Invalid Credentials</div>
+
+    <!-- Password Validation Message -->
+    <div id="message">
+      <h4>Password must contain the following:</h4>
+      <p id="letter" class="invalid">A <b>lowercase</b> letter</p>
+      <p id="capital" class="invalid">A <b>capital (uppercase)</b> letter</p>
+      <p id="number" class="invalid">A <b>number</b></p>
+      <p id="length" class="invalid">Minimum <b>8 characters</b></p>
+    </div>
+
+    <div class="links">
+      <a href="#">Forgot Password?</a>
+    </div>
+  </div>
+
+  <script>
+    // Password toggle
+    function togglePassword() {
+      let x = document.getElementById("password");
+      if (x.type === "password") {
+        x.type = "text";
+      } else {
+        x.type = "password";
+      }
+    }
+
+    // Password validation
+    let myInput = document.getElementById("password");
+    let letter = document.getElementById("letter");
+    let capital = document.getElementById("capital");
+    let number = document.getElementById("number");
+    let length = document.getElementById("length");
+
+    myInput.onfocus = function() {
+      document.getElementById("message").style.display = "block";
+    }
+    myInput.onblur = function() {
+      document.getElementById("message").style.display = "none";
+    }
+    myInput.onkeyup = function() {
+      // Lowercase letters
+      let lowerCaseLetters = /[a-z]/g;
+      if(myInput.value.match(lowerCaseLetters)) {  
+        letter.classList.remove("invalid");
+        letter.classList.add("valid");
+      } else {
+        letter.classList.remove("valid");
+        letter.classList.add("invalid");
+      }
+      
+      // Uppercase letters
+      let upperCaseLetters = /[A-Z]/g;
+      if(myInput.value.match(upperCaseLetters)) {  
+        capital.classList.remove("invalid");
+        capital.classList.add("valid");
+      } else {
+        capital.classList.remove("valid");
+        capital.classList.add("invalid");
+      }
+
+      // Numbers
+      let numbers = /[0-9]/g;
+      if(myInput.value.match(numbers)) {  
+        number.classList.remove("invalid");
+        number.classList.add("valid");
+      } else {
+        number.classList.remove("valid");
+        number.classList.add("invalid");
+      }
+      
+      // Length
+      if(myInput.value.length >= 8) {
+        length.classList.remove("invalid");
+        length.classList.add("valid");
+      } else {
+        length.classList.remove("valid");
+        length.classList.add("invalid");
+      }
+    }
+
+    // Login logic
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+      let email = document.getElementById("email").value.trim();
+      let pass = document.getElementById("password").value.trim();
+      let errorMsg = document.getElementById("errorMsg");
+
+      // Reset error message
+      errorMsg.style.display = "none";
+
+      // Admin Login
+      if(email === "Jobsure" && pass === "Jobsure@2025"){
+        localStorage.setItem("role","admin");
+        window.location.href="admin.html";
+      }
+      // Student Login (hardcoded example)
+      else if(pass === "Jobsure@123"){
+        localStorage.setItem("role","student");
+        localStorage.setItem("studentEmail", email);
+        window.location.href="student.html";
+      }
+      else{
+        errorMsg.innerText = "Invalid Credentials ❌";
+        errorMsg.style.display = "block";
+      }
+    });
+  </script>
+</body>
+</html>

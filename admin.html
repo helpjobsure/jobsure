@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #eef; padding: 20px; }
+    h1 { color: #333; }
+    h3 { margin-top: 30px; }
+    input, button {
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #007bff;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover { background: #0056b3; }
+    .logout { 
+      background: red; 
+      color: #fff; 
+      padding: 8px 15px; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer;
+    }
+    ul { list-style-type: none; padding: 0; }
+    li { 
+      background: #fff; 
+      margin: 10px 0; 
+      padding: 10px; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    li img {
+      width: 60px;
+      height: 60px;
+      border-radius: 5px;
+      object-fit: cover;
+    }
+    li:hover { background: #f8d7da; }
+  </style>
+</head>
+<body>
+  <h1>Welcome Admin 🎉</h1>
+  <p>You are logged in as <b>Admin</b>.</p>
+  <button class="logout" onclick="logout()">Logout</button>
+
+  <!-- Add Daily Activity -->
+  <h3>Add Daily Activity</h3>
+  <form id="activityForm">
+    <input type="text" id="actTitle" placeholder="Title" required>
+    <input type="date" id="actDate" required>
+    <input type="file" id="actPhoto" accept="image/*" required>
+    <button type="submit">Add</button>
+  </form>
+  <ul id="activityList"></ul>
+
+  <!-- Add Placed Student -->
+  <h3>Add Placed Student</h3>
+  <form id="placedForm">
+    <input type="text" id="stuName" placeholder="Name" required>
+    <input type="text" id="stuPackage" placeholder="Package" required>
+    <input type="text" id="stuDesignation" placeholder="Designation" required>
+    <input type="file" id="stuPhoto" accept="image/*" required>
+    <button type="submit">Add</button>
+  </form>
+  <ul id="placedList"></ul>
+
+  <!-- Student Registration Data -->
+  <h3>Students Registration Data</h3>
+  <ul id="studentRegList"></ul>
+
+  <!-- Firebase Firestore + Storage Logic -->
+  <script type="module">
+    import { db, storage } from "./firebase.js";
+    import { collection, addDoc, getDocs, deleteDoc, doc } 
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+    import { ref, uploadBytes, getDownloadURL, deleteObject }
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+
+    // Daily Activity Add
+    const actForm=document.getElementById("activityForm");
+    const actList=document.getElementById("activityList");
+    actForm.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      const file=document.getElementById("actPhoto").files[0];
+      const storageRef=ref(storage,"dailyActivity/"+file.name);
+      await uploadBytes(storageRef,file);
+      const url=await getDownloadURL(storageRef);
+
+      await addDoc(collection(db,"dailyActivity"),{
+        title: document.getElementById("actTitle").value,
+        date: document.getElementById("actDate").value,
+        photo: url,
+        photoRef: file.name
+      });
+      location.reload();
+    });
+
+    const actSnap=await getDocs(collection(db,"dailyActivity"));
+    actSnap.forEach(d=>{
+      let data=d.data();
+      let li=document.createElement("li");
+      li.innerHTML=`<img src="${data.photo}"><span>${data.title} (${data.date})</span>`;
+      li.title="Click to delete";
+      li.onclick=async()=>{
+        await deleteDoc(doc(db,"dailyActivity",d.id));
+        await deleteObject(ref(storage,"dailyActivity/"+data.photoRef));
+        location.reload();
+      }
+      actList.appendChild(li);
+    });
+
+    // Placed Students Add
+    const placedForm=document.getElementById("placedForm");
+    const placedList=document.getElementById("placedList");
+    placedForm.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+      const file=document.getElementById("stuPhoto").files[0];
+      const storageRef=ref(storage,"placedStudents/"+file.name);
+      await uploadBytes(storageRef,file);
+      const url=await getDownloadURL(storageRef);
+
+      await addDoc(collection(db,"placedStudents"),{
+        name: document.getElementById("stuName").value,
+        package: document.getElementById("stuPackage").value,
+        designation: document.getElementById("stuDesignation").value,
+        photo: url,
+        photoRef: file.name
+      });
+      location.reload();
+    });
+
+    const placedSnap=await getDocs(collection(db,"placedStudents"));
+    placedSnap.forEach(d=>{
+      let data=d.data();
+      let li=document.createElement("li");
+      li.innerHTML=`<img src="${data.photo}"><span>${data.name} - ${data.designation} (${data.package})</span>`;
+      li.title="Click to delete";
+      li.onclick=async()=>{
+        await deleteDoc(doc(db,"placedStudents",d.id));
+        await deleteObject(ref(storage,"placedStudents/"+data.photoRef));
+        location.reload();
+      }
+      placedList.appendChild(li);
+    });
+
+    // Students Registration Data (from student login/registration collection)
+    const studentRegList=document.getElementById("studentRegList");
+    const studentSnap=await getDocs(collection(db,"studentsRegistration"));
+    studentSnap.forEach(d=>{
+      let data=d.data();
+      let li=document.createElement("li");
+      li.innerHTML=`<span>${data.name} - ${data.email} - ${data.course}</span>`;
+      studentRegList.appendChild(li);
+    });
+  </script>
+
+  <!-- Logout -->
+  <script>
+    function logout(){ 
+      localStorage.clear(); 
+      window.location.href="index.html"; 
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact - Jobsure Automation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff;
+      color: #333;
+    }
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+    }
+    header .logo {
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+    nav a {
+      text-decoration: none;
+      margin-left: 20px;
+      color: #555;
+      font-weight: 500;
+    }
+    nav a.active {
+      color: #28a745;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 4px;
+    }
+    .container {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 1000px;
+      margin: 40px auto;
+      gap: 40px;
+      padding: 0 20px;
+    }
+    .form-section, .info-section {
+      flex: 1;
+      min-width: 300px;
+    }
+    .form-section h2 {
+      font-size: 1.8em;
+      margin-bottom: 20px;
+    }
+    .form-section label {
+      display: block;
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    .form-section input, .form-section textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      box-sizing: border-box;
+      font-size: 1em;
+    }
+    .form-section textarea {
+      height: 100px;
+    }
+    .form-section .checkbox {
+      margin-top: 15px;
+    }
+    .form-section button {
+      margin-top: 20px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      font-size: 1em;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+    .form-section button:hover {
+      background-color: #218838;
+    }
+    .info-section {
+      background-color: #f4f4f4;
+      padding: 20px;
+      border-radius: 8px;
+    }
+    .info-section h3 {
+      margin-bottom: 15px;
+      color: #28a745;
+    }
+    .info-section p {
+      margin-bottom: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #ddd;
+      margin-top: 40px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Jobsure Automation Training</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="daily.html">Daily Activity</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html" class="active">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="form-section">
+      <h2>We're here to help you succeed!</h2>
+      <form>
+        <label for="name">Name *</label>
+        <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+
+        <label for="email">Email address *</label>
+        <input type="email" id="email" name="email" placeholder="email@website.com" required>
+
+        <label for="phone">Phone number *</label>
+        <input type="tel" id="phone" name="phone" placeholder="555-555-5555" required>
+
+        <label for="message">Message</label>
+        <textarea id="message" name="message" placeholder="Write your message here..."></textarea>
+
+        <div class="checkbox">
+          <input type="checkbox" id="consent" name="consent" required>
+          <label for="consent">I allow this website to store my submission so they can respond to my inquiry. *</label>
+        </div>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+
+    <div class="info-section">
+      <h3>Get in touch</h3>
+      <p>Email: <a href="mailto:help.jobsure@hotmail.com">help.jobsure@hotmail.com</a></p>
+      <p>Location: <a href="#">Pune, MH IN</a></p>
+    </div>
+  </div>
+
+  <footer>
+    &copy; 2025 Jobsure Automation Training. All rights reserved.
+  </footer>
+
+</body>
+</html>

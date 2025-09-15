@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Services - Jobsure Automation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7faf7;
+      color: #333;
+    }
+    header {
+      background-color: #fff;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 15px 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+    }
+    header .logo {
+      font-size: 1.4em;
+      font-weight: bold;
+    }
+    nav a {
+      text-decoration: none;
+      margin-left: 20px;
+      color: #555;
+      font-weight: 500;
+    }
+    nav a.active {
+      color: #28a745;
+      border-bottom: 2px solid #28a745;
+      padding-bottom: 4px;
+    }
+    .services-section {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .services-section h3 {
+      color: #28a745;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .services-section h2 {
+      font-size: 2em;
+      margin: 10px 0 40px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: left;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h4 {
+      margin: 0 0 10px 0;
+    }
+    .card-content p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #ddd;
+      margin-top: 50px;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Jobsure Automation Training</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="daily.html">Daily Activity</a>
+      <a href="about.html">About</a>
+      <a href="courses.html" class="active">Services</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <section class="services-section">
+    <h3>Expert Automation Training</h3>
+    <h2>Unlock your potential in automation</h2>
+    <div class="grid">
+      
+      <div class="card">
+        <img src="service1.jpg" alt="DCS training">
+        <div class="card-content">
+          <h4>DCS training &gt;</h4>
+          <p>Comprehensive training on Distributed Control Systems.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="service2.jpg" alt="SCADA training">
+        <div class="card-content">
+          <h4>SCADA training &gt;</h4>
+          <p>Expert training on SCADA systems for aspiring professionals.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="service3.jpg" alt="HMI training">
+        <div class="card-content">
+          <h4>HMI training &gt;</h4>
+          <p>Hands-on experience with Human-Machine Interface systems.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="service4.jpg" alt="AutoCAD training">
+        <div class="card-content">
+          <h4>AutoCAD electrical training &gt;</h4>
+          <p>Master AutoCAD Electrical for industrial applications.</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="service5.jpg" alt="Internship">
+        <div class="card-content">
+          <h4>Internship certification &gt;</h4>
+          <p>Guaranteed internship certificates and placement support.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 Jobsure Automation Training. All rights reserved.
+  </footer>
+
+</body>
+</html>

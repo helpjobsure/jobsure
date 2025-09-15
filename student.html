@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f0f8ff; padding: 20px; }
+    h1 { color: #333; }
+    form { margin-top: 20px; }
+    label { display: block; margin-top: 10px; font-weight: bold; }
+    input, select, button {
+      padding: 8px;
+      margin: 5px 0;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      width: 100%;
+      max-width: 400px;
+    }
+    button {
+      background: #28a745;
+      color: #fff;
+      cursor: pointer;
+      border: none;
+    }
+    button:hover { background: #218838; }
+    .logout { 
+      background: red; 
+      color: #fff; 
+      padding: 8px 15px; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer;
+      margin-top: 20px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome Student 🎓</h1>
+  <p>You are logged in as <b id="studentEmail"></b></p>
+  <button class="logout" onclick="logout()">Logout</button>
+
+  <!-- Registration Form -->
+  <h3>Registration Form</h3>
+  <form id="regForm">
+    <label>Name of Student *</label>
+    <input type="text" id="name" required>
+
+    <label>Qualification *</label>
+    <select id="qualification" required>
+      <option value="">--Select--</option>
+      <option>BE/B.Tech</option>
+      <option>Diploma</option>
+    </select>
+
+    <label>Branch *</label>
+    <select id="branch" required>
+      <option value="">--Select--</option>
+      <option>Electrical</option>
+      <option>E&TC</option>
+      <option>Electronics</option>
+      <option>Instrumentation</option>
+      <option>Other</option>
+    </select>
+
+    <label>College Name *</label>
+    <input type="text" id="college" required>
+
+    <label>Email ID *</label>
+    <input type="email" id="email" required>
+
+    <label>Mobile Number *</label>
+    <input type="tel" id="mobile" required>
+
+    <label>Alternative Mobile Number</label>
+    <input type="tel" id="altMobile">
+
+    <label>Select Course *</label>
+    <select id="course" required>
+      <option value="">--Select--</option>
+      <option>DCS</option>
+      <option>PLC</option>
+      <option>SCADA</option>
+      <option>HMI</option>
+      <option>AutoCAD Electrical</option>
+      <option>Other</option>
+    </select>
+
+    <label>Make Payment (Vishnu Karape)</label>
+    <p>GPay / PhonePe: <b>7498282599</b></p>
+
+    <label>Payment Receipt (PDF/DOC, max 1 MB)</label>
+    <input type="file" id="receipt" accept=".pdf,.doc,.docx" required>
+
+    <label>Upload your CV/Resume (PDF/DOC, max 1 MB) *</label>
+    <input type="file" id="resume" accept=".pdf,.doc,.docx" required>
+
+    <label>Upload Passport Size Photo *</label>
+    <input type="file" id="photo" accept="image/*" required>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Firestore + Storage -->
+  <script type="module">
+    import { db, storage } from "./firebase.js";
+    import { collection, addDoc } 
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+    import { ref, uploadBytes, getDownloadURL } 
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+
+    // student email show
+    document.getElementById("studentEmail").innerText = localStorage.getItem("studentEmail");
+
+    const regForm=document.getElementById("regForm");
+    regForm.addEventListener("submit", async(e)=>{
+      e.preventDefault();
+
+      // Upload files
+      const receiptFile=document.getElementById("receipt").files[0];
+      const resumeFile=document.getElementById("resume").files[0];
+      const photoFile=document.getElementById("photo").files[0];
+
+      const receiptRef=ref(storage,"students/receipts/"+Date.now()+"_"+receiptFile.name);
+      const resumeRef=ref(storage,"students/resumes/"+Date.now()+"_"+resumeFile.name);
+      const photoRef=ref(storage,"students/photos/"+Date.now()+"_"+photoFile.name);
+
+      await uploadBytes(receiptRef,receiptFile);
+      await uploadBytes(resumeRef,resumeFile);
+      await uploadBytes(photoRef,photoFile);
+
+      const receiptURL=await getDownloadURL(receiptRef);
+      const resumeURL=await getDownloadURL(resumeRef);
+      const photoURL=await getDownloadURL(photoRef);
+
+      // Save form data
+      await addDoc(collection(db,"studentsRegistration"),{
+        name: document.getElementById("name").value,
+        qualification: document.getElementById("qualification").value,
+        branch: document.getElementById("branch").value,
+        college: document.getElementById("college").value,
+        email: document.getElementById("email").value,
+        mobile: document.getElementById("mobile").value,
+        altMobile: document.getElementById("altMobile").value,
+        course: document.getElementById("course").value,
+        receipt: receiptURL,
+        resume: resumeURL,
+        photo: photoURL,
+        submittedBy: localStorage.getItem("studentEmail"),
+        submittedAt: new Date().toISOString()
+      });
+
+      alert("Registration submitted successfully ✅");
+      regForm.reset();
+    });
+  </script>
+
+  <script>
+    function logout(){ 
+      localStorage.clear(); 
+      window.location.href="index.html"; 
+    }
+  </script>
+</body>
+</html>

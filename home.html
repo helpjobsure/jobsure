@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Jobsure Automation Training</title>
+  <style>
+    /* तुझं CSS जसंच्या तसं ठेवलंय */
+    body {font-family: Arial, sans-serif;margin: 0;padding: 0;line-height: 1.6;color: #333;background-color: #f8f9fa;}
+    header {background-color: #004080;color: white;padding: 15px 20px;display: flex;justify-content: space-between;align-items: center;position: sticky;top: 0;z-index: 1000;}
+    header .logo {font-size: 1.5em;font-weight: bold;}
+    nav a {color: white;text-decoration: none;margin-left: 15px;}
+    nav a:hover {text-decoration: underline;}
+    h2 {text-align: center;color: #004080;margin-bottom: 30px;font-size: 2em;}
+    .container {max-width: 1200px;margin: auto;padding: 20px;}
+    .grid {display: grid;grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));gap: 20px;}
+    .card {background: white;border-radius: 10px;padding: 20px;box-shadow: 0 4px 8px rgba(0,0,0,0.1);transition: transform 0.3s ease, box-shadow 0.3s ease;text-align: center;}
+    .card:hover {transform: translateY(-5px);box-shadow: 0 8px 16px rgba(0,0,0,0.2);}
+    .card h3 {color: #004080;margin-bottom: 10px;}
+    .card .position {font-weight: bold;color: #28a745;margin-bottom: 10px;font-size: 0.95em;}
+    footer {text-align: center;padding: 20px;background: #222;color: #ddd;margin-top: 40px;}
+    .hero {background: linear-gradient(135deg, #004080, #0073e6);color: white;padding: 70px 20px;text-align: center;}
+    .hero h1 {font-size: 2.8em;margin-bottom: 10px;}
+    .hero .tagline {font-size: 1.2em;margin-bottom: 15px;}
+    .hero .badge {display: inline-block;background: #ffcc00;color: #000;padding: 6px 15px;border-radius: 20px;font-weight: bold;margin: 15px 0;}
+    .hero .subtitle {font-size: 1.1em;margin: 10px 0 20px;}
+    .apply-btn {display: inline-block;background: #28a745;color: white;padding: 12px 25px;margin-top: 15px;border-radius: 6px;font-weight: bold;text-decoration: none;transition: 0.3s;}
+    .apply-btn:hover {background: #218838;}
+    .quick-info {display: grid;grid-template-columns: repeat(auto-fit,minmax(150px,1fr));gap: 15px;margin: 30px auto;max-width: 900px;}
+    .quick-info div {background: rgba(255,255,255,0.15);padding: 15px;border-radius: 8px;font-size: 0.95em;}
+    .contact {margin-top: 25px;font-size: 1em;}
+    .faq {margin-top: 50px;}
+    .faq h3 {color: #004080;margin-top: 20px;}
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Jobsure Automation Training </div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="daily.html">Daily Activity</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="contact.html">Contact</a>
+      <a href="login.html">Login</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Jobsure Automation Training</h1>
+      <p class="tagline">Pay after placement • 3 months • Online • Job Location Pune / Bangalore</p>
+      <span class="badge">PAY AFTER PLACEMENT</span>
+      <p class="subtitle">Industrial Automation Training — DCS | PLC | SCADA | HMI | AutoCAD Electrical</p>
+      <p>Free course with pay-after-placement — 3-month online programme with 100% placement assistance, project-based learning, and interview preparation.</p>
+      <a href="apply.html" class="apply-btn">Apply Now</a>
+
+      <div class="quick-info">
+        <div><strong>Duration</strong><br/>3 Months (Online)</div>
+        <div><strong>Salary Guarantee</strong><br/>Minimum ₹15,000 / month</div>
+        <div><strong>Placement</strong><br/>100% Assistance</div>
+        <div><strong>Location</strong><br/>Nationwide Online Batches</div>
+      </div>
+
+      <p class="contact">📞 Call / WhatsApp: <strong>7498282599</strong> • ✉ help.jobsure@hotmail.com</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <!-- Placed Students Section -->
+    <section>
+      <h2>Placed Students</h2>
+      <div id="studentsList" class="grid"></div>
+    </section>
+
+    <!-- Organizers Section -->
+    <section style="margin-top: 50px;">
+      <h2>Organizers</h2>
+      <div id="organizersList" class="grid"></div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq">
+      <h2>FAQs</h2>
+      <h3>Q1: Is this course fully online?</h3>
+      <p>A: Yes, the course is conducted through live online classes.</p>
+      <h3>Q2: Do I have to pay anything before joining?</h3>
+      <p>A: No. The course is free to join. You only pay after you get a job offer.</p>
+      <h3>Q3: What does "Pay After Placement" mean?</h3>
+      <p>A: Payment is only applicable after you receive a job offer, subject to terms & conditions.</p>
+      <h3>Q4: Any other charges during training?</h3>
+      <p>A: Usually no extra charges. Confirm if registration or documentation fees apply.</p>
+      <h3>Q5: Is placement guaranteed?</h3>
+      <p>A: Placement support is provided, but 100% job guarantee is not promised.</p>
+      <h3>Q6: What is the course duration?</h3>
+      <p>A: Typically 3 months (full-time), can extend up to 6 months for part-time.</p>
+      <h3>Q7: Who can join?</h3>
+      <p>A: BE/B.Tech/Diploma students, working professionals, technicians, and freshers.</p>
+    </section>
+  </div>
+
+  <footer>
+    © 2025 Jobsure Automation Training — All rights reserved.<br/>
+    Contact: 7498282599 • help.jobsure@hotmail.com
+  </footer>
+
+  <!-- Firebase -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "SENDER_ID",
+      appId: "APP_ID"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function loadStudents() {
+      const studentsRef = collection(db, "placedStudents");
+      const snapshot = await getDocs(studentsRef);
+      let html = "";
+      snapshot.forEach(doc => {
+        const s = doc.data();
+        html += `<div class="card"><h3>${s.name}</h3><p class="position">${s.position} — ${s.package}</p></div>`;
+      });
+      document.getElementById("studentsList").innerHTML = html;
+    }
+
+    async function loadOrganizers() {
+      const orgRef = collection(db, "organizers");
+      const snapshot = await getDocs(orgRef);
+      let html = "";
+      snapshot.forEach(doc => {
+        const o = doc.data();
+        html += `<div class="card"><h3>${o.name}</h3><p class="position">${o.role}</p><p>${o.description}</p></div>`;
+      });
+      document.getElementById("organizersList").innerHTML = html;
+    }
+
+    loadStudents();
+    loadOrganizers();
+  </script>
+
+</body>
+</html>
