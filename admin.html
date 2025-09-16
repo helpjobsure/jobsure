@@ -1,100 +1,281 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Login - Jobsure Automation Training</title>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Jobsure</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-    }
-    .login-box {
-      background: #fff;
-      padding: 30px;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      width: 350px;
-      text-align: center;
-    }
-    h2 {
-      margin-bottom: 20px;
-      color: #004080;
-    }
-    input {
-      width: 100%;
-      padding: 10px;
-      margin: 8px 0;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-    }
-    button {
-      width: 100%;
-      padding: 12px;
-      background: #004080;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      cursor: pointer;
-    }
-    button:hover {
-      background: #0066cc;
-    }
-    .links {
-      margin-top: 15px;
-      font-size: 14px;
-    }
-    .links a {
-      color: #004080;
-      text-decoration: none;
-    }
+    body { font-family: Arial, sans-serif; background:#f4f6f9; margin:0; padding:20px; }
+    h1 { text-align:center; color:#004080; }
+    h2 { margin-top:30px; color:#333; }
+    table { width:100%; border-collapse:collapse; margin-top:15px; }
+    th, td { border:1px solid #ddd; padding:8px; text-align:left; font-size:14px; }
+    th { background:#004080; color:#fff; }
+    button { margin:5px; padding:6px 12px; border:none; border-radius:4px; cursor:pointer; }
+    .btn-primary { background:#004080; color:#fff; }
+    .btn-danger { background:#d9534f; color:#fff; }
+    .btn-success { background:#28a745; color:#fff; }
+    .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin-top:15px; }
+    .card { background:#fff; border-radius:8px; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
+    input, select { width:100%; margin:5px 0; padding:8px; border:1px solid #ccc; border-radius:5px; }
   </style>
 </head>
 <body>
+  <h1>Admin Dashboard</h1>
 
-  <div class="login-box">
-    <h2>Admin Login</h2> 
-    <input type="text" id="username" placeholder="Enter Username" required />
-    <input type="password" id="password" placeholder="Enter Password" required />
-    <button onclick="adminLogin()">Login</button>
-    <div class="links">
-      <a href="#" onclick="forgotPassword()">Forgot Password?</a>
-    </div>
-    <p id="message" style="color:red;"></p>
-  </div>
+  <!-- ================== Student Registrations ================== -->
+  <h2>Student Registrations</h2>
+  <form id="studentForm">
+    <input id="sName" placeholder="Name of Student *" required>
 
-  <script>
-    // 🔑 Admin Credentials (इथे बदलायचे)
-    const ADMIN_USERNAME = "Jobsure";
-    const ADMIN_PASSWORD = "Jobsure@2025";
+    <label>Qualification *</label>
+    <select id="sQual" required>
+      <option value="">Select</option>
+      <option>BE/B.Tech</option>
+      <option>Diploma</option>
+    </select>
 
-    // Admin Login Function
-    function adminLogin() {
-      const username = document.getElementById("username").value.trim();
-      const password = document.getElementById("password").value.trim();
-      const message = document.getElementById("message");
+    <label>Branch *</label>
+    <select id="sBranch" required>
+      <option value="">Select</option>
+      <option>Electrical</option>
+      <option>E&TC</option>
+      <option>Electronics</option>
+      <option>Instrumentation</option>
+      <option>Other</option>
+    </select>
 
-      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
-        // Redirect to admin dashboard
-        window.location.href = "admin.html";
-      } else {
-        message.textContent = "❌ Invalid Username or Password";
-      }
+    <input id="sCollege" placeholder="College Name *" required>
+    <input id="sEmail" type="email" placeholder="Email ID *" required>
+    <input id="sMobile" placeholder="Mobile Number *" required>
+    <input id="sAltMobile" placeholder="Alternative Mobile Number">
+
+    <label>Select Course *</label>
+    <select id="sCourse" required>
+      <option value="">Select</option>
+      <option>DCS</option>
+      <option>PLC</option>
+      <option>SCADA</option>
+      <option>HMI</option>
+      <option>AutoCAD Electrical</option>
+      <option>Other</option>
+    </select>
+
+    <label>Photo *</label>
+    <input type="file" id="sPhoto" accept="image/*" required>
+
+    <label>Upload your CV/Resume *</label>
+    <input type="file" id="sCV" accept=".pdf,.doc,.docx" required>
+
+    <button class="btn-primary" type="submit">Add Student</button>
+  </form>
+
+  <button class="btn-success" onclick="exportCSV()">⬇ Export CSV</button>
+
+  <table id="studentsTable">
+    <thead>
+      <tr>
+        <th>Name</th><th>Qualification</th><th>Branch</th><th>College</th>
+        <th>Email</th><th>Mobile</th><th>Alt Mobile</th><th>Course</th>
+        <th>Photo</th><th>CV</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <!-- ================== Coupons ================== -->
+  <h2>Coupons</h2>
+  <form id="couponForm">
+    <input id="cTitle" placeholder="Title" required>
+    <input id="cCode" placeholder="Code" required>
+    <input id="cDesc" placeholder="Description">
+    <button class="btn-primary" type="submit">Add Coupon</button>
+  </form>
+  <div id="couponsList" class="card-grid"></div>
+
+  <!-- ================== Placed Students ================== -->
+  <h2>Placed Students</h2>
+  <form id="placedForm">
+    <input id="pName" placeholder="Name" required>
+    <input id="pDesignation" placeholder="Designation">
+    <input id="pPackage" placeholder="Package">
+    <input id="pPhoto" placeholder="Photo URL">
+    <button class="btn-primary" type="submit">Add Student</button>
+  </form>
+  <div id="placedList" class="card-grid"></div>
+
+  <!-- ================== Today’s Sessions ================== -->
+  <h2>Today’s Sessions</h2>
+  <form id="sessionForm">
+    <input id="sTitle" placeholder="Title" required>
+    <input id="sDate" placeholder="Date" required>
+    <input id="sPhotoUrl" placeholder="Photo URL">
+    <button class="btn-primary" type="submit">Add Session</button>
+  </form>
+  <div id="sessionsList" class="card-grid"></div>
+
+  <!-- ================== Ratings ================== -->
+  <h2>Ratings</h2>
+  <form id="ratingForm">
+    <input id="rName" placeholder="Reviewer" required>
+    <input id="rScore" placeholder="Score (1-5)" type="number" min="1" max="5" required>
+    <button class="btn-primary" type="submit">Add Rating</button>
+  </form>
+  <div id="ratingsList" class="card-grid"></div>
+
+  <!-- ================== Firebase + Logic ================== -->
+  <script type="module">
+    import { db, storage } from "./firebase.js";
+    import { collection, addDoc, getDocs, deleteDoc, doc } 
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+    import { ref, uploadBytes, getDownloadURL } 
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+
+    // ===== Add Student =====
+    studentForm.addEventListener("submit", async e => {
+      e.preventDefault();
+      const photoFile = document.getElementById("sPhoto").files[0];
+      const cvFile = document.getElementById("sCV").files[0];
+
+      if (!photoFile || !cvFile) { alert("Please upload required files."); return; }
+
+      const photoRef = ref(storage, "students/photos/" + Date.now() + "_" + photoFile.name);
+      await uploadBytes(photoRef, photoFile);
+      const photoURL = await getDownloadURL(photoRef);
+
+      const cvRef = ref(storage, "students/cv/" + Date.now() + "_" + cvFile.name);
+      await uploadBytes(cvRef, cvFile);
+      const cvURL = await getDownloadURL(cvRef);
+
+      await addDoc(collection(db, "students"), {
+        name: sName.value, qual: sQual.value, branch: sBranch.value,
+        college: sCollege.value, email: sEmail.value, mobile: sMobile.value,
+        altMobile: sAltMobile.value, course: sCourse.value,
+        photo: photoURL, cv: cvURL
+      });
+
+      alert("✅ Student Added Successfully!");
+      studentForm.reset(); loadStudents();
+    });
+
+    // ===== Load Students =====
+    async function loadStudents() {
+      const snap = await getDocs(collection(db, "students"));
+      const tbody = document.querySelector("#studentsTable tbody");
+      tbody.innerHTML = "";
+      snap.forEach(d => {
+        const s = d.data();
+        tbody.innerHTML += `
+          <tr>
+            <td>${s.name||""}</td><td>${s.qual||""}</td><td>${s.branch||""}</td>
+            <td>${s.college||""}</td><td>${s.email||""}</td><td>${s.mobile||""}</td>
+            <td>${s.altMobile||""}</td><td>${s.course||""}</td>
+            <td>${s.photo ? `<a href="${s.photo}" target="_blank">📷 View</a>` : ""}</td>
+            <td>${s.cv ? `<a href="${s.cv}" target="_blank">📄 View</a>` : ""}</td>
+          </tr>`;
+      });
     }
+    loadStudents();
 
-    // Forgot Password (Hardcoded Case)
-    function forgotPassword() {
-      const message = document.getElementById("message");
-      message.style.color = "green";
-      message.textContent = "ℹ Please contact system admin to reset credentials.";
+    // ===== Export CSV =====
+    window.exportCSV = function(){
+      let rows = [];
+      document.querySelectorAll("#studentsTable tr").forEach(tr=>{
+        let row=[]; tr.querySelectorAll("th,td").forEach(td=>row.push(td.innerText));
+        rows.push(row.join(","));
+      });
+      const blob = new Blob([rows.join("\n")], {type:"text/csv"});
+      const a=document.createElement("a");
+      a.href=URL.createObjectURL(blob); a.download="students.csv"; a.click();
+    };
+
+    // ===== Coupons CRUD =====
+    couponForm.addEventListener("submit",async e=>{
+      e.preventDefault();
+      await addDoc(collection(db,"coupons"),{
+        title:cTitle.value, code:cCode.value, desc:cDesc.value
+      });
+      couponForm.reset(); loadCoupons();
+    });
+    async function loadCoupons(){
+      const snap=await getDocs(collection(db,"coupons"));
+      const list=document.getElementById("couponsList"); list.innerHTML="";
+      snap.forEach(d=>{
+        const c=d.data();
+        list.innerHTML+=`<div class="card">
+          <h4>${c.title}</h4><p>${c.desc||""}</p><b>${c.code}</b>
+          <button class="btn-danger" onclick="delCoupon('${d.id}')">Delete</button>
+        </div>`;
+      });
     }
+    window.delCoupon=async id=>{ await deleteDoc(doc(db,"coupons",id)); loadCoupons(); };
+    loadCoupons();
+
+    // ===== Placed Students =====
+    placedForm.addEventListener("submit",async e=>{
+      e.preventDefault();
+      await addDoc(collection(db,"placedStudents"),{
+        name:pName.value, designation:pDesignation.value,
+        package:pPackage.value, photo:pPhoto.value
+      });
+      placedForm.reset(); loadPlaced();
+    });
+    async function loadPlaced(){
+      const snap=await getDocs(collection(db,"placedStudents"));
+      const list=document.getElementById("placedList"); list.innerHTML="";
+      snap.forEach(d=>{
+        const p=d.data();
+        list.innerHTML+=`<div class="card">
+          <img src="${p.photo||''}" alt="">
+          <h4>${p.name}</h4><p>${p.designation}</p><b>${p.package}</b>
+          <button class="btn-danger" onclick="delPlaced('${d.id}')">Delete</button>
+        </div>`;
+      });
+    }
+    window.delPlaced=async id=>{ await deleteDoc(doc(db,"placedStudents",id)); loadPlaced(); };
+    loadPlaced();
+
+    // ===== Sessions =====
+    sessionForm.addEventListener("submit",async e=>{
+      e.preventDefault();
+      await addDoc(collection(db,"sessions"),{
+        title:sTitle.value, date:sDate.value, photo:sPhotoUrl.value
+      });
+      sessionForm.reset(); loadSessions();
+    });
+    async function loadSessions(){
+      const snap=await getDocs(collection(db,"sessions"));
+      const list=document.getElementById("sessionsList"); list.innerHTML="";
+      snap.forEach(d=>{
+        const s=d.data();
+        list.innerHTML+=`<div class="card">
+          <img src="${s.photo||''}" alt="">
+          <h4>${s.title}</h4><p>${s.date}</p>
+          <button class="btn-danger" onclick="delSession('${d.id}')">Delete</button>
+        </div>`;
+      });
+    }
+    window.delSession=async id=>{ await deleteDoc(doc(db,"sessions",id)); loadSessions(); };
+    loadSessions();
+
+    // ===== Ratings =====
+    ratingForm.addEventListener("submit",async e=>{
+      e.preventDefault();
+      await addDoc(collection(db,"ratings"),{ name:rName.value, score:rScore.value });
+      ratingForm.reset(); loadRatings();
+    });
+    async function loadRatings(){
+      const snap=await getDocs(collection(db,"ratings"));
+      const list=document.getElementById("ratingsList"); list.innerHTML="";
+      snap.forEach(d=>{
+        const r=d.data();
+        list.innerHTML+=`<div class="card">
+          <h4>${r.name}</h4><p>${"★".repeat(r.score)}</p>
+          <button class="btn-danger" onclick="delRating('${d.id}')">Delete</button>
+        </div>`;
+      });
+    }
+    window.delRating=async id=>{ await deleteDoc(doc(db,"ratings",id)); loadRatings(); };
+    loadRatings();
   </script>
-
 </body>
 </html>
