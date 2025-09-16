@@ -1,175 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Login - Jobsure Automation Training</title>
   <style>
-    body { font-family: Arial, sans-serif; background: #eef; padding: 20px; }
-    h1 { color: #333; }
-    h3 { margin-top: 30px; }
-    input, button {
-      padding: 8px;
-      margin: 5px 0;
-      border-radius: 5px;
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f6f9;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-box {
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #004080;
+    }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
       border: 1px solid #ccc;
+      border-radius: 5px;
     }
     button {
-      background: #007bff;
-      color: #fff;
-      cursor: pointer;
+      width: 100%;
+      padding: 12px;
+      background: #004080;
+      color: white;
       border: none;
-    }
-    button:hover { background: #0056b3; }
-    .logout { 
-      background: red; 
-      color: #fff; 
-      padding: 8px 15px; 
-      border: none; 
-      border-radius: 5px; 
+      border-radius: 5px;
+      font-size: 16px;
       cursor: pointer;
     }
-    ul { list-style-type: none; padding: 0; }
-    li { 
-      background: #fff; 
-      margin: 10px 0; 
-      padding: 10px; 
-      border-radius: 5px; 
-      cursor: pointer; 
-      display: flex;
-      align-items: center;
-      gap: 15px;
+    button:hover {
+      background: #0066cc;
     }
-    li img {
-      width: 60px;
-      height: 60px;
-      border-radius: 5px;
-      object-fit: cover;
+    .links {
+      margin-top: 15px;
+      font-size: 14px;
     }
-    li:hover { background: #f8d7da; }
+    .links a {
+      color: #004080;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
-  <h1>Welcome Admin 🎉</h1>
-  <p>You are logged in as <b>Admin</b>.</p>
-  <button class="logout" onclick="logout()">Logout</button>
 
-  <!-- Add Daily Activity -->
-  <h3>Add Daily Activity</h3>
-  <form id="activityForm">
-    <input type="text" id="actTitle" placeholder="Title" required>
-    <input type="date" id="actDate" required>
-    <input type="file" id="actPhoto" accept="image/*" required>
-    <button type="submit">Add</button>
-  </form>
-  <ul id="activityList"></ul>
+  <div class="login-box">
+    <h2>Admin Login</h2> 
+    <input type="text" id="username" placeholder="Enter Username" required />
+    <input type="password" id="password" placeholder="Enter Password" required />
+    <button onclick="adminLogin()">Login</button>
+    <div class="links">
+      <a href="#" onclick="forgotPassword()">Forgot Password?</a>
+    </div>
+    <p id="message" style="color:red;"></p>
+  </div>
 
-  <!-- Add Placed Student -->
-  <h3>Add Placed Student</h3>
-  <form id="placedForm">
-    <input type="text" id="stuName" placeholder="Name" required>
-    <input type="text" id="stuPackage" placeholder="Package" required>
-    <input type="text" id="stuDesignation" placeholder="Designation" required>
-    <input type="file" id="stuPhoto" accept="image/*" required>
-    <button type="submit">Add</button>
-  </form>
-  <ul id="placedList"></ul>
-
-  <!-- Student Registration Data -->
-  <h3>Students Registration Data</h3>
-  <ul id="studentRegList"></ul>
-
-  <!-- Firebase Firestore + Storage Logic -->
-  <script type="module">
-    import { db, storage } from "./firebase.js";
-    import { collection, addDoc, getDocs, deleteDoc, doc } 
-      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-    import { ref, uploadBytes, getDownloadURL, deleteObject }
-      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
-
-    // Daily Activity Add
-    const actForm=document.getElementById("activityForm");
-    const actList=document.getElementById("activityList");
-    actForm.addEventListener("submit", async(e)=>{
-      e.preventDefault();
-      const file=document.getElementById("actPhoto").files[0];
-      const storageRef=ref(storage,"dailyActivity/"+file.name);
-      await uploadBytes(storageRef,file);
-      const url=await getDownloadURL(storageRef);
-
-      await addDoc(collection(db,"dailyActivity"),{
-        title: document.getElementById("actTitle").value,
-        date: document.getElementById("actDate").value,
-        photo: url,
-        photoRef: file.name
-      });
-      location.reload();
-    });
-
-    const actSnap=await getDocs(collection(db,"dailyActivity"));
-    actSnap.forEach(d=>{
-      let data=d.data();
-      let li=document.createElement("li");
-      li.innerHTML=`<img src="${data.photo}"><span>${data.title} (${data.date})</span>`;
-      li.title="Click to delete";
-      li.onclick=async()=>{
-        await deleteDoc(doc(db,"dailyActivity",d.id));
-        await deleteObject(ref(storage,"dailyActivity/"+data.photoRef));
-        location.reload();
-      }
-      actList.appendChild(li);
-    });
-
-    // Placed Students Add
-    const placedForm=document.getElementById("placedForm");
-    const placedList=document.getElementById("placedList");
-    placedForm.addEventListener("submit", async(e)=>{
-      e.preventDefault();
-      const file=document.getElementById("stuPhoto").files[0];
-      const storageRef=ref(storage,"placedStudents/"+file.name);
-      await uploadBytes(storageRef,file);
-      const url=await getDownloadURL(storageRef);
-
-      await addDoc(collection(db,"placedStudents"),{
-        name: document.getElementById("stuName").value,
-        package: document.getElementById("stuPackage").value,
-        designation: document.getElementById("stuDesignation").value,
-        photo: url,
-        photoRef: file.name
-      });
-      location.reload();
-    });
-
-    const placedSnap=await getDocs(collection(db,"placedStudents"));
-    placedSnap.forEach(d=>{
-      let data=d.data();
-      let li=document.createElement("li");
-      li.innerHTML=`<img src="${data.photo}"><span>${data.name} - ${data.designation} (${data.package})</span>`;
-      li.title="Click to delete";
-      li.onclick=async()=>{
-        await deleteDoc(doc(db,"placedStudents",d.id));
-        await deleteObject(ref(storage,"placedStudents/"+data.photoRef));
-        location.reload();
-      }
-      placedList.appendChild(li);
-    });
-
-    // Students Registration Data (from student login/registration collection)
-    const studentRegList=document.getElementById("studentRegList");
-    const studentSnap=await getDocs(collection(db,"studentsRegistration"));
-    studentSnap.forEach(d=>{
-      let data=d.data();
-      let li=document.createElement("li");
-      li.innerHTML=`<span>${data.name} - ${data.email} - ${data.course}</span>`;
-      studentRegList.appendChild(li);
-    });
-  </script>
-
-  <!-- Logout -->
   <script>
-    function logout(){ 
-      localStorage.clear(); 
-      window.location.href="index.html"; 
+    // 🔑 Admin Credentials (इथे बदलायचे)
+    const ADMIN_USERNAME = "Jobsure";
+    const ADMIN_PASSWORD = "Jobsure@2025";
+
+    // Admin Login Function
+    function adminLogin() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const message = document.getElementById("message");
+
+      if (username === ADMIN_USERNAME && password === ADMIN_PASSWORD) {
+        // Redirect to admin dashboard
+        window.location.href = "admin.html";
+      } else {
+        message.textContent = "❌ Invalid Username or Password";
+      }
+    }
+
+    // Forgot Password (Hardcoded Case)
+    function forgotPassword() {
+      const message = document.getElementById("message");
+      message.style.color = "green";
+      message.textContent = "ℹ Please contact system admin to reset credentials.";
     }
   </script>
+
 </body>
 </html>

@@ -13,10 +13,12 @@
       color: #333;
       background-color: #f8f9fa;
     }
+
+    /* HEADER */
     header {
       background-color: #004080;
       color: white;
-      padding: 15px 20px;
+      padding: 10px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -24,9 +26,21 @@
       top: 0;
       z-index: 1000;
     }
-    header .logo {
-      font-size: 1.5em;
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .logo-container span {
+      font-size: 1.3em;
       font-weight: bold;
+      color: white;
     }
     nav {
       display: flex;
@@ -37,58 +51,13 @@
     nav a {
       color: white;
       text-decoration: none;
-      margin-left: 15px;
-      cursor: pointer;
+      font-weight: 500;
     }
     nav a:hover {
       text-decoration: underline;
     }
-    h2 {
-      text-align: center;
-      color: #004080;
-      margin-bottom: 30px;
-      font-size: 2em;
-    }
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 10px;
-      padding: 20px;
-      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-align: center;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    }
-    .card h3 {
-      color: #004080;
-      margin-bottom: 10px;
-    }
-    .card .position {
-      font-weight: bold;
-      color: #28a745;
-      margin-bottom: 10px;
-      font-size: 0.95em;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #ddd;
-      margin-top: 40px;
-    }
-    /* Hero Section */
+
+    /* HERO SECTION */
     .hero {
       background: linear-gradient(135deg, #004080, #0073e6);
       color: white;
@@ -147,6 +116,42 @@
       margin-top: 25px;
       font-size: 1em;
     }
+
+    /* CARDS */
+    .container {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      overflow: hidden;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      padding: 20px;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .card h3 {
+      color: #004080;
+      margin-bottom: 10px;
+    }
+    .card .position {
+      font-weight: bold;
+      color: #28a745;
+      margin-bottom: 10px;
+      font-size: 0.95em;
+    }
+
     /* FAQ */
     .faq {
       margin-top: 50px;
@@ -154,6 +159,15 @@
     .faq h3 {
       color: #004080;
       margin-top: 20px;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #ddd;
+      margin-top: 40px;
     }
 
     /* Dropdown styling */
@@ -180,118 +194,125 @@
     .dropdown-content a:hover {
       background-color: #0066cc;
     }
+
+    @media (max-width: 768px) {
+      .logo-container img { width:40px; height:40px; }
+      .logo-container span { font-size:1em; }
+      nav { flex-wrap: wrap; gap:10px; }
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <div class="logo">Jobsure Automation Training</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="daily.html">Daily Activity</a>
-      <a href="about.html">About</a>
-      <a href="courses.html">Courses</a>
-      <a href="contact.html">Contact</a>
+<header>
+  <div class="logo-container">
+    <a href="index.html">
+      <img src="logo.JPG" alt="Jobsure Logo">
+    </a>
+    <span>Jobsure Automation Training</span>
+  </div>
 
-      <!-- Login Dropdown -->
-      <div class="dropdown">
-        <a class="dropbtn" onclick="toggleDropdown()">Login</a>
-        <div id="myDropdown" class="dropdown-content">
-          <a href="admin-login.html">Admin Login</a>
-          <a href="student-login.html">Student Login</a>
-        </div>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="daily.html">Daily Activity</a>
+    <a href="about.html">About</a>
+    <a href="courses.html">Courses</a>
+    <a href="contact.html">Contact</a>
+
+    <div class="dropdown">
+      <a class="dropbtn" onclick="toggleDropdown()">Login</a>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="admin-login.html">Admin Login</a>
+        <a href="student-login.html">Student Login</a>
       </div>
-    </nav>
-  </header>
+    </div>
+  </nav>
+</header>
 
-  <!-- HERO / COURSE INFO SECTION -->
-  <section class="hero">
-    <div class="hero-content">
-      <h1>Jobsure Automation Training</h1>
-      <p class="tagline">Pay after placement • 3 months • Online • Job Location Pune / Bangalore</p>
-      <span class="badge">PAY AFTER PLACEMENT</span>
-      <p class="subtitle">Industrial Automation Training — DCS | PLC | SCADA | HMI | AutoCAD Electrical</p>
-      <p>Free course with pay-after-placement — 3-month online programme with 100% placement assistance, project-based learning, and interview preparation.</p>
-      <a href="apply.html" class="apply-btn">Apply Now</a>
+<!-- HERO -->
+<section class="hero">
+  <h1>Jobsure Automation Training</h1>
+  <p class="tagline">Pay after placement • 3 months • Online • Job Location Pune / Bangalore</p>
+  <span class="badge">PAY AFTER PLACEMENT</span>
+  <p class="subtitle">Industrial Automation Training — DCS | PLC | SCADA | HMI | AutoCAD Electrical</p>
+  <p>Free course with pay-after-placement — 3-month online programme with 100% placement assistance, project-based learning, and interview preparation.</p>
+  <a href="contact.html" class="apply-btn">Apply Now</a>
 
-      <div class="quick-info">
-        <div><strong>Duration</strong><br/>3 Months (Online)</div>
-        <div><strong>Salary Guarantee</strong><br/>Minimum ₹15,000 / month</div>
-        <div><strong>Placement</strong><br/>100% Assistance</div>
-        <div><strong>Location</strong><br/>Nationwide Online Batches</div>
-      </div>
+  <div class="quick-info">
+    <div><strong>Duration</strong><br/>3 Months (Online)</div>
+    <div><strong>Salary Guarantee</strong><br/>Minimum ₹15,000 / month</div>
+    <div><strong>Placement</strong><br/>100% Assistance</div>
+    <div><strong>Location</strong><br/>Nationwide Online Batches</div>
+  </div>
 
-      <p class="contact">📞 Call / WhatsApp: <strong>7498282599</strong> • ✉ help.jobsure@hotmail.com</p>
+  <p class="contact">📞 Call / WhatsApp: <strong>7498282599</strong> • ✉ help.jobsure@hotmail.com</p>
+</section>
+
+<!-- Placed Students -->
+<div class="container">
+  <section>
+    <h2>Placed Students</h2>
+    <div class="grid">
+      <div class="card"><h3>PRATIK PATIL</h3><p class="position">AutoCAD Engineer — 3 LPA package</p></div>
+      <div class="card"><h3>ANUJA M</h3><p class="position">DCS Software Engineer — 4.25 LPA package</p></div>
+      <div class="card"><h3>ROHIT KADAM</h3><p class="position">Project Engineer — 2.75 LPA package</p></div>
+      <div class="card"><h3>AMOL HANBAR</h3><p class="position">Design Engineer — 3.75 LPA package</p></div>
+      <div class="card"><h3>VIDHYA S</h3><p class="position">HMI Engineer — 2.75 LPA package</p></div>
+      <div class="card"><h3>MRUNAL D</h3><p class="position">HMI Engineer — 3.75 LPA package</p></div>
+      <div class="card"><h3>BHAGYSHREE</h3><p class="position">DCS Hardware Engineer — 3.85 LPA package</p></div>
+      <div class="card"><h3>BHARTH SHIRSATH</h3><p class="position">GET — 2.75 LPA package</p></div>
     </div>
   </section>
 
-  <div class="container">
-    <!-- Placed Students Section -->
-    <section>
-      <h2>Placed Students</h2>
-      <div class="grid">
-        <div class="card"><h3>PRATIK PATIL</h3><p class="position">AutoCAD Engineer — 3 LPA package</p></div>
-        <div class="card"><h3>ANUJA M</h3><p class="position">DCS Software Engineer — 4.25 LPA package</p></div>
-        <div class="card"><h3>ROHIT KADAM</h3><p class="position">Project Engineer — 2.75 LPA package</p></div>
-        <div class="card"><h3>AMOL HANBAR</h3><p class="position">Design Engineer — 3.75 LPA package</p></div>
-        <div class="card"><h3>VIDHYA S</h3><p class="position">HMI Engineer — 2.75 LPA package</p></div>
-        <div class="card"><h3>MRUNAL D</h3><p class="position">HMI Engineer — 3.75 LPA package</p></div>
-        <div class="card"><h3>BHAGYSHREE</h3><p class="position">DCS Hardware Engineer — 3.85 LPA package</p></div>
-        <div class="card"><h3>BHARTH SHIRSATH</h3><p class="position">GET — 2.75 LPA package</p></div>
-      </div>
-    </section>
+  <!-- Organizers -->
+  <section style="margin-top:50px;">
+    <h2>Organizers</h2>
+    <div class="grid">
+      <div class="card"><h3>PRASHANT H.</h3><p class="position">MD & Chairman</p><p>Supportive placement team — ensuring students get the best opportunities.</p></div>
+      <div class="card"><h3>ASHWINI H.</h3><p class="position">Director</p><p>Guiding the institute’s strategic growth and academic excellence.</p></div>
+      <div class="card"><h3>PRIYANKA H.</h3><p class="position">Head of Placement Team</p><p>Leading the placement efforts to connect students with top employers.</p></div>
+      <div class="card"><h3>BASAVARAJ H.</h3><p class="position">Vice President</p><p>Supporting operations and expanding training initiatives across regions.</p></div>
+      <div class="card"><h3>ARJUN K.</h3><p class="position">Head of Operations</p><p>Streamlining workflows to ensure smooth training and placement processes.</p></div>
+      <div class="card"><h3>VISHNU K.</h3><p class="position">Training and Labs Support</p><p>Providing great trainers and hands-on labs for practical learning experience.</p></div>
+    </div>
+  </section>
 
-    <!-- Organizers Section -->
-    <section style="margin-top: 50px;">
-      <h2>Organizers</h2>
-      <div class="grid">
-        <div class="card"><h3>PRASHANT H.</h3><p class="position">MD & Chairman</p><p>Supportive placement team — ensuring students get the best opportunities.</p></div>
-        <div class="card"><h3>ASHWINI H.</h3><p class="position">Director</p><p>Guiding the institute’s strategic growth and academic excellence.</p></div>
-        <div class="card"><h3>PRIYANKA H.</h3><p class="position">Head of Placement Team</p><p>Leading the placement efforts to connect students with top employers.</p></div>
-        <div class="card"><h3>BASAVARAJ H.</h3><p class="position">Vice President</p><p>Supporting operations and expanding training initiatives across regions.</p></div>
-        <div class="card"><h3>ARJUN K.</h3><p class="position">Head of Operations</p><p>Streamlining workflows to ensure smooth training and placement processes.</p></div>
-        <div class="card"><h3>VISHNU K.</h3><p class="position">Training and Labs Support</p><p>Providing great trainers and hands-on labs for practical learning experience.</p></div>
-      </div>
-    </section>
+  <!-- FAQ -->
+  <section class="faq">
+    <h2>FAQs</h2>
+    <h3>Q1: Is this course fully online?</h3>
+    <p>A: Yes, the course is conducted through live online classes.</p>
 
-    <!-- FAQ Section -->
-    <section class="faq">
-      <h2>FAQs</h2>
-      <h3>Q1: Is this course fully online?</h3>
-      <p>A: Yes, the course is conducted through live online classes.</p>
+    <h3>Q2: Do I have to pay anything before joining?</h3>
+    <p>A: No. The course is free to join. You only pay after you get a job offer.</p>
 
-      <h3>Q2: Do I have to pay anything before joining?</h3>
-      <p>A: No. The course is free to join. You only pay after you get a job offer.</p>
+    <h3>Q3: What does "Pay After Placement" mean?</h3>
+    <p>A: Payment is only applicable after you receive a job offer, subject to terms & conditions.</p>
 
-      <h3>Q3: What does "Pay After Placement" mean?</h3>
-      <p>A: Payment is only applicable after you receive a job offer, subject to terms & conditions.</p>
+    <h3>Q4: Any other charges during training?</h3>
+    <p>A: Usually no extra charges. Confirm if registration or documentation fees apply.</p>
 
-      <h3>Q4: Any other charges during training?</h3>
-      <p>A: Usually no extra charges. Confirm if registration or documentation fees apply.</p>
+    <h3>Q5: Is placement guaranteed?</h3>
+    <p>A: Placement support is provided, but 100% job guarantee is not promised.</p>
 
-      <h3>Q5: Is placement guaranteed?</h3>
-      <p>A: Placement support is provided, but 100% job guarantee is not promised.</p>
+    <h3>Q6: What is the course duration?</h3>
+    <p>A: Typically 3 months (full-time), can extend up to 6 months for part-time.</p>
 
-      <h3>Q6: What is the course duration?</h3>
-      <p>A: Typically 3 months (full-time), can extend up to 6 months for part-time.</p>
+    <h3>Q7: Who can join?</h3>
+    <p>A: BE/B.Tech/Diploma students, working professionals, technicians, and freshers.</p>
+  </section>
+</div>
 
-      <h3>Q7: Who can join?</h3>
-      <p>A: BE/B.Tech/Diploma students, working professionals, technicians, and freshers.</p>
-    </section>
-  </div>
-
-  <footer>
-    © 2025 Jobsure Automation Training — All rights reserved.<br/>
-    Contact: 7498282599 • help.jobsure@hotmail.com
-  </footer>
+<footer>
+  © 2025 Jobsure Automation Training — All rights reserved.<br/>
+  Contact: 7498282599 • help.jobsure@hotmail.com
+</footer>
 
 <script>
 function toggleDropdown() {
   var dropdown = document.getElementById('myDropdown');
   dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
 }
-
-// Hide dropdown if click outside
 window.onclick = function(event) {
   if (!event.target.matches('.dropbtn')) {
     document.getElementById('myDropdown').style.display = "none";

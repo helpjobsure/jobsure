@@ -3,42 +3,229 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Daily Activity - Jobsure Automation</title>
+  <title>Daily Activity - Jobsure Automation Training</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 0; padding: 0;}
-    header { background-color: #004080; color: white; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;}
-    header .logo { font-size: 1.5em; font-weight: bold;}
-    nav a { color: white; text-decoration: none; margin-left: 20px;}
-    .content { max-width: 600px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 5px;}
-    footer { text-align: center; padding: 20px; background: #222; color: #ddd;}
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f8f9fa;
+    }
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 15px;
+      cursor: pointer;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    h2 {
+      text-align: center;
+      color: #004080;
+      margin: 30px 0 20px;
+      font-size: 2em;
+    }
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-align: center;
+    }
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+    }
+    .card img {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .card h4 {
+      color: #004080;
+      margin-bottom: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #ddd;
+      margin-top: 40px;
+    }
+    /* Dropdown styling */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #004080;
+      border-radius: 4px;
+      flex-direction: column;
+      min-width: 150px;
+      z-index: 1000;
+    }
+    .dropdown-content a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #0066cc;
+    }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <div class="logo">Jobsure Automation</div>
+    <div class="logo">
+      <a href="index.html">
+        <img src="logo.JPG" alt="Jobsure Automation Training" style="height:50px;">
+      </a>
+    </div>
     <nav>
       <a href="index.html">Home</a>
       <a href="daily.html">Daily Activity</a>
       <a href="about.html">About</a>
       <a href="courses.html">Courses</a>
       <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
+
+      <div class="dropdown">
+        <a class="dropbtn" onclick="toggleDropdown()">Login</a>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="admin-login.html">Admin Login</a>
+          <a href="student-login.html">Student Login</a>
+        </div>
+      </div>
     </nav>
   </header>
 
-  <div class="content">
-    <h2>Daily Activity (Admin Data)</h2>
-    <ul>
-      <li>Student A uploaded CV</li>
-      <li>Student B completed Module 3</li>
-      <li>New batch started on 12th September 2025</li>
-    </ul>
+  <!-- PAGE HEADING -->
+  <div class="container">
+    <h2>📝 Daily Activity Dashboard</h2>
+
+    <!-- Coupons Section -->
+    <h3>Coupons</h3>
+    <div id="dailyCoupons" class="card-grid">
+      <!-- Admin data येईल -->
+    </div>
+
+    <!-- Placed Students Section -->
+    <h3>Placed Students</h3>
+    <div id="dailyPlaced" class="card-grid">
+      <!-- Admin data येईल -->
+    </div>
+
+    <!-- Today’s Session Section -->
+    <h3>Today's Session</h3>
+    <div id="dailySessions" class="card-grid">
+      <!-- Admin data येईल -->
+    </div>
+
+    <!-- Ratings Section -->
+    <h3>Ratings</h3>
+    <div id="dailyRatings" class="card-grid">
+      <!-- Admin data येईल -->
+    </div>
   </div>
 
+  <!-- FOOTER -->
   <footer>
-    &copy; 2025 Jobsure Automation
+    © 2025 Jobsure Automation Training — All rights reserved.<br/>
+    Contact: 7498282599 • help.jobsure@hotmail.com
   </footer>
+
+<script>
+function toggleDropdown() {
+  var dropdown = document.getElementById('myDropdown');
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    document.getElementById('myDropdown').style.display = "none";
+  }
+}
+</script>
+
+<!-- Firebase Config (future data load from admin panel) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-app.js";
+  import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.7.2/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
+    authDomain: "jobsure-115fa.firebaseapp.com",
+    projectId: "jobsure-115fa",
+    storageBucket: "jobsure-115fa.firebasestorage.app",
+    messagingSenderId: "575119834568",
+    appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd",
+    measurementId: "G-6KTNMMZHG9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  // Generic function to load section data
+  async function loadSection(collectionName, containerId) {
+    const container = document.getElementById(containerId);
+    const snapshot = await getDocs(collection(db, collectionName));
+    if (snapshot.empty) {
+      container.innerHTML = "<p style='color:gray;'>No data available</p>";
+      return;
+    }
+    snapshot.forEach(doc => {
+      const data = doc.data();
+      container.innerHTML += `
+        <div class="card">
+          ${data.imageUrl ? `<img src="${data.imageUrl}" alt="${data.title}">` : ""}
+          <h4>${data.title || "Untitled"}</h4>
+          <p>${data.description || ""}</p>
+        </div>`;
+    });
+  }
+
+  // Load all sections (data only if admin ने add केले असेल)
+  loadSection("coupons", "dailyCoupons");
+  loadSection("placedStudents", "dailyPlaced");
+  loadSection("sessions", "dailySessions");
+  loadSection("ratings", "dailyRatings");
+</script>
 
 </body>
 </html>
