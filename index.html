@@ -28,10 +28,17 @@
       font-size: 1.5em;
       font-weight: bold;
     }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+    }
     nav a {
       color: white;
       text-decoration: none;
       margin-left: 15px;
+      cursor: pointer;
     }
     nav a:hover {
       text-decoration: underline;
@@ -148,19 +155,52 @@
       color: #004080;
       margin-top: 20px;
     }
+
+    /* Dropdown styling */
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #004080;
+      border-radius: 4px;
+      flex-direction: column;
+      min-width: 150px;
+      z-index: 1000;
+    }
+    .dropdown-content a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #0066cc;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <div class="logo">Jobsure Automation Training </div>
+    <div class="logo">Jobsure Automation Training</div>
     <nav>
       <a href="index.html">Home</a>
       <a href="daily.html">Daily Activity</a>
       <a href="about.html">About</a>
       <a href="courses.html">Courses</a>
       <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
+
+      <!-- Login Dropdown -->
+      <div class="dropdown">
+        <a class="dropbtn" onclick="toggleDropdown()">Login</a>
+        <div id="myDropdown" class="dropdown-content">
+          <a href="admin-login.html">Admin Login</a>
+          <a href="student-login.html">Student Login</a>
+        </div>
+      </div>
     </nav>
   </header>
 
@@ -244,6 +284,20 @@
     © 2025 Jobsure Automation Training — All rights reserved.<br/>
     Contact: 7498282599 • help.jobsure@hotmail.com
   </footer>
+
+<script>
+function toggleDropdown() {
+  var dropdown = document.getElementById('myDropdown');
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+
+// Hide dropdown if click outside
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    document.getElementById('myDropdown').style.display = "none";
+  }
+}
+</script>
 
 </body>
 </html>
