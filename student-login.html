@@ -1,113 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Student Login - Jobsure</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Portal - Jobsure Automation Training</title>
   <style>
-    body { 
-      font-family: Arial, sans-serif; 
-      background:#f4f6f9; 
-      display:flex; 
-      justify-content:center; 
-      align-items:center; 
-      height:100vh; 
-      margin:0; 
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
     }
-    .login-box { 
-      background:#fff; 
-      padding:30px; 
-      border-radius:8px; 
-      box-shadow:0 4px 10px rgba(0,0,0,0.1); 
-      width:350px; 
-      text-align:center; 
+    .container-box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
     }
-    h2 { margin-bottom:20px; color:#004080; }
-    input { width:100%; padding:10px; margin:8px 0; border:1px solid #ccc; border-radius:5px; }
-    button { width:100%; padding:12px; background:#004080; color:white; border:none; border-radius:5px; font-size:16px; cursor:pointer; }
-    button:hover { background:#0066cc; }
-    .links { margin-top:15px; font-size:14px; }
-    .links a { color:#004080; text-decoration:none; margin:0 5px; }
-    .showpass { 
-      text-align:left; 
-      font-size:13px; 
-      margin-top:-5px; 
-      margin-bottom:10px; 
+    img.avatar {
+      width: 90px;
+      border-radius: 50%;
+      margin-bottom: 10px;
     }
-    .showpass label {
-      cursor:pointer;
+    h1 {
+      color: #004080;
+      margin-bottom: 20px;
     }
+    input[type=text], input[type=password], input[type=email] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .showpass {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 0.9em;
+      margin-bottom: 12px;
+      color: #333;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button:hover { background-color: #0066cc; }
+    .small-text {
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    #message { margin-top: 10px; font-size: 0.9em; }
   </style>
 </head>
 <body>
 
-  <div class="login-box">
-    <h2>Student Login</h2>
-    <input type="email" id="email" placeholder="Enter Email" required />
-    
-    <input type="password" id="password" placeholder="Enter Password" required />
-    <!-- ⬇ Checkbox directly below password input -->
-    <div class="showpass">
-      <label><input type="checkbox" onclick="togglePass()"> Show Password</label>
-    </div>
+<div class="container-box">
+  <h1>Student Portal</h1>
+  <img src="avatar.png" alt="Avatar" class="avatar">
 
-    <button onclick="login()">Login</button>
-    <div class="links">
-      <a href="#" onclick="signup()">Sign Up</a> | 
-      <a href="#" onclick="forgotPassword()">Forgot Password?</a>
-    </div>
-    <p id="message" style="color:red;"></p>
+  <!-- EMAIL -->
+  <input type="email" placeholder="Enter Email" id="email" required>
+
+  <!-- PASSWORD -->
+  <input type="password" placeholder="Enter Password" id="password" required>
+  <div class="showpass">
+    <input type="checkbox" onclick="togglePass()" id="showPassBox">
+    <label for="showPassBox">&nbsp;Show Password</label>
   </div>
 
-  <!-- Firebase -->
-  <script type="module">
-    import { auth, db } from "./firebase.js";
-    import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendPasswordResetEmail } 
-      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+  <!-- LOGIN -->
+  <button onclick="login()">Login</button>
 
-    // Login
-    window.login = function(){
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const message = document.getElementById("message");
+  <!-- SIGNUP -->
+  <button onclick="signup()">Sign Up</button>
 
-      signInWithEmailAndPassword(auth, email, password)
-        .then(() => window.location.href="student.html")
-        .catch(err => message.textContent = "❌ "+err.message);
-    };
+  <!-- REMEMBER + FORGOT -->
+  <label style="display:block;margin-top:5px;">
+    <input type="checkbox" checked="checked"> Remember me
+  </label>
+  <p class="small-text"><a href="#" onclick="resetPassword()">Forgot password?</a></p>
 
-    // Signup
-    window.signup = function(){
-      const email = document.getElementById("email").value;
-      const password = document.getElementById("password").value;
-      const message = document.getElementById("message");
+  <p id="message"></p>
+</div>
 
-      createUserWithEmailAndPassword(auth, email, password)
-        .then(async userCred=>{
-          await setDoc(doc(db,"students",userCred.user.uid), { email: email });
-          message.style.color="green";
-          message.textContent="✔ Account Created! Now Login.";
-        })
-        .catch(err => message.textContent = "❌ "+err.message);
-    };
+<!-- Firebase Script -->
+<script type="module">
+  import { auth } from "./firebase.js";
+  import { 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    sendPasswordResetEmail 
+  } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
 
-    // Forgot Password
-    window.forgotPassword = function(){
-      const email = document.getElementById("email").value;
-      const message = document.getElementById("message");
-      if(!email){ message.textContent="⚠ Enter your email first."; return; }
-      sendPasswordResetEmail(auth, email)
-        .then(()=>{ message.style.color="green"; message.textContent="✔ Reset link sent to email."; })
-        .catch(err => message.textContent="❌ "+err.message);
-    };
-  </script>
+  const msg = document.getElementById('message');
+  const emailInput = document.getElementById('email');
+  const passInput = document.getElementById('password');
 
-  <script>
-    function togglePass(){
-      const p=document.getElementById("password");
-      p.type = (p.type==="password")?"text":"password";
+  // LOGIN FUNCTION
+  window.login = async function() {
+    try {
+      await signInWithEmailAndPassword(auth, emailInput.value, passInput.value);
+      msg.style.color = "green";
+      msg.textContent = "✅ Login Successful!";
+      setTimeout(()=> window.location.href = "student.html", 1000);
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = "❌ " + error.message;
     }
-  </script>
+  }
+
+  // SIGNUP FUNCTION
+  window.signup = async function() {
+    try {
+      await createUserWithEmailAndPassword(auth, emailInput.value, passInput.value);
+      msg.style.color = "green";
+      msg.textContent = "✅ Account Created Successfully! Please Login.";
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = "❌ " + error.message;
+    }
+  }
+
+  // RESET PASSWORD FUNCTION
+  window.resetPassword = async function() {
+    if (!emailInput.value) {
+      msg.style.color = "red";
+      msg.textContent = "⚠ Please enter your email above.";
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, emailInput.value);
+      msg.style.color = "green";
+      msg.textContent = "✔ Password reset email sent!";
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = "❌ " + error.message;
+    }
+  }
+
+  // SHOW/HIDE PASSWORD
+  window.togglePass = function() {
+    passInput.type = (passInput.type === "password") ? "text" : "password";
+  }
+</script>
 
 </body>
 </html>

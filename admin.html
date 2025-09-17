@@ -1,281 +1,233 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard - Jobsure</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Jobsure Automation Training</title>
   <style>
-    body { font-family: Arial, sans-serif; background:#f4f6f9; margin:0; padding:20px; }
-    h1 { text-align:center; color:#004080; }
-    h2 { margin-top:30px; color:#333; }
-    table { width:100%; border-collapse:collapse; margin-top:15px; }
-    th, td { border:1px solid #ddd; padding:8px; text-align:left; font-size:14px; }
-    th { background:#004080; color:#fff; }
-    button { margin:5px; padding:6px 12px; border:none; border-radius:4px; cursor:pointer; }
-    .btn-primary { background:#004080; color:#fff; }
-    .btn-danger { background:#d9534f; color:#fff; }
-    .btn-success { background:#28a745; color:#fff; }
-    .card-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:15px; margin-top:15px; }
-    .card { background:#fff; border-radius:8px; padding:15px; box-shadow:0 2px 5px rgba(0,0,0,0.1); }
-    input, select { width:100%; margin:5px 0; padding:8px; border:1px solid #ccc; border-radius:5px; }
+    body {font-family: Arial, sans-serif; margin:0; padding:20px; background:#f4f6f9;}
+    h1,h2 {color:#004080; text-align:center;}
+    form {background:#fff; padding:15px; margin:15px auto; max-width:600px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    label{display:block; margin-top:10px; font-weight:bold;}
+    input,select{width:100%; padding:8px; margin-top:5px; border:1px solid #ccc; border-radius:5px;}
+    button{margin-top:10px; padding:10px 15px; border:none; border-radius:5px; cursor:pointer;}
+    .btn-primary{background:#004080; color:white;}
+    .btn-danger{background:#d9534f; color:white;}
+    .card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:15px; margin:20px 0;}
+    .card{background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    .card img{max-width:100%; border-radius:6px;}
+    table{width:100%; border-collapse:collapse; margin-top:20px;}
+    th,td{border:1px solid #ccc; padding:8px; text-align:left;}
   </style>
 </head>
 <body>
   <h1>Admin Dashboard</h1>
 
-  <!-- ================== Student Registrations ================== -->
-  <h2>Student Registrations</h2>
-  <form id="studentForm">
-    <input id="sName" placeholder="Name of Student *" required>
+  <!-- ================= Students Data ================= -->
+  <h2>Students Data</h2>
+  <div id="studentsTable"></div>
+  <button class="btn-primary" onclick="exportCSV()">⬇ Export CSV</button>
 
-    <label>Qualification *</label>
-    <select id="sQual" required>
-      <option value="">Select</option>
-      <option>BE/B.Tech</option>
-      <option>Diploma</option>
-    </select>
-
-    <label>Branch *</label>
-    <select id="sBranch" required>
-      <option value="">Select</option>
-      <option>Electrical</option>
-      <option>E&TC</option>
-      <option>Electronics</option>
-      <option>Instrumentation</option>
-      <option>Other</option>
-    </select>
-
-    <input id="sCollege" placeholder="College Name *" required>
-    <input id="sEmail" type="email" placeholder="Email ID *" required>
-    <input id="sMobile" placeholder="Mobile Number *" required>
-    <input id="sAltMobile" placeholder="Alternative Mobile Number">
-
-    <label>Select Course *</label>
-    <select id="sCourse" required>
-      <option value="">Select</option>
-      <option>DCS</option>
-      <option>PLC</option>
-      <option>SCADA</option>
-      <option>HMI</option>
-      <option>AutoCAD Electrical</option>
-      <option>Other</option>
-    </select>
-
-    <label>Photo *</label>
-    <input type="file" id="sPhoto" accept="image/*" required>
-
-    <label>Upload your CV/Resume *</label>
-    <input type="file" id="sCV" accept=".pdf,.doc,.docx" required>
-
-    <button class="btn-primary" type="submit">Add Student</button>
+  <!-- ================= Invoice ================= -->
+  <h2>Generate Invoice</h2>
+  <form id="invoiceForm">
+    <label>Student Name</label><input id="invName" required>
+    <label>Course</label><input id="invCourse" required>
+    <label>Duration</label><input id="invDuration" required>
+    <label>Course Fee (INR)</label><input id="invFee" required>
+    <button class="btn-primary" type="submit">Generate Invoice</button>
   </form>
+  <iframe id="invoiceFrame" style="width:100%; height:400px; border:1px solid #ccc;"></iframe>
 
-  <button class="btn-success" onclick="exportCSV()">⬇ Export CSV</button>
-
-  <table id="studentsTable">
-    <thead>
-      <tr>
-        <th>Name</th><th>Qualification</th><th>Branch</th><th>College</th>
-        <th>Email</th><th>Mobile</th><th>Alt Mobile</th><th>Course</th>
-        <th>Photo</th><th>CV</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-
-  <!-- ================== Coupons ================== -->
+  <!-- ================= Coupons ================= -->
   <h2>Coupons</h2>
   <form id="couponForm">
-    <input id="cTitle" placeholder="Title" required>
-    <input id="cCode" placeholder="Code" required>
-    <input id="cDesc" placeholder="Description">
+    <label>Title</label><input id="cTitle" required>
+    <label>Description</label><input id="cDesc">
     <button class="btn-primary" type="submit">Add Coupon</button>
   </form>
-  <div id="couponsList" class="card-grid"></div>
+  <div id="couponList" class="card-grid"></div>
 
-  <!-- ================== Placed Students ================== -->
+  <!-- ================= Placed Students ================= -->
   <h2>Placed Students</h2>
   <form id="placedForm">
-    <input id="pName" placeholder="Name" required>
-    <input id="pDesignation" placeholder="Designation">
-    <input id="pPackage" placeholder="Package">
-    <input id="pPhoto" placeholder="Photo URL">
+    <label>Name</label><input id="pName" required>
+    <label>Designation</label><input id="pDesignation">
+    <label>Package</label><input id="pPackage">
+    <label>Photo *</label><input type="file" id="pPhoto" accept="image/*" required>
     <button class="btn-primary" type="submit">Add Student</button>
   </form>
   <div id="placedList" class="card-grid"></div>
 
-  <!-- ================== Today’s Sessions ================== -->
+  <!-- ================= Today’s Sessions ================= -->
   <h2>Today’s Sessions</h2>
   <form id="sessionForm">
-    <input id="sTitle" placeholder="Title" required>
-    <input id="sDate" placeholder="Date" required>
-    <input id="sPhotoUrl" placeholder="Photo URL">
+    <label>Title</label><input id="sTitle" required>
+    <label>Date</label><input id="sDate" type="date" required>
+    <label>Photo *</label><input type="file" id="sPhoto" accept="image/*" required>
     <button class="btn-primary" type="submit">Add Session</button>
   </form>
   <div id="sessionsList" class="card-grid"></div>
 
-  <!-- ================== Ratings ================== -->
+  <!-- ================= Ratings ================= -->
   <h2>Ratings</h2>
   <form id="ratingForm">
-    <input id="rName" placeholder="Reviewer" required>
-    <input id="rScore" placeholder="Score (1-5)" type="number" min="1" max="5" required>
+    <label>Student Name</label><input id="rName" required>
+    <label>Feedback</label><input id="rFeedback" required>
     <button class="btn-primary" type="submit">Add Rating</button>
   </form>
-  <div id="ratingsList" class="card-grid"></div>
+  <div id="ratingList" class="card-grid"></div>
 
-  <!-- ================== Firebase + Logic ================== -->
-  <script type="module">
-    import { db, storage } from "./firebase.js";
-    import { collection, addDoc, getDocs, deleteDoc, doc } 
-      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
-    import { ref, uploadBytes, getDownloadURL } 
-      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
 
-    // ===== Add Student =====
-    studentForm.addEventListener("submit", async e => {
-      e.preventDefault();
-      const photoFile = document.getElementById("sPhoto").files[0];
-      const cvFile = document.getElementById("sCV").files[0];
+  const firebaseConfig = {
+    apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
+    authDomain: "jobsure-115fa.firebaseapp.com",
+    projectId: "jobsure-115fa",
+    storageBucket: "jobsure-115fa.appspot.com",
+    messagingSenderId: "575119834568",
+    appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd",
+    measurementId: "G-6KTNMMZHG9"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
 
-      if (!photoFile || !cvFile) { alert("Please upload required files."); return; }
-
-      const photoRef = ref(storage, "students/photos/" + Date.now() + "_" + photoFile.name);
-      await uploadBytes(photoRef, photoFile);
-      const photoURL = await getDownloadURL(photoRef);
-
-      const cvRef = ref(storage, "students/cv/" + Date.now() + "_" + cvFile.name);
-      await uploadBytes(cvRef, cvFile);
-      const cvURL = await getDownloadURL(cvRef);
-
-      await addDoc(collection(db, "students"), {
-        name: sName.value, qual: sQual.value, branch: sBranch.value,
-        college: sCollege.value, email: sEmail.value, mobile: sMobile.value,
-        altMobile: sAltMobile.value, course: sCourse.value,
-        photo: photoURL, cv: cvURL
-      });
-
-      alert("✅ Student Added Successfully!");
-      studentForm.reset(); loadStudents();
+  // ============ Students Table ============
+  async function loadStudents(){
+    const snap = await getDocs(collection(db,"students"));
+    let html="<table><tr><th>Name</th><th>Email</th><th>Course</th><th>Mobile</th><th>Fee</th></tr>";
+    snap.forEach(d=>{
+      const s=d.data();
+      html+=`<tr><td>${s.name}</td><td>${s.email}</td><td>${s.course}</td><td>${s.mobile}</td><td>${s.fee||''}</td></tr>`;
     });
+    html+="</table>";
+    document.getElementById("studentsTable").innerHTML=html;
+  }
+  loadStudents();
 
-    // ===== Load Students =====
-    async function loadStudents() {
-      const snap = await getDocs(collection(db, "students"));
-      const tbody = document.querySelector("#studentsTable tbody");
-      tbody.innerHTML = "";
-      snap.forEach(d => {
-        const s = d.data();
-        tbody.innerHTML += `
-          <tr>
-            <td>${s.name||""}</td><td>${s.qual||""}</td><td>${s.branch||""}</td>
-            <td>${s.college||""}</td><td>${s.email||""}</td><td>${s.mobile||""}</td>
-            <td>${s.altMobile||""}</td><td>${s.course||""}</td>
-            <td>${s.photo ? `<a href="${s.photo}" target="_blank">📷 View</a>` : ""}</td>
-            <td>${s.cv ? `<a href="${s.cv}" target="_blank">📄 View</a>` : ""}</td>
-          </tr>`;
-      });
-    }
-    loadStudents();
-
-    // ===== Export CSV =====
-    window.exportCSV = function(){
-      let rows = [];
-      document.querySelectorAll("#studentsTable tr").forEach(tr=>{
-        let row=[]; tr.querySelectorAll("th,td").forEach(td=>row.push(td.innerText));
-        rows.push(row.join(","));
-      });
-      const blob = new Blob([rows.join("\n")], {type:"text/csv"});
-      const a=document.createElement("a");
-      a.href=URL.createObjectURL(blob); a.download="students.csv"; a.click();
-    };
-
-    // ===== Coupons CRUD =====
-    couponForm.addEventListener("submit",async e=>{
-      e.preventDefault();
-      await addDoc(collection(db,"coupons"),{
-        title:cTitle.value, code:cCode.value, desc:cDesc.value
-      });
-      couponForm.reset(); loadCoupons();
+  // Export CSV
+  window.exportCSV=async()=>{
+    const snap=await getDocs(collection(db,"students"));
+    let csv="Name,Email,Course,Mobile,Fee\n";
+    snap.forEach(d=>{
+      const s=d.data();
+      csv+=`${s.name},${s.email},${s.course},${s.mobile},${s.fee||''}\n`;
     });
-    async function loadCoupons(){
-      const snap=await getDocs(collection(db,"coupons"));
-      const list=document.getElementById("couponsList"); list.innerHTML="";
-      snap.forEach(d=>{
-        const c=d.data();
-        list.innerHTML+=`<div class="card">
-          <h4>${c.title}</h4><p>${c.desc||""}</p><b>${c.code}</b>
-          <button class="btn-danger" onclick="delCoupon('${d.id}')">Delete</button>
-        </div>`;
-      });
-    }
-    window.delCoupon=async id=>{ await deleteDoc(doc(db,"coupons",id)); loadCoupons(); };
-    loadCoupons();
+    const blob=new Blob([csv],{type:"text/csv"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download="students.csv"; a.click();
+  };
 
-    // ===== Placed Students =====
-    placedForm.addEventListener("submit",async e=>{
-      e.preventDefault();
-      await addDoc(collection(db,"placedStudents"),{
-        name:pName.value, designation:pDesignation.value,
-        package:pPackage.value, photo:pPhoto.value
-      });
-      placedForm.reset(); loadPlaced();
-    });
-    async function loadPlaced(){
-      const snap=await getDocs(collection(db,"placedStudents"));
-      const list=document.getElementById("placedList"); list.innerHTML="";
-      snap.forEach(d=>{
-        const p=d.data();
-        list.innerHTML+=`<div class="card">
-          <img src="${p.photo||''}" alt="">
-          <h4>${p.name}</h4><p>${p.designation}</p><b>${p.package}</b>
-          <button class="btn-danger" onclick="delPlaced('${d.id}')">Delete</button>
-        </div>`;
-      });
-    }
-    window.delPlaced=async id=>{ await deleteDoc(doc(db,"placedStudents",id)); loadPlaced(); };
-    loadPlaced();
+  // ============ Invoice ============
+  invoiceForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    const invHTML=`
+      <h2>INVOICE</h2>
+      <p><b>Invoice No:</b> INV-${Date.now()}</p>
+      <p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
+      <h3>Jobsure Automation Training</h3>
+      <p>Pune, Maharashtra - 411002<br>
+      Email: help.jobsure@hotmail.com | Ph: +91-7420836331</p>
+      <h4>Bill To:</h4>
+      <p>${invName.value}<br>Course: ${invCourse.value}<br>Duration: ${invDuration.value}</p>
+      <table style="width:100%;border-collapse:collapse;" border="1">
+        <tr><th>Description</th><th>Amount (INR)</th></tr>
+        <tr><td>${invCourse.value} - ${invDuration.value}</td><td>${invFee.value}</td></tr>
+        <tr><td><b>Total</b></td><td><b>${invFee.value}</b></td></tr>
+      </table>
+      <p>Note: This invoice confirms the enrollment for training course at Jobsure Automation Training.</p>
+      <p><b>Authorized Signatory</b><br>Ashwini H, Director</p>`;
+    invoiceFrame.srcdoc=invHTML;
+  });
 
-    // ===== Sessions =====
-    sessionForm.addEventListener("submit",async e=>{
-      e.preventDefault();
-      await addDoc(collection(db,"sessions"),{
-        title:sTitle.value, date:sDate.value, photo:sPhotoUrl.value
-      });
-      sessionForm.reset(); loadSessions();
+  // ============ Coupons ============
+  couponForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    await addDoc(collection(db,"coupons"),{title:cTitle.value,description:cDesc.value});
+    couponForm.reset(); loadCoupons();
+  });
+  async function loadCoupons(){
+    const snap=await getDocs(collection(db,"coupons"));
+    couponList.innerHTML="";
+    snap.forEach(d=>{
+      const c=d.data();
+      couponList.innerHTML+=`<div class="card"><h4>${c.title}</h4><p>${c.description}</p>
+        <button class="btn-danger" onclick="delCoupon('${d.id}')">Delete</button></div>`;
     });
-    async function loadSessions(){
-      const snap=await getDocs(collection(db,"sessions"));
-      const list=document.getElementById("sessionsList"); list.innerHTML="";
-      snap.forEach(d=>{
-        const s=d.data();
-        list.innerHTML+=`<div class="card">
-          <img src="${s.photo||''}" alt="">
-          <h4>${s.title}</h4><p>${s.date}</p>
-          <button class="btn-danger" onclick="delSession('${d.id}')">Delete</button>
-        </div>`;
-      });
-    }
-    window.delSession=async id=>{ await deleteDoc(doc(db,"sessions",id)); loadSessions(); };
-    loadSessions();
+  }
+  window.delCoupon=async id=>{await deleteDoc(doc(db,"coupons",id)); loadCoupons();};
+  loadCoupons();
 
-    // ===== Ratings =====
-    ratingForm.addEventListener("submit",async e=>{
-      e.preventDefault();
-      await addDoc(collection(db,"ratings"),{ name:rName.value, score:rScore.value });
-      ratingForm.reset(); loadRatings();
+  // ============ Placed Students ============
+  placedForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const file=pPhoto.files[0];
+    const fileRef=ref(storage,"placedStudents/"+Date.now()+"_"+file.name);
+    await uploadBytes(fileRef,file);
+    const url=await getDownloadURL(fileRef);
+    await addDoc(collection(db,"placedStudents"),{
+      name:pName.value,designation:pDesignation.value,package:pPackage.value,photo:url
     });
-    async function loadRatings(){
-      const snap=await getDocs(collection(db,"ratings"));
-      const list=document.getElementById("ratingsList"); list.innerHTML="";
-      snap.forEach(d=>{
-        const r=d.data();
-        list.innerHTML+=`<div class="card">
-          <h4>${r.name}</h4><p>${"★".repeat(r.score)}</p>
-          <button class="btn-danger" onclick="delRating('${d.id}')">Delete</button>
-        </div>`;
-      });
-    }
-    window.delRating=async id=>{ await deleteDoc(doc(db,"ratings",id)); loadRatings(); };
-    loadRatings();
-  </script>
+    placedForm.reset(); loadPlaced();
+  });
+  async function loadPlaced(){
+    const snap=await getDocs(collection(db,"placedStudents"));
+    placedList.innerHTML="";
+    snap.forEach(d=>{
+      const p=d.data();
+      placedList.innerHTML+=`<div class="card"><img src="${p.photo}" style="width:100px">
+        <h4>${p.name}</h4><p>${p.designation}</p><b>${p.package}</b>
+        <button class="btn-danger" onclick="delPlaced('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delPlaced=async id=>{await deleteDoc(doc(db,"placedStudents",id)); loadPlaced();};
+  loadPlaced();
+
+  // ============ Sessions ============
+  sessionForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const file=sPhoto.files[0];
+    const fileRef=ref(storage,"sessions/"+Date.now()+"_"+file.name);
+    await uploadBytes(fileRef,file);
+    const url=await getDownloadURL(fileRef);
+    await addDoc(collection(db,"sessions"),{title:sTitle.value,date:sDate.value,photo:url});
+    sessionForm.reset(); loadSessions();
+  });
+  async function loadSessions(){
+    const snap=await getDocs(collection(db,"sessions"));
+    sessionsList.innerHTML="";
+    snap.forEach(d=>{
+      const s=d.data();
+      sessionsList.innerHTML+=`<div class="card"><img src="${s.photo}" style="width:100px">
+        <h4>${s.title}</h4><p>${s.date}</p>
+        <button class="btn-danger" onclick="delSession('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delSession=async id=>{await deleteDoc(doc(db,"sessions",id)); loadSessions();};
+  loadSessions();
+
+  // ============ Ratings ============
+  ratingForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    await addDoc(collection(db,"ratings"),{name:rName.value,feedback:rFeedback.value});
+    ratingForm.reset(); loadRatings();
+  });
+  async function loadRatings(){
+    const snap=await getDocs(collection(db,"ratings"));
+    ratingList.innerHTML="";
+    snap.forEach(d=>{
+      const r=d.data();
+      ratingList.innerHTML+=`<div class="card"><h4>${r.name}</h4><p>${r.feedback}</p>
+        <button class="btn-danger" onclick="delRating('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delRating=async id=>{await deleteDoc(doc(db,"ratings",id)); loadRatings();};
+  loadRatings();
+</script>
 </body>
 </html>
