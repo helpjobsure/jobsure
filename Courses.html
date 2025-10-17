@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Services - Jobsure Automation</title>
+  <title>Courses - Jobsure Automation Training</title>
   <style>
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -11,9 +11,10 @@
       padding: 0;
       background-color: #f7faf7;
       color: #333;
+      line-height: 1.6;
     }
 
-    /* HEADER (same as index.html) */
+    /* HEADER */
     header {
       background-color: #004080;
       color: white;
@@ -46,6 +47,7 @@
       align-items: center;
       gap: 15px;
       position: relative;
+      flex-wrap: wrap;
     }
     nav a {
       color: white;
@@ -79,6 +81,22 @@
       background-color: #0066cc;
     }
 
+    /* HERO SECTION */
+    .hero {
+      background: linear-gradient(135deg, #004080, #0073e6);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
     /* COURSES SECTION */
     .services-section {
       max-width: 1200px;
@@ -91,49 +109,64 @@
       text-transform: uppercase;
       font-weight: bold;
       letter-spacing: 1px;
+      margin-bottom: 5px;
     }
     .services-section h2 {
       font-size: 2em;
-      margin: 10px 0 40px 0;
+      margin: 0 0 40px 0;
     }
     .grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      gap: 25px;
     }
     .card {
       background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      border-radius: 15px;
       overflow: hidden;
       text-align: left;
-      transition: transform 0.3s, box-shadow 0.3s;
-    }
-    .card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
     }
     .card img {
       width: 100%;
-      height: 150px;
+      height: 180px;
       object-fit: cover;
+      transition: transform 0.3s ease-in-out;
     }
     .card-content {
-      padding: 15px;
+      padding: 20px;
     }
     .card-content h4 {
       margin: 0 0 10px 0;
+      color: #004080;
+      font-size: 1.2em;
     }
     .card-content p {
       font-size: 0.95em;
       color: #555;
     }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .card:hover img {
+      transform: scale(1.1);
+    }
+
+    /* FOOTER */
     footer {
       text-align: center;
-      padding: 20px;
+      padding: 25px;
       background: #222;
       color: #ddd;
       margin-top: 50px;
+    }
+
+    @media (max-width: 768px) {
+      .logo-container img { width:40px; height:40px; }
+      .logo-container span { font-size:1em; }
     }
   </style>
 </head>
@@ -142,7 +175,7 @@
 <header>
   <div class="logo-container">
     <a href="index.html">
-      <img src="logo.JPG" alt="Logo">
+      <img src="logo.jpg" alt="Logo">
     </a>
     <span>Jobsure Automation Training</span>
   </div>
@@ -150,7 +183,7 @@
   <nav>
     <a href="index.html">Home</a>
     <a href="about.html">About</a>
-    <a href="courses.html" style="text-decoration:underline;">Services</a>
+    <a href="courses.html" style="text-decoration:underline;">Courses</a>
     <a href="contact.html">Contact</a>
 
     <div class="dropdown">
@@ -163,6 +196,13 @@
   </nav>
 </header>
 
+<!-- HERO -->
+<section class="hero">
+  <h1>Our Courses & Training Programs</h1>
+  <p>Hands-on Industrial Automation Training — DCS, PLC, SCADA, HMI, AutoCAD Electrical</p>
+</section>
+
+<!-- COURSES SECTION -->
 <section class="services-section">
   <h3>Expert Automation Training</h3>
   <h2>Unlock your potential in automation</h2>
@@ -171,23 +211,23 @@
     <div class="card">
       <img src="service1.jpg" alt="DCS training">
       <div class="card-content">
-        <h4>DCS training &gt;</h4>
-        <p>Comprehensive training on Distributed Control Systems.</p>
+        <h4>DCS Training &gt;</h4>
+        <p>Comprehensive training on Distributed Control Systems with practical projects.</p>
       </div>
     </div>
 
     <div class="card">
       <img src="service2.jpg" alt="SCADA training">
       <div class="card-content">
-        <h4>SCADA training &gt;</h4>
-        <p>Expert training on SCADA systems for aspiring professionals.</p>
+        <h4>SCADA Training &gt;</h4>
+        <p>Expert training on Supervisory Control and Data Acquisition systems.</p>
       </div>
     </div>
 
     <div class="card">
       <img src="service3.jpg" alt="HMI training">
       <div class="card-content">
-        <h4>HMI training &gt;</h4>
+        <h4>HMI Training &gt;</h4>
         <p>Hands-on experience with Human-Machine Interface systems.</p>
       </div>
     </div>
@@ -195,16 +235,16 @@
     <div class="card">
       <img src="service4.jpg" alt="AutoCAD training">
       <div class="card-content">
-        <h4>AutoCAD electrical training &gt;</h4>
-        <p>Master AutoCAD Electrical for industrial applications.</p>
+        <h4>AutoCAD Electrical &gt;</h4>
+        <p>Master AutoCAD Electrical for industrial electrical design.</p>
       </div>
     </div>
 
     <div class="card">
       <img src="service5.jpg" alt="Internship">
       <div class="card-content">
-        <h4>Internship certification &gt;</h4>
-        <p>Guaranteed internship certificates and placement support.</p>
+        <h4>Internship & Certification &gt;</h4>
+        <p>Guaranteed internship certificates and placement support after training.</p>
       </div>
     </div>
 
@@ -212,7 +252,8 @@
 </section>
 
 <footer>
-  &copy; 2025 Jobsure Automation Training. All rights reserved.
+  &copy; 2025 Jobsure Automation Training. All rights reserved.<br/>
+  Contact: 7498282599 • help.jobsure@hotmail.com
 </footer>
 
 <script>
