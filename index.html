@@ -135,21 +135,33 @@
       overflow: hidden;
       text-align: center;
       transition: transform 0.3s, box-shadow 0.3s;
-      padding: 20px;
+      padding: 0;
     }
     .card:hover {
       transform: translateY(-5px);
       box-shadow: 0 4px 12px rgba(0,0,0,0.2);
     }
-    .card h3 {
-      color: #004080;
-      margin-bottom: 10px;
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
     }
-    .card .position {
+    .card-content {
+      padding: 15px;
+    }
+    .card-content h4 {
+      color: #004080;
+      margin-bottom: 5px;
+    }
+    .card-content p.position {
       font-weight: bold;
       color: #28a745;
       margin-bottom: 10px;
       font-size: 0.95em;
+    }
+    .card-content p {
+      font-size: 0.95em;
+      color: #333;
     }
 
     /* FAQ */
@@ -214,7 +226,6 @@
 
   <nav>
     <a href="index.html">Home</a>
-    <a href="daily.html">Daily Activity</a>
     <a href="about.html">About</a>
     <a href="courses.html">Courses</a>
     <a href="contact.html">Contact</a>
@@ -253,27 +264,117 @@
   <section>
     <h2>Placed Students</h2>
     <div class="grid">
-      <div class="card"><h3>PRATIK PATIL</h3><p class="position">AutoCAD Engineer — 3 LPA package</p></div>
-      <div class="card"><h3>ANUJA M</h3><p class="position">DCS Software Engineer — 4.25 LPA package</p></div>
-      <div class="card"><h3>ROHIT KADAM</h3><p class="position">Project Engineer — 2.75 LPA package</p></div>
-      <div class="card"><h3>AMOL HANBAR</h3><p class="position">Design Engineer — 3.75 LPA package</p></div>
-      <div class="card"><h3>VIDHYA S</h3><p class="position">HMI Engineer — 2.75 LPA package</p></div>
-      <div class="card"><h3>MRUNAL D</h3><p class="position">HMI Engineer — 3.75 LPA package</p></div>
-      <div class="card"><h3>BHAGYSHREE</h3><p class="position">DCS Hardware Engineer — 3.85 LPA package</p></div>
-      <div class="card"><h3>BHARTH SHIRSATH</h3><p class="position">GET — 2.75 LPA package</p></div>
+      <div class="card">
+        <img src="pratik.jpg" alt="Pratik Patil">
+        <div class="card-content">
+          <h4>PRATIK PATIL</h4>
+          <p class="position">AutoCAD Engineer — 3 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="anuja.jpg" alt="Anuja M">
+        <div class="card-content">
+          <h4>ANUJA M</h4>
+          <p class="position">DCS Software Engineer — 4.25 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="rohit.jpg" alt="Rohit Kadam">
+        <div class="card-content">
+          <h4>ROHIT KADAM</h4>
+          <p class="position">Project Engineer — 2.75 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="amol.jpg" alt="Amol Hanbar">
+        <div class="card-content">
+          <h4>AMOL HANBAR</h4>
+          <p class="position">Design Engineer — 3.75 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="vidhya.jpg" alt="Vidhya S">
+        <div class="card-content">
+          <h4>VIDHYA S</h4>
+          <p class="position">HMI Engineer — 2.75 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="mrunal.jpg" alt="Mrunal D">
+        <div class="card-content">
+          <h4>MRUNAL D</h4>
+          <p class="position">HMI Engineer — 3.75 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="bhagyashree.jpg" alt="Bhagyashree">
+        <div class="card-content">
+          <h4>BHAGYSHREE</h4>
+          <p class="position">DCS Hardware Engineer — 3.85 LPA package</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="bharath.jpg" alt="Bharath Shirsath">
+        <div class="card-content">
+          <h4>BHARTH SHIRSATH</h4>
+          <p class="position">GET — 2.75 LPA package</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- Organizers -->
   <section style="margin-top:50px;">
-    <h2>Organizers</h2>
+    <h2>Our Organizers</h2>
     <div class="grid">
-      <div class="card"><h3>PRASHANT H.</h3><p class="position">MD & Chairman</p><p>Supportive placement team — ensuring students get the best opportunities.</p></div>
-      <div class="card"><h3>ASHWINI H.</h3><p class="position">Director</p><p>Guiding the institute’s strategic growth and academic excellence.</p></div>
-      <div class="card"><h3>PRIYANKA H.</h3><p class="position">Head of Placement Team</p><p>Leading the placement efforts to connect students with top employers.</p></div>
-      <div class="card"><h3>BASAVARAJ H.</h3><p class="position">Vice President</p><p>Supporting operations and expanding training initiatives across regions.</p></div>
-      <div class="card"><h3>ARJUN K.</h3><p class="position">Head of Operations</p><p>Streamlining workflows to ensure smooth training and placement processes.</p></div>
-      <div class="card"><h3>VISHNU K.</h3><p class="position">Training and Labs Support</p><p>Providing great trainers and hands-on labs for practical learning experience.</p></div>
+      <div class="card">
+        <img src="prashant.jpg" alt="Prashant H.">
+        <div class="card-content">
+          <h4>PRASHANT H.</h4>
+          <p class="position">MD & Chairman</p>
+          <p>Supportive placement team — ensuring students get the best opportunities.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="ashwini.jpg" alt="Ashwini H.">
+        <div class="card-content">
+          <h4>ASHWINI H.</h4>
+          <p class="position">Director</p>
+          <p>Guiding the institute’s strategic growth and academic excellence.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="priyanka.jpg" alt="Priyanka H.">
+        <div class="card-content">
+          <h4>PRIYANKA H.</h4>
+          <p class="position">Head of Placement Team</p>
+          <p>Leading the placement efforts to connect students with top employers.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="basavaraj.jpg" alt="Basavaraj H.">
+        <div class="card-content">
+          <h4>BASAVARAJ H.</h4>
+          <p class="position">Vice President</p>
+          <p>Supporting operations and expanding training initiatives across regions.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="arjun.jpg" alt="Arjun K.">
+        <div class="card-content">
+          <h4>ARJUN K.</h4>
+          <p class="position">Head of Operations</p>
+          <p>Streamlining workflows to ensure smooth training and placement processes.</p>
+        </div>
+      </div>
+      <div class="card">
+        <img src="vishnu.jpg" alt="Vishnu K.">
+        <div class="card-content">
+          <h4>VISHNU K.</h4>
+          <p class="position">Training and Labs Support</p>
+          <p>Providing great trainers and hands-on labs for practical learning experience.</p>
+        </div>
+      </div>
     </div>
   </section>
 
