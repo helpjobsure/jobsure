@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Dashboard - Jobsure</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f6f9;padding:20px;}
+    .card{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+    img{width:100px;border-radius:50%;}
+    button{margin-top:10px;background:#d9534f;color:white;padding:10px;border:none;border-radius:5px;cursor:pointer;}
+  </style>
+</head>
+<body>
+  <div class="card" id="profile"></div>
+  <script type="module">
+    import { auth, db } from "./firebase.js";
+    import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    onAuthStateChanged(auth,async u=>{
+      if(!u) window.location.href="student-login.html";
+      else {
+        const snap=await getDoc(doc(db,"students",u.uid));
+        const s=snap.data();
+        profile.innerHTML=`
+          <h2>Welcome ${s.name}</h2>
+          <img src="${s.photo}" alt="profile"><br>
+          <p><b>Course:</b> ${s.course}</p>
+          <p><b>Email:</b> ${s.email}</p>
+          <p><b>Mobile:</b> ${s.mobile}</p>
+          <a href="${s.cv}" target="_blank">📄 CV</a><br>
+          <button onclick="logout()">Logout</button>`;
+      }
+    });
+
+    window.logout=()=>signOut(auth).then(()=>window.location.href="student-login.html");
+  </script>
+</body>
+</html>

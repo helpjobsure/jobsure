@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Courses - Jobsure Automation Training</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f7faf7;
+      color: #333;
+      line-height: 1.6;
+    }
+
+    /* HEADER */
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .logo-container span {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: white;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+      flex-wrap: wrap;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #004080;
+      border-radius: 4px;
+      flex-direction: column;
+      min-width: 150px;
+      z-index: 1000;
+    }
+    .dropdown-content a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #0066cc;
+    }
+
+    /* HERO SECTION */
+    .hero {
+      background: linear-gradient(135deg, #004080, #0073e6);
+      color: white;
+      padding: 60px 20px;
+      text-align: center;
+    }
+    .hero h1 {
+      font-size: 2.5em;
+      margin-bottom: 10px;
+    }
+    .hero p {
+      font-size: 1.1em;
+      margin-bottom: 20px;
+    }
+
+    /* COURSES SECTION */
+    .services-section {
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+      text-align: center;
+    }
+    .services-section h3 {
+      color: #28a745;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+      margin-bottom: 5px;
+    }
+    .services-section h2 {
+      font-size: 2em;
+      margin: 0 0 40px 0;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 15px;
+      overflow: hidden;
+      text-align: left;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      transition: all 0.3s ease-in-out;
+      cursor: pointer;
+    }
+    .card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      transition: transform 0.3s ease-in-out;
+    }
+    .card-content {
+      padding: 20px;
+    }
+    .card-content h4 {
+      margin: 0 0 10px 0;
+      color: #004080;
+      font-size: 1.2em;
+    }
+    .card-content p {
+      font-size: 0.95em;
+      color: #555;
+    }
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.2);
+    }
+    .card:hover img {
+      transform: scale(1.1);
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 25px;
+      background: #222;
+      color: #ddd;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 768px) {
+      .logo-container img { width:40px; height:40px; }
+      .logo-container span { font-size:1em; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <a href="index.html">
+      <img src="logo.jpg" alt="Logo">
+    </a>
+    <span>Jobsure Automation Training</span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html">About</a>
+    <a href="courses.html" style="text-decoration:underline;">Courses</a>
+    <a href="contact.html">Contact</a>
+
+    <div class="dropdown">
+      <a class="dropbtn" onclick="toggleDropdown()">Login</a>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="admin-login.html">Admin Login</a>
+        <a href="student-login.html">Student Login</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <h1>Our Courses & Training Programs</h1>
+  <p>Hands-on Industrial Automation Training — DCS, PLC, SCADA, HMI, AutoCAD Electrical</p>
+</section>
+
+<!-- COURSES SECTION -->
+<section class="services-section">
+  <h3>Expert Automation Training</h3>
+  <h2>Unlock your potential in automation</h2>
+  <div class="grid">
+    
+    <div class="card">
+      <img src="service1.jpg" alt="DCS training">
+      <div class="card-content">
+        <h4>DCS Training &gt;</h4>
+        <p>Comprehensive training on Distributed Control Systems with practical projects.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="service2.jpg" alt="SCADA training">
+      <div class="card-content">
+        <h4>SCADA Training &gt;</h4>
+        <p>Expert training on Supervisory Control and Data Acquisition systems.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="service3.jpg" alt="HMI training">
+      <div class="card-content">
+        <h4>HMI Training &gt;</h4>
+        <p>Hands-on experience with Human-Machine Interface systems.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="service4.jpg" alt="AutoCAD training">
+      <div class="card-content">
+        <h4>AutoCAD Electrical &gt;</h4>
+        <p>Master AutoCAD Electrical for industrial electrical design.</p>
+      </div>
+    </div>
+
+    <div class="card">
+      <img src="service5.jpg" alt="Internship">
+      <div class="card-content">
+        <h4>Internship & Certification &gt;</h4>
+        <p>Guaranteed internship certificates and placement support after training.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Jobsure Automation Training. All rights reserved.<br/>
+  Contact: 7498282599 • help.jobsure@hotmail.com
+</footer>
+
+<script>
+function toggleDropdown() {
+  var dropdown = document.getElementById('myDropdown');
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    document.getElementById('myDropdown').style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>

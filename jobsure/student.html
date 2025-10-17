@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration - Jobsure</title>
+  <style>
+    body{font-family:Arial,sans-serif;background:#f4f6f9;padding:20px;}
+    h1{text-align:center;color:#004080;}
+    form{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
+    label{font-weight:bold;display:block;margin-top:10px;}
+    input,select{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px;}
+    button{background:#004080;color:white;padding:12px;border:none;border-radius:5px;margin-top:10px;cursor:pointer;}
+    button:hover{background:#0066cc;}
+  </style>
+</head>
+<body>
+  <h1>Student Registration</h1>
+  <form id="studentForm">
+    <label>Name of Student *</label><input id="sName" required>
+    <label>Qualification *</label>
+    <select id="sQual" required><option>BE/B.Tech</option><option>Diploma</option></select>
+    <label>Branch *</label>
+    <select id="sBranch" required>
+      <option>Electrical</option><option>E&TC</option><option>Electronics</option><option>Instrumentation</option><option>Other</option>
+    </select>
+    <label>College Name *</label><input id="sCollege" required>
+    <label>Email *</label><input id="sEmail" type="email" required>
+    <label>Mobile *</label><input id="sMobile" required>
+    <label>Alt Mobile</label><input id="sAltMobile">
+    <label>Select Course *</label>
+    <select id="sCourse" required>
+      <option>DCS</option><option>PLC</option><option>SCADA</option><option>HMI</option><option>AutoCAD Electrical</option><option>Other</option>
+    </select>
+    <label>Photo *</label><input type="file" id="sPhoto" accept="image/*" required>
+    <label>CV *</label><input type="file" id="sCV" accept=".pdf,.doc,.docx" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <script type="module">
+    import { auth, db, storage } from "./firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+    import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+
+    onAuthStateChanged(auth,u=>{
+      if(!u) window.location.href="student-login.html"; // not logged in
+    });
+
+    studentForm.addEventListener("submit",async e=>{
+      e.preventDefault();
+      const u=auth.currentUser;
+      const photoRef=ref(storage,"students/photos/"+u.uid+"_"+sPhoto.files[0].name);
+      await uploadBytes(photoRef,sPhoto.files[0]); const photoURL=await getDownloadURL(photoRef);
+      const cvRef=ref(storage,"students/cv/"+u.uid+"_"+sCV.files[0].name);
+      await uploadBytes(cvRef,sCV.files[0]); const cvURL=await getDownloadURL(cvRef);
+
+      await setDoc(doc(db,"students",u.uid),{
+        uid:u.uid, name:sName.value, qual:sQual.value, branch:sBranch.value,
+        college:sCollege.value, email:sEmail.value, mobile:sMobile.value,
+        altMobile:sAltMobile.value, course:sCourse.value, photo:photoURL, cv:cvURL
+      });
+
+      alert("✅ Registration Submitted!");
+      window.location.href="student-dashboard.html";
+    });
+  </script>
+</body>
+</html>

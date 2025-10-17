@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin Dashboard - Jobsure Automation Training</title>
+  <style>
+    body {font-family: Arial, sans-serif; margin:0; padding:20px; background:#f4f6f9;}
+    h1,h2 {color:#004080; text-align:center;}
+    form {background:#fff; padding:15px; margin:15px auto; max-width:600px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    label{display:block; margin-top:10px; font-weight:bold;}
+    input,select{width:100%; padding:8px; margin-top:5px; border:1px solid #ccc; border-radius:5px;}
+    button{margin-top:10px; padding:10px 15px; border:none; border-radius:5px; cursor:pointer;}
+    .btn-primary{background:#004080; color:white;}
+    .btn-danger{background:#d9534f; color:white;}
+    .card-grid{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:15px; margin:20px 0;}
+    .card{background:#fff; padding:15px; border-radius:8px; box-shadow:0 2px 6px rgba(0,0,0,0.1);}
+    .card img{max-width:100%; border-radius:6px;}
+    table{width:100%; border-collapse:collapse; margin-top:20px;}
+    th,td{border:1px solid #ccc; padding:8px; text-align:left;}
+  </style>
+</head>
+<body>
+  <h1>Admin Dashboard</h1>
+
+  <!-- ================= Students Data ================= -->
+  <h2>Students Data</h2>
+  <div id="studentsTable"></div>
+  <button class="btn-primary" onclick="exportCSV()">⬇ Export CSV</button>
+
+  <!-- ================= Invoice ================= -->
+  <h2>Generate Invoice</h2>
+  <form id="invoiceForm">
+    <label>Student Name</label><input id="invName" required>
+    <label>Course</label><input id="invCourse" required>
+    <label>Duration</label><input id="invDuration" required>
+    <label>Course Fee (INR)</label><input id="invFee" required>
+    <button class="btn-primary" type="submit">Generate Invoice</button>
+  </form>
+  <iframe id="invoiceFrame" style="width:100%; height:400px; border:1px solid #ccc;"></iframe>
+
+  <!-- ================= Coupons ================= -->
+  <h2>Coupons</h2>
+  <form id="couponForm">
+    <label>Title</label><input id="cTitle" required>
+    <label>Description</label><input id="cDesc">
+    <button class="btn-primary" type="submit">Add Coupon</button>
+  </form>
+  <div id="couponList" class="card-grid"></div>
+
+  <!-- ================= Placed Students ================= -->
+  <h2>Placed Students</h2>
+  <form id="placedForm">
+    <label>Name</label><input id="pName" required>
+    <label>Designation</label><input id="pDesignation">
+    <label>Package</label><input id="pPackage">
+    <label>Photo *</label><input type="file" id="pPhoto" accept="image/*" required>
+    <button class="btn-primary" type="submit">Add Student</button>
+  </form>
+  <div id="placedList" class="card-grid"></div>
+
+  <!-- ================= Today’s Sessions ================= -->
+  <h2>Today’s Sessions</h2>
+  <form id="sessionForm">
+    <label>Title</label><input id="sTitle" required>
+    <label>Date</label><input id="sDate" type="date" required>
+    <label>Photo *</label><input type="file" id="sPhoto" accept="image/*" required>
+    <button class="btn-primary" type="submit">Add Session</button>
+  </form>
+  <div id="sessionsList" class="card-grid"></div>
+
+  <!-- ================= Ratings ================= -->
+  <h2>Ratings</h2>
+  <form id="ratingForm">
+    <label>Student Name</label><input id="rName" required>
+    <label>Feedback</label><input id="rFeedback" required>
+    <button class="btn-primary" type="submit">Add Rating</button>
+  </form>
+  <div id="ratingList" class="card-grid"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+  import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
+    authDomain: "jobsure-115fa.firebaseapp.com",
+    projectId: "jobsure-115fa",
+    storageBucket: "jobsure-115fa.appspot.com",
+    messagingSenderId: "575119834568",
+    appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd",
+    measurementId: "G-6KTNMMZHG9"
+  };
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // ============ Students Table ============
+  async function loadStudents(){
+    const snap = await getDocs(collection(db,"students"));
+    let html="<table><tr><th>Name</th><th>Email</th><th>Course</th><th>Mobile</th><th>Fee</th></tr>";
+    snap.forEach(d=>{
+      const s=d.data();
+      html+=`<tr><td>${s.name}</td><td>${s.email}</td><td>${s.course}</td><td>${s.mobile}</td><td>${s.fee||''}</td></tr>`;
+    });
+    html+="</table>";
+    document.getElementById("studentsTable").innerHTML=html;
+  }
+  loadStudents();
+
+  // Export CSV
+  window.exportCSV=async()=>{
+    const snap=await getDocs(collection(db,"students"));
+    let csv="Name,Email,Course,Mobile,Fee\n";
+    snap.forEach(d=>{
+      const s=d.data();
+      csv+=`${s.name},${s.email},${s.course},${s.mobile},${s.fee||''}\n`;
+    });
+    const blob=new Blob([csv],{type:"text/csv"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download="students.csv"; a.click();
+  };
+
+  // ============ Invoice ============
+  invoiceForm.addEventListener("submit",e=>{
+    e.preventDefault();
+    const invHTML=`
+      <h2>INVOICE</h2>
+      <p><b>Invoice No:</b> INV-${Date.now()}</p>
+      <p><b>Date:</b> ${new Date().toLocaleDateString()}</p>
+      <h3>Jobsure Automation Training</h3>
+      <p>Pune, Maharashtra - 411002<br>
+      Email: help.jobsure@hotmail.com | Ph: +91-7420836331</p>
+      <h4>Bill To:</h4>
+      <p>${invName.value}<br>Course: ${invCourse.value}<br>Duration: ${invDuration.value}</p>
+      <table style="width:100%;border-collapse:collapse;" border="1">
+        <tr><th>Description</th><th>Amount (INR)</th></tr>
+        <tr><td>${invCourse.value} - ${invDuration.value}</td><td>${invFee.value}</td></tr>
+        <tr><td><b>Total</b></td><td><b>${invFee.value}</b></td></tr>
+      </table>
+      <p>Note: This invoice confirms the enrollment for training course at Jobsure Automation Training.</p>
+      <p><b>Authorized Signatory</b><br>Ashwini H, Director</p>`;
+    invoiceFrame.srcdoc=invHTML;
+  });
+
+  // ============ Coupons ============
+  couponForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    await addDoc(collection(db,"coupons"),{title:cTitle.value,description:cDesc.value});
+    couponForm.reset(); loadCoupons();
+  });
+  async function loadCoupons(){
+    const snap=await getDocs(collection(db,"coupons"));
+    couponList.innerHTML="";
+    snap.forEach(d=>{
+      const c=d.data();
+      couponList.innerHTML+=`<div class="card"><h4>${c.title}</h4><p>${c.description}</p>
+        <button class="btn-danger" onclick="delCoupon('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delCoupon=async id=>{await deleteDoc(doc(db,"coupons",id)); loadCoupons();};
+  loadCoupons();
+
+  // ============ Placed Students ============
+  placedForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const file=pPhoto.files[0];
+    const fileRef=ref(storage,"placedStudents/"+Date.now()+"_"+file.name);
+    await uploadBytes(fileRef,file);
+    const url=await getDownloadURL(fileRef);
+    await addDoc(collection(db,"placedStudents"),{
+      name:pName.value,designation:pDesignation.value,package:pPackage.value,photo:url
+    });
+    placedForm.reset(); loadPlaced();
+  });
+  async function loadPlaced(){
+    const snap=await getDocs(collection(db,"placedStudents"));
+    placedList.innerHTML="";
+    snap.forEach(d=>{
+      const p=d.data();
+      placedList.innerHTML+=`<div class="card"><img src="${p.photo}" style="width:100px">
+        <h4>${p.name}</h4><p>${p.designation}</p><b>${p.package}</b>
+        <button class="btn-danger" onclick="delPlaced('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delPlaced=async id=>{await deleteDoc(doc(db,"placedStudents",id)); loadPlaced();};
+  loadPlaced();
+
+  // ============ Sessions ============
+  sessionForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    const file=sPhoto.files[0];
+    const fileRef=ref(storage,"sessions/"+Date.now()+"_"+file.name);
+    await uploadBytes(fileRef,file);
+    const url=await getDownloadURL(fileRef);
+    await addDoc(collection(db,"sessions"),{title:sTitle.value,date:sDate.value,photo:url});
+    sessionForm.reset(); loadSessions();
+  });
+  async function loadSessions(){
+    const snap=await getDocs(collection(db,"sessions"));
+    sessionsList.innerHTML="";
+    snap.forEach(d=>{
+      const s=d.data();
+      sessionsList.innerHTML+=`<div class="card"><img src="${s.photo}" style="width:100px">
+        <h4>${s.title}</h4><p>${s.date}</p>
+        <button class="btn-danger" onclick="delSession('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delSession=async id=>{await deleteDoc(doc(db,"sessions",id)); loadSessions();};
+  loadSessions();
+
+  // ============ Ratings ============
+  ratingForm.addEventListener("submit",async e=>{
+    e.preventDefault();
+    await addDoc(collection(db,"ratings"),{name:rName.value,feedback:rFeedback.value});
+    ratingForm.reset(); loadRatings();
+  });
+  async function loadRatings(){
+    const snap=await getDocs(collection(db,"ratings"));
+    ratingList.innerHTML="";
+    snap.forEach(d=>{
+      const r=d.data();
+      ratingList.innerHTML+=`<div class="card"><h4>${r.name}</h4><p>${r.feedback}</p>
+        <button class="btn-danger" onclick="delRating('${d.id}')">Delete</button></div>`;
+    });
+  }
+  window.delRating=async id=>{await deleteDoc(doc(db,"ratings",id)); loadRatings();};
+  loadRatings();
+</script>
+</body>
+</html>

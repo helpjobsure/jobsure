@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Portal - Jobsure Automation Training</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+    .container-box {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 380px;
+      text-align: center;
+    }
+    img.avatar {
+      width: 90px;
+      border-radius: 50%;
+      margin-bottom: 10px;
+    }
+    h1 {
+      color: #004080;
+      margin-bottom: 20px;
+    }
+    input[type=text], input[type=password], input[type=email] {
+      width: 100%;
+      padding: 10px;
+      margin: 8px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    .showpass {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      font-size: 0.9em;
+      margin-bottom: 12px;
+      color: #333;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+      margin-bottom: 10px;
+    }
+    button:hover { background-color: #0066cc; }
+    .small-text {
+      font-size: 0.9em;
+      margin-top: 5px;
+    }
+    a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+    a:hover { text-decoration: underline; }
+    #message { margin-top: 10px; font-size: 0.9em; }
+  </style>
+</head>
+<body>
+
+<div class="container-box">
+  <h1>Student Portal</h1>
+  <img src="avatar.png" alt="Avatar" class="avatar">
+
+  <!-- EMAIL -->
+  <input type="email" placeholder="Enter Email" id="email" required>
+
+  <!-- PASSWORD -->
+  <input type="password" placeholder="Enter Password" id="password" required>
+  <div class="showpass">
+    <input type="checkbox" onclick="togglePass()" id="showPassBox">
+    <label for="showPassBox">&nbsp;Show Password</label>
+  </div>
+
+  <!-- LOGIN -->
+  <button onclick="login()">Login</button>
+
+  <!-- SIGNUP -->
+  <button onclick="signup()">Sign Up</button>
+
+  <!-- REMEMBER + FORGOT -->
+  <label style="display:block;margin-top:5px;">
+    <input type="checkbox" checked="checked"> Remember me
+  </label>
+  <p class="small-text"><a href="#" onclick="resetPassword()">Forgot password?</a></p>
+
+  <p id="message"></p>
+</div>
+
+<!-- Firebase Script -->
+<script type="module">
+  import { auth } from "./firebase.js";
+  import { 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    sendPasswordResetEmail 
+  } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+  const msg = document.getElementById('message');
+  const emailInput = document.getElementById('email');
+  const passInput = document.getElementById('password');
+
+  // LOGIN FUNCTION
+  window.login = async function() {
+    try {
+      await signInWithEmailAndPassword(auth, emailInput.value, passInput.value);
+      msg.style.color = "green";
+      msg.textContent = "✅ Login Successful!";
+      setTimeout(()=> window.location.href = "student.html", 1000);
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = "❌ " + error.message;
+    }
+  }
+
+  // SIGNUP FUNCTION
+  window.signup = async function() {
+    try {
+      await createUserWithEmailAndPassword(auth, emailInput.value, passInput.value);
+      msg.style.color = "green";
+      msg.textContent = "✅ Account Created Successfully! Please Login.";
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = "❌ " + error.message;
+    }
+  }
+
+  // RESET PASSWORD FUNCTION
+  window.resetPassword = async function() {
+    if (!emailInput.value) {
+      msg.style.color = "red";
+      msg.textContent = "⚠ Please enter your email above.";
+      return;
+    }
+    try {
+      await sendPasswordResetEmail(auth, emailInput.value);
+      msg.style.color = "green";
+      msg.textContent = "✔ Password reset email sent!";
+    } catch (error) {
+      msg.style.color = "red";
+      msg.textContent = "❌ " + error.message;
+    }
+  }
+
+  // SHOW/HIDE PASSWORD
+  window.togglePass = function() {
+    passInput.type = (passInput.type === "password") ? "text" : "password";
+  }
+</script>
+
+</body>
+</html>

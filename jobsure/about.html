@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About - Jobsure Automation</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      background-color: #fff;
+    }
+
+    /* HEADER (same as index.html) */
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .logo-container img {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    .logo-container span {
+      font-size: 1.3em;
+      font-weight: bold;
+      color: white;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      position: relative;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    nav a:hover {
+      text-decoration: underline;
+    }
+    .dropdown {
+      position: relative;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: #004080;
+      border-radius: 4px;
+      flex-direction: column;
+      min-width: 150px;
+      z-index: 1000;
+    }
+    .dropdown-content a {
+      color: white;
+      text-decoration: none;
+      padding: 8px 12px;
+      display: block;
+    }
+    .dropdown-content a:hover {
+      background-color: #0066cc;
+    }
+
+    /* ABOUT PAGE */
+    .about-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+    .about-text {
+      max-width: 500px;
+    }
+    .about-text h3 {
+      color: #28a745;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+    .about-text h2 {
+      font-size: 2em;
+      margin-top: 10px;
+    }
+    .about-text p {
+      margin-top: 15px;
+      line-height: 1.6;
+    }
+    .about-text a {
+      display: inline-block;
+      margin-top: 20px;
+      color: #28a745;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    .about-image img {
+      max-width: 100%;
+      border-radius: 10px;
+    }
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #222;
+      color: #ddd;
+      margin-top: 50px;
+    }
+    @media (max-width: 768px) {
+      .about-section {
+        flex-direction: column;
+        text-align: center;
+      }
+      .about-text {
+        max-width: 100%;
+      }
+      .about-image img {
+        max-width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-container">
+    <a href="index.html">
+      <img src="logo.jpg" alt="Logo">
+    </a>
+    <span>Jobsure Automation Training</span>
+  </div>
+
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="about.html" style="text-decoration:underline;">About</a>
+    <a href="courses.html">Courses</a>
+    <a href="contact.html">Contact</a>
+
+    <div class="dropdown">
+      <a class="dropbtn" onclick="toggleDropdown()">Login</a>
+      <div id="myDropdown" class="dropdown-content">
+        <a href="admin-login.html">Admin Login</a>
+        <a href="student-login.html">Student Login</a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<section class="about-section">
+  <div class="about-text">
+    <h3>Empowering Future Engineers</h3>
+    <h2>Unlock your potential with us</h2>
+    <p>
+      At Industrial Automation Training, we specialize in equipping final-year students, graduates, and pre-joining candidates with the essential skills needed for a successful career in industrial automation. Our comprehensive online courses cover DCS, SCADA, HMI, and AutoCAD Electrical & P&ID, ensuring you gain practical knowledge and hands-on experience. With internship certificates, technical interview preparation, and 100% placement assistance, we are committed to your success in this dynamic field.
+    </p>
+    <a href="contact.html">Get in touch</a>
+  </div>
+  <div class="about-image">
+    <img src="2.png" alt="Students learning automation">
+  </div>
+</section>
+
+<footer>
+  &copy; 2025 Jobsure Automation Training. All rights reserved.
+</footer>
+
+<script>
+function toggleDropdown() {
+  var dropdown = document.getElementById('myDropdown');
+  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
+}
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    document.getElementById('myDropdown').style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>
