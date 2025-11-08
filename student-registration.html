@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Student Registration - Jobsure Automation Training</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* keep basic styles */
+  </style>
+</head>
+<body class="bg-gray-50 p-6">
+  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
+    <h1 class="text-xl font-semibold mb-4">Student Registration</h1>
+    <!-- (form fields kept concise for this build; full form can be replaced) -->
+    <form id="studentForm" class="space-y-3">
+      <input id="sEmail" type="email" placeholder="Email" required class="w-full p-2 border rounded" />
+      <input id="sName" placeholder="Full name" required class="w-full p-2 border rounded" />
+      <input id="sMobile1" placeholder="Mobile" required class="w-full p-2 border rounded" />
+      <input id="itCourse" placeholder="Course" required class="w-full p-2 border rounded" />
+      <input id="gradDegree" placeholder="Degree" required class="w-full p-2 border rounded" />
+      <input id="gradYear" placeholder="Grad Year" required class="w-full p-2 border rounded" />
+      <input id="gradPercent" placeholder="Grad %" required class="w-full p-2 border rounded" />
+      <input id="gradCollege" placeholder="College" required class="w-full p-2 border rounded" />
+      <input id="city" placeholder="City" required class="w-full p-2 border rounded" />
+
+      <label class="block">Photo (required)</label>
+      <input id="sPhoto" type="file" accept="image/*" required />
+
+      <label class="block">CV (required)</label>
+      <input id="sCV" type="file" accept=".pdf,.doc,.docx" required />
+
+      <button class="bg-indigo-600 text-white px-4 py-2 rounded" type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script type="module">
+    import { auth, db, storage } from './firebase.js';
+    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+    import { ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js';
+    import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+
+    const form = document.getElementById('studentForm');
+
+    onAuthStateChanged(auth, u => {
+      if (!u) {
+        alert('Please login first');
+        window.location.href = 'student-login.html';
+      }
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const u = auth.currentUser;
+      if (!u) return alert('Login required');
+
+      // upload photo
+      const photoFile = document.getElementById('sPhoto').files[0];
+      const cvFile = document.getElementById('sCV').files[0];
+      const photoRef = ref(storage, `students/photos/${u.uid}_${photoFile.name}`);
+      const cvRef = ref(storage, `students/cv/${u.uid}_${cvFile.name}`);
+      await uploadBytes(photoRef, photoFile);
+      await uploadBytes(cvRef, cvFile);
+      const photoURL = await getDownloadURL(photoRef);
+      const cvURL = await getDownloadURL(cvRef);
+
+      const payload = {
+        uid: u.uid,
+        email: document.getElementById('sEmail').value.trim(),
+        name: document.getElementById('sName').value.trim(),
+        mobile1: document.getElementById('sMobile1').value.trim(),
+        itCourse: document.getElementById('itCourse').value.trim(),
+        gradDegree: document.getElementById('gradDegree').value.trim(),
+        gradYear: document.getElementById('gradYear').value.trim(),
+        gradPercent: document.getElementById('gradPercent').value.trim(),
+        gradCollege: document.getElementById('gradCollege').value.trim(),
+        city: document.getElementById('city').value.trim(),
+        photo: photoURL,
+        cv: cvURL,
+        status: 'Pending',
+        createdAt: new Date().toISOString()
+      };
+
+      await setDoc(doc(db, 'students', u.uid), payload);
+      alert('Registration saved. Thank you!');
+      window.location.href = 'student.html';
+    });
+  </script>
+</body>
+</html>

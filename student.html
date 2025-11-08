@@ -1,67 +1,50 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Student Registration - Jobsure</title>
-  <style>
-    body{font-family:Arial,sans-serif;background:#f4f6f9;padding:20px;}
-    h1{text-align:center;color:#004080;}
-    form{max-width:600px;margin:auto;background:#fff;padding:20px;border-radius:10px;box-shadow:0 4px 10px rgba(0,0,0,0.1);}
-    label{font-weight:bold;display:block;margin-top:10px;}
-    input,select{width:100%;padding:10px;margin:5px 0;border:1px solid #ccc;border-radius:5px;}
-    button{background:#004080;color:white;padding:12px;border:none;border-radius:5px;margin-top:10px;cursor:pointer;}
-    button:hover{background:#0066cc;}
-  </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Dashboard — JobSure</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <h1>Student Registration</h1>
-  <form id="studentForm">
-    <label>Name of Student *</label><input id="sName" required>
-    <label>Qualification *</label>
-    <select id="sQual" required><option>BE/B.Tech</option><option>Diploma</option></select>
-    <label>Branch *</label>
-    <select id="sBranch" required>
-      <option>Electrical</option><option>E&TC</option><option>Electronics</option><option>Instrumentation</option><option>Other</option>
-    </select>
-    <label>College Name *</label><input id="sCollege" required>
-    <label>Email *</label><input id="sEmail" type="email" required>
-    <label>Mobile *</label><input id="sMobile" required>
-    <label>Alt Mobile</label><input id="sAltMobile">
-    <label>Select Course *</label>
-    <select id="sCourse" required>
-      <option>DCS</option><option>PLC</option><option>SCADA</option><option>HMI</option><option>AutoCAD Electrical</option><option>Other</option>
-    </select>
-    <label>Photo *</label><input type="file" id="sPhoto" accept="image/*" required>
-    <label>CV *</label><input type="file" id="sCV" accept=".pdf,.doc,.docx" required>
-    <button type="submit">Submit</button>
-  </form>
+<body class="bg-gray-50">
+  <div class="max-w-4xl mx-auto p-6">
+    <div class="bg-white p-4 rounded shadow">
+      <div class="flex justify-between items-center">
+        <h2 class="text-lg font-semibold">Student Dashboard</h2>
+        <button id="signOut" class="bg-red-500 text-white px-3 py-1 rounded">Sign out</button>
+      </div>
+      <div id="profile" class="mt-4"></div>
+    </div>
+  </div>
 
   <script type="module">
-    import { auth, db, storage } from "./firebase.js";
-    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
-    import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-storage.js";
-    import { doc, setDoc } from "https://www.gstatic.com/firebasejs/10.12.3/firebase-firestore.js";
+    import { auth, db } from './firebase.js';
+    import { onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
+    import { doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
 
-    onAuthStateChanged(auth,u=>{
-      if(!u) window.location.href="student-login.html"; // not logged in
+    const profile = document.getElementById('profile');
+    const signOutBtn = document.getElementById('signOut');
+
+    onAuthStateChanged(auth, async (u) => {
+      if (!u) return window.location.href = 'student-login.html';
+      const snap = await getDoc(doc(db, 'students', u.uid));
+      const data = snap.exists() ? snap.data() : null;
+      profile.innerHTML = data ? `
+        <div class="flex gap-4 items-center">
+          <img src="${'${data.photo}'}" class="w-24 h-24 rounded object-cover" />
+          <div>
+            <div class="font-semibold text-lg">${'${data.name}'}</div>
+            <div class="text-sm text-slate-600">${'${data.email}'}</div>
+            <div class="mt-1">Status: <strong>${'${data.status||"Pending"}'}</strong></div>
+            <div class="mt-2"><a href="${'${data.cv||"#"}'}" target="_blank" class="text-blue-600">Download CV</a></div>
+          </div>
+        </div>
+      ` : '<p>No registration found. Please complete registration.</p>';
     });
 
-    studentForm.addEventListener("submit",async e=>{
-      e.preventDefault();
-      const u=auth.currentUser;
-      const photoRef=ref(storage,"students/photos/"+u.uid+"_"+sPhoto.files[0].name);
-      await uploadBytes(photoRef,sPhoto.files[0]); const photoURL=await getDownloadURL(photoRef);
-      const cvRef=ref(storage,"students/cv/"+u.uid+"_"+sCV.files[0].name);
-      await uploadBytes(cvRef,sCV.files[0]); const cvURL=await getDownloadURL(cvRef);
-
-      await setDoc(doc(db,"students",u.uid),{
-        uid:u.uid, name:sName.value, qual:sQual.value, branch:sBranch.value,
-        college:sCollege.value, email:sEmail.value, mobile:sMobile.value,
-        altMobile:sAltMobile.value, course:sCourse.value, photo:photoURL, cv:cvURL
-      });
-
-      alert("✅ Registration Submitted!");
-      window.location.href="student-dashboard.html";
+    signOutBtn.addEventListener('click', async ()=>{
+      await signOut(auth);
+      window.location.href = 'index.html';
     });
   </script>
 </body>

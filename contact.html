@@ -1,250 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Contact - Jobsure Automation</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #fff;
-      color: #333;
-    }
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — JobSure Automation</title>
 
-    /* HEADER (same as index.html) */
-    header {
-      background-color: #004080;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo-container img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .logo-container span {
-      font-size: 1.3em;
-      font-weight: bold;
-      color: white;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      position: relative;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #004080;
-      border-radius: 4px;
-      flex-direction: column;
-      min-width: 150px;
-      z-index: 1000;
-    }
-    .dropdown-content a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-      display: block;
-    }
-    .dropdown-content a:hover {
-      background-color: #0066cc;
-    }
+  <!-- Tailwind (CDN) + Font -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
-    /* CONTACT PAGE STYLES */
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-      max-width: 1000px;
-      margin: 40px auto;
-      gap: 40px;
-      padding: 0 20px;
-    }
-    .form-section, .info-section {
-      flex: 1;
-      min-width: 300px;
-    }
-    .form-section h2 {
-      font-size: 1.8em;
-      margin-bottom: 20px;
-    }
-    .form-section label {
-      display: block;
-      margin-top: 15px;
-      font-weight: bold;
-    }
-    .form-section input, .form-section textarea {
-      width: 100%;
-      padding: 10px;
-      margin-top: 5px;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      box-sizing: border-box;
-      font-size: 1em;
-    }
-    .form-section textarea {
-      height: 100px;
-    }
-
-    /* ✅ Checkbox alignment सुधारले */
-    .checkbox {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-top: 15px;
-    }
-    .checkbox input[type="checkbox"] {
-      width: 18px;
-      height: 18px;
-      accent-color: #28a745; /* Green tick color */
-      cursor: pointer;
-    }
-    .checkbox label {
-      font-weight: normal;
-      cursor: pointer;
-    }
-
-    .form-section button {
-      margin-top: 20px;
-      background-color: #28a745;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 1em;
-      border-radius: 25px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-    .form-section button:hover {
-      background-color: #218838;
-    }
-    .info-section {
-      background-color: #f4f4f4;
-      padding: 20px;
-      border-radius: 8px;
-    }
-    .info-section h3 {
-      margin-bottom: 15px;
-      color: #28a745;
-    }
-    .info-section p {
-      margin-bottom: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #ddd;
-      margin-top: 40px;
-    }
-
-    @media (max-width: 768px) {
-      .logo-container img { width:40px; height:40px; }
-      .logo-container span { font-size:1em; }
-      nav { flex-wrap: wrap; gap:10px; }
-    }
-  </style>
+  <meta name="description" content="Contact JobSure Automation — PLC, DCS, SCADA, HMI, AutoCAD training. Enquire for course, fee & batch timings." />
+  <style>body { font-family: 'Poppins', sans-serif; }</style>
 </head>
-<body>
+<body class="bg-gray-50">
 
-<header>
-  <div class="logo-container">
-    <a href="index.html">
-      <img src="logo.jpg" alt="Logo">
-    </a>
-    <span>Jobsure Automation Training</span>
-  </div>
-
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html">About</a>
-    <a href="courses.html">Courses</a>
-    <a href="contact.html" class="active">Contact</a>
-
-    <div class="dropdown">
-      <a class="dropbtn" onclick="toggleDropdown()">Login</a>
-      <div id="myDropdown" class="dropdown-content">
-        <a href="admin-login.html">Admin Login</a>
-        <a href="student-login.html">Student Login</a>
+<!-- Header -->
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="index.html" class="flex items-center gap-3">
+      <img src="logo.jpg" alt="JobSure Logo" class="w-12 h-12 rounded-lg object-cover">
+      <div>
+        <div class="text-blue-900 font-semibold">JobSure Automation</div>
+        <div class="text-xs text-gray-500">PLC · SCADA · DCS · HMI</div>
       </div>
-    </div>
-  </nav>
+    </a>
+
+    <nav class="hidden md:flex gap-6 text-gray-700 font-medium">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="courses.html">Courses</a>
+      <a href="contact.html" class="text-blue-600">Contact</a>
+    </nav>
+  </div>
 </header>
 
-<div class="container">
-  <div class="form-section">
-    <h2>We're here to help you succeed!</h2>
-    <form>
-      <label for="name">Name *</label>
-      <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+<!-- Page header -->
+<section class="max-w-7xl mx-auto px-6 py-8">
+  <div class="bg-gradient-to-r from-blue-50 to-white rounded-lg p-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-blue-900">Get in Touch</h1>
+    <p class="text-gray-600 mt-1">Fill the form below — we'll reply by email and send you a WhatsApp message instantly.</p>
+  </div>
+</section>
 
-      <label for="email">Email address *</label>
-      <input type="email" id="email" name="email" placeholder="email@website.com" required>
+<!-- Main content -->
+<section class="max-w-7xl mx-auto px-6 pb-14 grid lg:grid-cols-2 gap-8">
+  <!-- Contact form card -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold text-blue-900 mb-4">Send an Enquiry</h2>
 
-      <label for="phone">Phone number *</label>
-      <input type="tel" id="phone" name="phone" placeholder="555-555-5555" required>
+    <!-- ✅ Success Message Placeholder -->
+    <p id="successMsg" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-3">
+      ✅ Your enquiry has been sent successfully!
+    </p>
 
-      <label for="message">Message</label>
-      <textarea id="message" name="message" placeholder="Write your message here..."></textarea>
+    <form id="contactForm" class="space-y-4">
+      <input id="name" name="name" required placeholder="Your name" class="w-full border rounded p-3" />
+      <input id="email" name="email" type="email" required placeholder="Email address" class="w-full border rounded p-3" />
+      <input id="phone" name="phone" required placeholder="Phone number" class="w-full border rounded p-3" />
 
-      <div class="checkbox">
-        <input type="checkbox" id="consent" name="consent" required>
-        <label for="consent">I allow this website to store my submission so they can respond to my inquiry. *</label>
+      <select id="course" name="course" required class="w-full border rounded p-3">
+        <option value="">Select Course</option>
+        <option value="PLC">PLC</option>
+        <option value="SCADA">SCADA</option>
+        <option value="DCS">DCS</option>
+        <option value="HMI">HMI</option>
+        <option value="AutoCAD Electrical">AutoCAD Electrical</option>
+        <option value="Internship">Internship</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <textarea id="message" name="message" placeholder="Your message (optional)" class="w-full border rounded p-3 h-28"></textarea>
+
+      <div class="flex items-start gap-3">
+        <input id="consent" type="checkbox" required class="mt-1" />
+        <label for="consent" class="text-sm text-gray-700">I allow JobSure Automation to store my submission and contact me.</label>
       </div>
 
-      <button type="submit">Submit</button>
+      <div class="flex flex-col md:flex-row gap-3 mt-2">
+        <button id="sendBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">
+          Send Message
+        </button>
+
+        <a id="whatsappBtn" target="_blank" rel="noopener" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded font-semibold text-center">
+          Message on WhatsApp
+        </a>
+      </div>
     </form>
   </div>
 
-  <div class="info-section">
-    <h3>Get in touch</h3>
-    <p>Email: <a href="mailto:help.jobsure@hotmail.com">help.jobsure@hotmail.com</a></p>
-    <p>Location: <a href="#">Pune, MH IN</a></p>
+  <!-- Info + Map -->
+  <div class="space-y-6">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-blue-900">Contact Info</h3>
+      <div class="mt-3 space-y-2 text-gray-700">
+        <div><strong>Phone:</strong> <a class="text-blue-700" href="tel:+917798311756">+91 7798311756</a></div>
+        <div><strong>Email:</strong> <a class="text-blue-700" href="mailto:helpjobsure@gmail.com">helpjobsure@gmail.com</a></div>
+        <div><strong>Location:</strong> Pune, Maharashtra</div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
-<footer>
-  &copy; 2025 Jobsure Automation Training. All rights reserved.
+<!-- Footer -->
+<footer class="bg-gray-900 text-white text-center py-6">
+  <div class="max-w-7xl mx-auto px-6">
+    © 2025 JobSure Automation Training — All rights reserved.
+  </div>
 </footer>
-
+<!-- ✅ EmailJS Script -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
 <script>
-function toggleDropdown() {
-  var dropdown = document.getElementById('myDropdown');
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    document.getElementById('myDropdown').style.display = "none";
+  (function () {
+    emailjs.init("IvSeQMpfSU_RcesQb"); // ✅ Your Public Key
+  })();
+</script>
+
+<!-- ✅ Form + WhatsApp Logic -->
+<script>
+  const form = document.getElementById('contactForm');
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  const successMsg = document.getElementById('successMsg');
+
+  // ✅ Build WhatsApp Message (Professional Style)
+  function buildWhatsAppMessage() {
+    const name = document.getElementById('name').value.trim() || "Student";
+    const course = document.getElementById('course').value || "Course";
+    return `Hello JobSure Automation Team,%0A%0AMy name is ${name}. I want to know more about your ${course} course.%0APlease share fees, duration and placement information.%0A%0AThank you.`;
   }
-}
+
+  // ✅ Update WhatsApp Link Dynamically
+  function updateWhatsAppLink() {
+    whatsappBtn.href = `https://wa.me/917798311756?text=${buildWhatsAppMessage()}`;
+  }
+  updateWhatsAppLink();
+
+  document.getElementById('name').addEventListener('input', updateWhatsAppLink);
+  document.getElementById('course').addEventListener('change', updateWhatsAppLink);
+
+  // ✅ Send Email Using EmailJS
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const templateParams = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      course: document.getElementById('course').value,
+      message: document.getElementById('message').value
+    };
+
+    emailjs.send("service_bw58d2g", "template_oj6reh7", templateParams)
+      .then(() => {
+        successMsg.classList.remove('hidden');
+        form.reset();
+        updateWhatsAppLink();
+        setTimeout(() => successMsg.classList.add('hidden'), 4000);
+      })
+      .catch(() => {
+        alert("❌ Failed to send. Please try again or message on WhatsApp.");
+      });
+  });
 </script>
 
 </body>

@@ -1,198 +1,416 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>About - Jobsure Automation</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>About — JobSure Automation Training</title>
+
+  <!-- Tailwind optional, but page uses custom CSS so it's fine without it -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      color: #333;
-      background-color: #fff;
+    :root{
+      --blue-900:#003f7f;
+      --blue-600:#2563eb;
+      --emerald:#10b981;
+      --muted:#6b7280;
+      --bg:#f8fafc;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background:var(--bg);
+      color:#0f172a;
+      -webkit-font-smoothing:antialiased;
     }
 
-    /* HEADER (same as index.html) */
-    header {
-      background-color: #004080;
-      color: white;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-    .logo-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .logo-container img {
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-    .logo-container span {
-      font-size: 1.3em;
-      font-weight: bold;
-      color: white;
-    }
-    nav {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      position: relative;
-    }
-    nav a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-    nav a:hover {
-      text-decoration: underline;
-    }
-    .dropdown {
-      position: relative;
-    }
-    .dropdown-content {
-      display: none;
-      position: absolute;
-      top: 100%;
-      left: 0;
-      background: #004080;
-      border-radius: 4px;
-      flex-direction: column;
-      min-width: 150px;
-      z-index: 1000;
-    }
-    .dropdown-content a {
-      color: white;
-      text-decoration: none;
-      padding: 8px 12px;
-      display: block;
-    }
-    .dropdown-content a:hover {
-      background-color: #0066cc;
+    /* Header */
+    header{background:#fff;border-bottom:1px solid #e6edf5;position:sticky;top:0;z-index:50}
+    .container{max-width:1100px;margin:0 auto;padding:0 20px}
+    .header-inner{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+    .logo{display:flex;align-items:center;gap:12px;text-decoration:none;color:inherit}
+    .logo img{width:56px;height:56px;object-fit:cover;border-radius:8px}
+    nav a{color:#0f172a;text-decoration:none;margin-left:18px;font-weight:600}
+    .cta-call{background:var(--emerald);color:#fff;padding:8px 14px;border-radius:8px;font-weight:600}
+
+    /* Hero */
+    .about-hero{padding:48px 0 28px;text-align:center}
+    .about-hero h1{color:var(--blue-900);font-size:28px;margin:6px 0}
+    .about-hero p{color:var(--muted);margin-top:6px}
+
+    /* Sections */
+    .section{padding:36px 0}
+    .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:28px;align-items:center}
+    .box{background:#fff;border-radius:10px;padding:22px;box-shadow:0 8px 20px rgba(15,23,42,0.06)}
+    h2.section-title{color:var(--blue-900);font-size:20px;margin-bottom:12px}
+
+    /* Stats */
+    .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;text-align:center}
+    .stat{background:#fff;padding:20px;border-radius:10px;box-shadow:0 6px 18px rgba(15,23,42,0.05)}
+    .stat h3{font-size:20px;color:var(--blue-900);margin-bottom:6px}
+
+    /* Why */
+    .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:16px}
+    .why-card{background:#fff;padding:18px;border-radius:10px;box-shadow:0 6px 16px rgba(15,23,42,0.04)}
+
+    /* CTA */
+    .cta{background:linear-gradient(90deg,var(--blue-600),var(--blue-900));color:#fff;padding:32px 0;text-align:center;border-radius:10px;margin:36px 20px}
+    footer{background:#0b1220;color:#cbd5e1;padding:28px 0;margin-top:36px}
+
+    /* ===== TEAM SLIDER ===== */
+    .slider-wrap{width:100%;background:transparent;padding:36px 0}
+    .slider-inner{max-width:1200px;margin:0 auto;position:relative;padding:0 20px}
+    .slider-viewport{overflow:hidden}
+    .slides{display:flex;gap:22px;transition:transform .6s cubic-bezier(.2,.8,.2,1); will-change:transform}
+    .slide{
+      min-width: 100%;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      padding:18px;
     }
 
-    /* ABOUT PAGE */
-    .about-section {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 40px;
-      max-width: 1200px;
-      margin: 50px auto;
-      padding: 20px;
+    /* Card */
+    .card{
+      width:760px; max-width:100%;
+      background:#fff;border-radius:12px;padding:26px;box-shadow:0 12px 30px rgba(2,6,23,0.12);display:flex;gap:24px;align-items:center;
     }
-    .about-text {
-      max-width: 500px;
+    .card-image{flex:0 0 320px;max-width:320px;height:280px;overflow:hidden;border-radius:8px}
+    .card-image img{width:100%;height:100%;object-fit:cover;display:block}
+    .card-body{flex:1}
+    .card-body h3{margin:0;font-size:20px;color:var(--blue-900)}
+    .card-body p.role{margin:6px 0 10px;color:var(--muted);font-weight:600}
+    .card-body p.desc{margin:0;color:#374151;line-height:1.5}
+
+    /* Nav arrows */
+    .arrow{
+      position:absolute;top:50%;transform:translateY(-50%);background:#fff;border-radius:999px;width:46px;height:46px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 18px rgba(2,6,23,0.12);cursor:pointer;border:0;
     }
-    .about-text h3 {
-      color: #28a745;
-      text-transform: uppercase;
-      font-weight: bold;
-      letter-spacing: 1px;
+    .arrow.prev{left:8px}
+    .arrow.next{right:8px}
+
+    .arrow svg{width:20px;height:20px;fill:var(--blue-900)}
+
+    /* Pagination dots */
+    .dots{display:flex;gap:8px;justify-content:center;margin-top:18px}
+    .dot{width:10px;height:10px;border-radius:999px;background:#d1d5db;cursor:pointer}
+    .dot.active{background:var(--blue-600)}
+
+    /* Responsive */
+    @media (max-width:1000px){
+      .card{flex-direction:column;align-items:flex-start}
+      .card-image{width:100%;height:220px;max-height:260px}
+      .card-body{width:100%}
+      .arrow{display:none}
     }
-    .about-text h2 {
-      font-size: 2em;
-      margin-top: 10px;
+    @media (max-width:600px){
+      .card{padding:18px}
+      .about-hero h1{font-size:22px}
     }
-    .about-text p {
-      margin-top: 15px;
-      line-height: 1.6;
-    }
-    .about-text a {
-      display: inline-block;
-      margin-top: 20px;
-      color: #28a745;
-      text-decoration: none;
-      font-weight: bold;
-    }
-    .about-image img {
-      max-width: 100%;
-      border-radius: 10px;
-    }
-    footer {
-      text-align: center;
-      padding: 20px;
-      background: #222;
-      color: #ddd;
-      margin-top: 50px;
-    }
-    @media (max-width: 768px) {
-      .about-section {
-        flex-direction: column;
-        text-align: center;
-      }
-      .about-text {
-        max-width: 100%;
-      }
-      .about-image img {
-        max-width: 90%;
-      }
-    }
+
+    /* small accessibility focus */
+    .arrow:focus,.dot:focus{outline:2px solid rgba(37,99,235,0.25)}
   </style>
 </head>
 <body>
 
-<header>
-  <div class="logo-container">
-    <a href="index.html">
-      <img src="logo.jpg" alt="Logo">
-    </a>
-    <span>Jobsure Automation Training</span>
-  </div>
+  <!-- Header -->
+  <header>
+    <div class="container header-inner">
+      <a href="index.html" class="logo">
+        <img src="logo.jpg" alt="JobSure Logo">
+        <div>
+          <div style="font-weight:700;color:var(--blue-900)">JobSure Automation</div>
+          <div style="font-size:12px;color:var(--muted);margin-top:4px">PLC · SCADA · DCS · HMI</div>
+        </div>
+      </a>
 
-  <nav>
-    <a href="index.html">Home</a>
-    <a href="about.html" style="text-decoration:underline;">About</a>
-    <a href="courses.html">Courses</a>
-    <a href="contact.html">Contact</a>
+      <nav class="hidden md:flex">
+        <a href="index.html">Home</a>
+        <a href="courses.html">Courses</a>
+        <a href="about.html" style="color:var(--blue-600)">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="student-login.html" class="ml-4 cta-call">Student Login</a>
+        <a href="tel:+917798311756" class="ml-3" style="display:inline-block;padding:8px 12px;background:#eefbf6;border-radius:8px;color:var(--emerald);font-weight:700">Call Now</a>
+      </nav>
+    </div>
+  </header>
 
-    <div class="dropdown">
-      <a class="dropbtn" onclick="toggleDropdown()">Login</a>
-      <div id="myDropdown" class="dropdown-content">
-        <a href="admin-login.html">Admin Login</a>
-        <a href="student-login.html">Student Login</a>
+  <!-- Hero -->
+  <section class="about-hero">
+    <div class="container">
+      <h1>About JobSure Automation Training</h1>
+      <p>We deliver industry-ready automation training — practical projects, lab sessions and placement support to launch careers in automation.</p>
+    </div>
+  </section>
+
+  <!-- Intro -->
+  <section class="section">
+    <div class="container grid-2">
+      <div>
+        <div class="box">
+          <h2 class="section-title">Who We Are</h2>
+          <p style="color:var(--muted);line-height:1.6">
+            JobSure Automation Training is a focused institute for Industrial Automation training. Our programs cover PLC, SCADA, DCS, HMI and AutoCAD Electrical with hands-on labs and real industrial projects. We bridge the gap between academics and industry by training students for core engineering roles and supporting them through placements.
+          </p>
+          <p style="color:var(--muted);margin-top:10px">We run online and offline batches, provide internships, and help students with resume preparation and interview training.</p>
+        </div>
+      </div>
+      <div>
+        <div class="box" style="padding:0;overflow:hidden">
+          <img src="banner1.jpg" alt="About" style="width:100%;height:100%;object-fit:cover">
+        </div>
       </div>
     </div>
-  </nav>
-</header>
+  </section>
 
-<section class="about-section">
-  <div class="about-text">
-    <h3>Empowering Future Engineers</h3>
-    <h2>Unlock your potential with us</h2>
-    <p>
-      At Industrial Automation Training, we specialize in equipping final-year students, graduates, and pre-joining candidates with the essential skills needed for a successful career in industrial automation. Our comprehensive online courses cover DCS, SCADA, HMI, and AutoCAD Electrical & P&ID, ensuring you gain practical knowledge and hands-on experience. With internship certificates, technical interview preparation, and 100% placement assistance, we are committed to your success in this dynamic field.
-    </p>
-    <a href="contact.html">Get in touch</a>
-  </div>
-  <div class="about-image">
-    <img src="2.png" alt="Students learning automation">
-  </div>
-</section>
+  <!-- Stats -->
+  <section class="section">
+    <div class="container">
+      <div class="stats">
+        <div class="stat"><h3>1200+</h3><p style="color:var(--muted)">Students Trained</p></div>
+        <div class="stat"><h3>350+</h3><p style="color:var(--muted)">Successful Placements</p></div>
+        <div class="stat"><h3>25+</h3><p style="color:var(--muted)">Hiring Partners</p></div>
+        <div class="stat"><h3>5+</h3><p style="color:var(--muted)">Years of Experience</p></div>
+      </div>
+    </div>
+  </section>
 
-<footer>
-  &copy; 2025 Jobsure Automation Training. All rights reserved.
-</footer>
+  <!-- Mission & Vision -->
+  <section class="section">
+    <div class="container">
+      <div class="vision-mission" style="display:grid;grid-template-columns:1fr 1fr;gap:24px">
+        <div class="box">
+          <h2 class="section-title">Our Mission</h2>
+          <p style="color:var(--muted)">To empower engineers with practical automation knowledge and industry skills, enabling them to perform on real projects and secure suitable jobs.</p>
+        </div>
+        <div class="box">
+          <h2 class="section-title">Our Vision</h2>
+          <p style="color:var(--muted)">To be the preferred automation training partner for students and industries across India, known for practical training and placement support.</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-<script>
-function toggleDropdown() {
-  var dropdown = document.getElementById('myDropdown');
-  dropdown.style.display = (dropdown.style.display === "flex") ? "none" : "flex";
-}
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    document.getElementById('myDropdown').style.display = "none";
-  }
-}
-</script>
+  <!-- Why -->
+  <section class="section">
+    <div class="container">
+      <h2 class="section-title">Why Choose Us</h2>
+      <div class="why-grid">
+        <div class="why-card"><strong>Practical Projects</strong><p style="color:var(--muted);margin-top:8px">Work on real-time projects used in industry.</p></div>
+        <div class="why-card"><strong>Placement Support</strong><p style="color:var(--muted);margin-top:8px">Resume, mock interviews and job introductions.</p></div>
+        <div class="why-card"><strong>Expert Trainers</strong><p style="color:var(--muted);margin-top:8px">Trainers with years of field experience.</p></div>
+        <div class="why-card"><strong>Pay After Placement</strong><p style="color:var(--muted);margin-top:8px">Start learning now, pay after you get a job (T&C apply).</p></div>
+        <div class="why-card"><strong>Online & Offline</strong><p style="color:var(--muted);margin-top:8px">Flexible batch options for working students.</p></div>
+        <div class="why-card"><strong>Certifications</strong><p style="color:var(--muted);margin-top:8px">Internship & course completion certificates.</p></div>
+      </div>
+    </div>
+  </section>
 
+  <!-- Team Slider (REPLACES GRID) -->
+  <section class="slider-wrap" aria-label="Leadership slider">
+    <div class="slider-inner">
+      <div class="slider-viewport">
+        <div class="slides" id="slides">
+          <!-- Slide 1 -->
+          <div class="slide" role="group" aria-roledescription="slide">
+            <div class="card" aria-label="Prashant H — CEO">
+              <div class="card-image"><img src="prashant.jpg" alt="Prashant H, CEO"></div>
+              <div class="card-body">
+                <h3>Prashant H</h3>
+                <p class="role">MD & Chairman</p>
+                <p class="desc">Leading strategic growth and automation excellence across training and industry collaborations.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 2 -->
+          <div class="slide" role="group" aria-roledescription="slide">
+            <div class="card" aria-label="Ashwini H — Director">
+              <div class="card-image"><img src="ashwini.jpg" alt="Ashwini H, Director"></div>
+              <div class="card-body">
+                <h3>Ashwini H</h3>
+                <p class="role">Director</p>
+                <p class="desc">Driving curriculum quality, partnerships and academic excellence for real-world outcomes.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 3 -->
+          <div class="slide" role="group" aria-roledescription="slide">
+            <div class="card" aria-label="Priyanka H — Placement Head">
+              <div class="card-image"><img src="priyanka.jpg" alt="Priyanka H, Placement Head"></div>
+              <div class="card-body">
+                <h3>Priyanka H</h3>
+                <p class="role">Placement Head</p>
+                <p class="desc">Connecting students with top employers and guiding career readiness through mock interviews.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 4 -->
+          <div class="slide" role="group" aria-roledescription="slide">
+            <div class="card" aria-label="Basavaraj H — Vice President">
+              <div class="card-image"><img src="basavaraj.jpg" alt="Basavaraj H, Vice President"></div>
+              <div class="card-body">
+                <h3>Basavaraj H</h3>
+                <p class="role">Vice President</p>
+                <p class="desc">Overseeing operations and expanding training initiatives across regions for scalable impact.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 5 -->
+          <div class="slide" role="group" aria-roledescription="slide">
+            <div class="card" aria-label="Arjun K — Head of Operations">
+              <div class="card-image"><img src="arjun.jpg" alt="Arjun K, Head of Operations"></div>
+              <div class="card-body">
+                <h3>Arjun K</h3>
+                <p class="role">Head of Operations</p>
+                <p class="desc">Streamlining workflows and ensuring smooth delivery of training & lab operations.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slide 6 -->
+          <div class="slide" role="group" aria-roledescription="slide">
+            <div class="card" aria-label="Vishnu K — Training & Labs Support">
+              <div class="card-image"><img src="vishnu.jpg" alt="Vishnu K, Training & Labs Support"></div>
+              <div class="card-body">
+                <h3>Vishnu K</h3>
+                <p class="role">Training & Labs Support</p>
+                <p class="desc">Maintaining lab infrastructure and hands-on training environments for practical learning.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Arrows -->
+      <button class="arrow prev" id="prevBtn" aria-label="Previous slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15.41 7.41 14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+      </button>
+      <button class="arrow next" id="nextBtn" aria-label="Next slide">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.59 16.59 13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+      </button>
+
+      <!-- Dots -->
+      <div class="dots" id="dots" role="tablist" aria-label="Leadership pagination"></div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <div class="container">
+      <h2 style="font-size:20px;margin-bottom:12px;">Want to Build Your Automation Career?</h2>
+      <a href="contact.html" class="cta-call" style="display:inline-block;">Contact Us →</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:20px;">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <img src="logo.jpg" alt="logo" style="width:54px;height:54px;border-radius:8px;object-fit:cover;">
+        <div>
+          <div style="font-weight:700;color:#fff;">JobSure Automation</div>
+          <div style="font-size:12px;color:#cbd5e1;margin-top:4px;">PLC · SCADA · DCS · HMI</div>
+        </div>
+      </div>
+      <div style="text-align:right;color:#cbd5e1;">
+        <div>Phone: +91 7798311756</div>
+        <div style="margin-top:6px;">Email: help.jobsure@hotmail.com</div>
+        <div style="font-size:12px;margin-top:8px;color:#94a3b8;">© 2025 JobSure Automation Training</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Slider logic (Big profile slider)
+    (function(){
+      const slidesEl = document.getElementById('slides');
+      const slides = Array.from(slidesEl.children);
+      const total = slides.length;
+      const dotsContainer = document.getElementById('dots');
+      const prevBtn = document.getElementById('prevBtn');
+      const nextBtn = document.getElementById('nextBtn');
+      let index = 0;
+      let timer = null;
+      const AUTOPLAY_DELAY = 5000; // 5 seconds
+
+      // create dots
+      slides.forEach((s,i)=>{
+        const d = document.createElement('button');
+        d.className='dot';
+        d.setAttribute('aria-label', 'Go to slide '+(i+1));
+        d.addEventListener('click', ()=> goTo(i));
+        dotsContainer.appendChild(d);
+      });
+      const dots = Array.from(dotsContainer.children);
+
+      function update(){
+        const offset = -index * slidesEl.clientWidth;
+        slidesEl.style.transform = `translateX(${offset}px)`;
+        dots.forEach((d, i)=> d.classList.toggle('active', i===index));
+      }
+
+      function goTo(i){
+        index = (i + total) % total;
+        update();
+        resetAutoplay();
+      }
+
+      function next(){
+        goTo(index + 1);
+      }
+      function prev(){
+        goTo(index - 1);
+      }
+
+      prevBtn.addEventListener('click', prev);
+      nextBtn.addEventListener('click', next);
+
+      // autoplay with pause on hover
+      function startAutoplay(){
+        stopAutoplay();
+        timer = setInterval(next, AUTOPLAY_DELAY);
+      }
+      function stopAutoplay(){
+        if(timer){ clearInterval(timer); timer = null; }
+      }
+      function resetAutoplay(){
+        stopAutoplay();
+        startAutoplay();
+      }
+
+      // responsive: adjust transform on resize
+      window.addEventListener('resize', update);
+
+      // pause on hover/focus
+      const sliderContainer = document.querySelector('.slider-inner');
+      sliderContainer.addEventListener('mouseenter', stopAutoplay);
+      sliderContainer.addEventListener('mouseleave', startAutoplay);
+      sliderContainer.addEventListener('focusin', stopAutoplay);
+      sliderContainer.addEventListener('focusout', startAutoplay);
+
+      // touch swipe support
+      let startX = 0;
+      let isTouch = false;
+      slidesEl.addEventListener('touchstart', (e)=>{ isTouch=true; startX = e.touches[0].clientX; stopAutoplay(); });
+      slidesEl.addEventListener('touchmove', (e)=>{ if(!isTouch) return; const dx = e.touches[0].clientX - startX; });
+      slidesEl.addEventListener('touchend', (e)=>{ if(!isTouch) return; const dx = (e.changedTouches[0].clientX - startX); if(Math.abs(dx) > 40){ if(dx < 0) next(); else prev(); } isTouch=false; startAutoplay(); });
+
+      // keyboard navigation
+      document.addEventListener('keydown', (e)=>{
+        if(e.key === 'ArrowLeft') prev();
+        if(e.key === 'ArrowRight') next();
+      });
+
+      // init
+      update();
+      startAutoplay();
+    })();
+  </script>
 </body>
 </html>
