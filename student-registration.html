@@ -3,88 +3,191 @@
 <head>
   <meta charset="UTF-8">
   <title>Student Registration - Jobsure Automation Training</title>
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    /* keep basic styles */
+    body { font-family: Arial, sans-serif; background: #f4f6f9; padding: 20px; }
+    h1 { text-align: center; color: #004080; }
+    form { max-width: 800px; margin: auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    label { font-weight: bold; display: block; margin-top: 10px; }
+    input, select, textarea { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ccc; border-radius: 5px; }
+    button { background: #004080; color: white; padding: 12px; border: none; border-radius: 5px; margin-top: 10px; cursor: pointer; }
+    button:hover { background: #0066cc; }
   </style>
 </head>
-<body class="bg-gray-50 p-6">
-  <div class="max-w-3xl mx-auto bg-white p-6 rounded shadow">
-    <h1 class="text-xl font-semibold mb-4">Student Registration</h1>
-    <!-- (form fields kept concise for this build; full form can be replaced) -->
-    <form id="studentForm" class="space-y-3">
-      <input id="sEmail" type="email" placeholder="Email" required class="w-full p-2 border rounded" />
-      <input id="sName" placeholder="Full name" required class="w-full p-2 border rounded" />
-      <input id="sMobile1" placeholder="Mobile" required class="w-full p-2 border rounded" />
-      <input id="itCourse" placeholder="Course" required class="w-full p-2 border rounded" />
-      <input id="gradDegree" placeholder="Degree" required class="w-full p-2 border rounded" />
-      <input id="gradYear" placeholder="Grad Year" required class="w-full p-2 border rounded" />
-      <input id="gradPercent" placeholder="Grad %" required class="w-full p-2 border rounded" />
-      <input id="gradCollege" placeholder="College" required class="w-full p-2 border rounded" />
-      <input id="city" placeholder="City" required class="w-full p-2 border rounded" />
+<body>
+  <h1>Student Registration</h1>
 
-      <label class="block">Photo (required)</label>
-      <input id="sPhoto" type="file" accept="image/*" required />
+  <form id="studentForm">
+    <label>Email *</label>
+    <input type="email" id="sEmail" required>
 
-      <label class="block">CV (required)</label>
-      <input id="sCV" type="file" accept=".pdf,.doc,.docx" required />
+    <label>Full Name (First Middle Surname) *</label>
+    <input id="sName" required>
 
-      <button class="bg-indigo-600 text-white px-4 py-2 rounded" type="submit">Submit</button>
-    </form>
-  </div>
+    <label>Gender *</label>
+    <select id="sGender" required>
+      <option>Female</option>
+      <option>Male</option>
+    </select>
 
-  <script type="module">
-    import { auth, db, storage } from './firebase.js';
-    import { onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js';
-    import { ref, uploadBytes, getDownloadURL } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-storage.js';
-    import { doc, setDoc } from 'https://www.gstatic.com/firebasejs/10.13.0/firebase-firestore.js';
+    <label>Date of Birth *</label>
+    <input type="date" id="sDOB" required>
 
-    const form = document.getElementById('studentForm');
+    <label>Mobile Number *</label>
+    <input id="sMobile1" required maxlength="10">
 
-    onAuthStateChanged(auth, u => {
-      if (!u) {
-        alert('Please login first');
-        window.location.href = 'student-login.html';
-      }
-    });
+    <label>SSC % (10th Std) *</label>
+    <input type="number" step="0.01" id="sscPercent" required>
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const u = auth.currentUser;
-      if (!u) return alert('Login required');
+    <label>SSC Year of Passing *</label>
+    <input type="number" id="sscYear" required>
 
-      // upload photo
-      const photoFile = document.getElementById('sPhoto').files[0];
-      const cvFile = document.getElementById('sCV').files[0];
-      const photoRef = ref(storage, `students/photos/${u.uid}_${photoFile.name}`);
-      const cvRef = ref(storage, `students/cv/${u.uid}_${cvFile.name}`);
-      await uploadBytes(photoRef, photoFile);
-      await uploadBytes(cvRef, cvFile);
-      const photoURL = await getDownloadURL(photoRef);
-      const cvURL = await getDownloadURL(cvRef);
+    <label>Medium of School Education *</label>
+    <select id="sscMedium" required>
+      <option>English</option>
+      <option>Semi English</option>
+      <option>Marathi</option>
+      <option>Hindi</option>
+      <option>Others</option>
+    </select>
 
-      const payload = {
-        uid: u.uid,
-        email: document.getElementById('sEmail').value.trim(),
-        name: document.getElementById('sName').value.trim(),
-        mobile1: document.getElementById('sMobile1').value.trim(),
-        itCourse: document.getElementById('itCourse').value.trim(),
-        gradDegree: document.getElementById('gradDegree').value.trim(),
-        gradYear: document.getElementById('gradYear').value.trim(),
-        gradPercent: document.getElementById('gradPercent').value.trim(),
-        gradCollege: document.getElementById('gradCollege').value.trim(),
-        city: document.getElementById('city').value.trim(),
-        photo: photoURL,
-        cv: cvURL,
-        status: 'Pending',
-        createdAt: new Date().toISOString()
-      };
+    <label>HSC Percentage (12th Std)</label>
+    <input type="number" step="0.01" id="hscPercent">
+    <label>HSC Year of Passing</label>
+    <input type="number" id="hscYear">
 
-      await setDoc(doc(db, 'students', u.uid), payload);
-      alert('Registration saved. Thank you!');
-      window.location.href = 'student.html';
-    });
+    <label>Diploma %</label>
+    <input type="number" step="0.01" id="diplomaPercent">
+    <label>Diploma Year of Passing</label>
+    <input type="number" id="diplomaYear">
+
+    <label>Graduation Degree *</label>
+    <select id="gradDegree" required>
+      <option>BE/BTech</option>
+      <option>Diploma</option>
+      <option>Others</option>
+    </select>
+
+    <label>Specialization of Graduation *</label>
+    <select id="gradSpec" required>
+      <option>ENTC</option>
+      <option>Electronics</option>
+      <option>Electrical</option>
+      <option>Instrumentation</option>
+      <option>Others</option>
+    </select>
+
+    <label>Graduation Year of Passing *</label>
+    <select id="gradYear" required>
+      <option>2026</option><option>2025</option><option>2024</option>
+      <option>2023</option><option>2022</option><option>2021</option><option>2020 and before</option>
+    </select>
+
+    <label>Graduation Aggregate % *</label>
+    <input type="number" step="0.01" id="gradPercent" required>
+
+    <label>Name of the College of Graduation *</label>
+    <input id="gradCollege" required>
+
+    <label>Name of the University of Graduation *</label>
+    <input id="gradUniversity" required>
+
+    <label>Mention Automation Training/Course Done (if any) *</label>
+    <input id="itCourse" required>
+
+    <label>Name of Institute from where Training/Course is Done *</label>
+    <input id="itInstitute" required>
+
+    <label>Current City *</label>
+    <input id="sCity" required>
+
+    <label>Are you ready to Relocate *</label>
+    <select id="relocate" required>
+      <option>Anywhere in India</option>
+      <option>Pune</option>
+      <option>Mumbai</option>
+      <option>Bangalore</option>
+      <option>Hyderabad</option>
+      <option>Chennai</option>
+      <option>Indore</option>
+      <option>Ahmadabad</option>
+    </select>
+
+    <label>Do you have a year gap during/between education *</label>
+    <select id="yearGap" required>
+      <option>No year gap</option>
+      <option>1 Year Gap</option>
+      <option>More than 1 year gap</option>
+    </select>
+
+    <label>Attach CV *</label>
+    <input type="file" id="sCV" accept=".pdf,.doc,.docx" required>
+
+    <label>Rate your communication skills *</label>
+    <select id="commSkills" required>
+      <option>Poor</option>
+      <option>1</option><option>2</option><option>3</option>
+      <option>4</option><option>5</option><option>6</option>
+      <option>7</option><option>8</option><option>9</option>
+      <option>10</option>
+    </select>
+
+    <label>Attach Photo *</label>
+    <input type="file" id="sPhoto" accept="image/*" required>
+
+    <label>Declaration *</label>
+    <select id="declaration" required>
+      <option>Yes</option>
+      <option>No</option>
+    </select>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <script>
+  const studentForm = document.getElementById("studentForm");
+
+  studentForm.addEventListener("submit", e => {
+    e.preventDefault();
+
+    const studentData = {
+      email: sEmail.value,
+      name: sName.value,
+      gender: sGender.value,
+      dob: sDOB.value,
+      mobile1: sMobile1.value,
+      sscPercent: sscPercent.value,
+      sscYear: sscYear.value,
+      sscMedium: sscMedium.value,
+      hscPercent: hscPercent.value,
+      hscYear: hscYear.value,
+      diplomaPercent: diplomaPercent.value,
+      diplomaYear: diplomaYear.value,
+      gradDegree: gradDegree.value,
+      gradSpec: gradSpec.value,
+      gradYear: gradYear.value,
+      gradPercent: gradPercent.value,
+      gradCollege: gradCollege.value,
+      gradUniversity: gradUniversity.value,
+      itCourse: itCourse.value,
+      itInstitute: itInstitute.value,
+      city: sCity.value,
+      relocate: relocate.value,
+      yearGap: yearGap.value,
+      commSkills: commSkills.value,
+      declaration: declaration.value,
+      photo: sPhoto.files[0]?.name || "",
+      cv: sCV.files[0]?.name || "",
+      submittedAt: new Date().toLocaleString()
+    };
+
+    const students = JSON.parse(localStorage.getItem("studentsData")) || [];
+    students.push(studentData);
+    localStorage.setItem("studentsData", JSON.stringify(students));
+
+    alert("✅ Registration Submitted Successfully!");
+    studentForm.reset();
+    window.location.href = "student-dashboard.html";
+  });
   </script>
 </body>
 </html>

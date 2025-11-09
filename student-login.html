@@ -1,297 +1,219 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Student Portal Login — JobSure Automation</title>
-
-  <!-- Tailwind + font -->
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet" />
-  <style> body { font-family: 'Poppins', sans-serif; }</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Student Portal - Jobsure Automation Training</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      background-color: #f8f9fa; 
+      display: flex; 
+      justify-content: center; 
+      align-items: center; 
+      min-height: 100vh; 
+      margin: 0; 
+    }
+    .container-box { 
+      background: white; 
+      padding: 25px; 
+      border-radius: 10px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); 
+      width: 100%; 
+      max-width: 380px; 
+      text-align: center; 
+    }
+    img.avatar { 
+      width: 90px; 
+      border-radius: 50%; 
+      margin-bottom: 10px; 
+    }
+    h1 { 
+      color: #004080; 
+      margin-bottom: 20px; 
+    }
+    input[type=text], input[type=password], input[type=email] { 
+      width: 100%; 
+      padding: 10px; 
+      margin: 8px 0; 
+      border: 1px solid #ccc; 
+      border-radius: 5px; 
+    }
+    .showpass { 
+      display: flex; 
+      align-items: center; 
+      justify-content: flex-start; 
+      font-size: 0.9em; 
+      margin-bottom: 12px; 
+      color: #333; 
+    }
+    button { 
+      background-color: #004080; 
+      color: white; 
+      padding: 10px; 
+      border: none; 
+      border-radius: 5px; 
+      cursor: pointer; 
+      width: 100%; 
+      margin-bottom: 10px; 
+    }
+    button:hover { 
+      background-color: #0066cc; 
+    }
+    .small-text { 
+      font-size: 0.9em; 
+      margin-top: 5px; 
+    }
+    a { 
+      color: #0066cc; 
+      text-decoration: none; 
+    }
+    a:hover { 
+      text-decoration: underline; 
+    }
+    #message { 
+      margin-top: 10px; 
+      font-size: 0.9em; 
+    }
+  </style>
 </head>
-<body class="bg-white">
+<body>
 
-  <!-- Header -->
-  <header class="bg-white shadow-sm sticky top-0 z-40">
-    <div class="max-w-3xl mx-auto px-6 py-4 flex items-center justify-center">
-      <a href="index.html" class="flex items-center gap-3">
-        <img src="logo.jpg" alt="JobSure" class="w-12 h-12 rounded-lg object-cover">
-        <div class="text-center">
-          <div class="text-lg font-semibold text-blue-900">JobSure Automation</div>
-          <div class="text-xs text-gray-500">PLC · SCADA · DCS · HMI</div>
-        </div>
-      </a>
-    </div>
-  </header>
+<div class="container-box">
+  <h1>Student Portal</h1>
+  <img src="avatar.png" alt="Avatar" class="avatar">
 
-  <!-- Centered Card -->
-  <main class="min-h-[calc(100vh-120px)] flex items-center justify-center px-4">
-    <div class="w-full max-w-md mx-auto">
-      <div class="rounded-xl shadow-lg bg-white p-8">
-        <!-- Logo & Tagline -->
-        <div class="text-center mb-4">
-          <img src="avatar.png" alt="JobSure Logo" class="w-16 h-16 mx-auto rounded-md object-cover">
-          <h1 class="mt-3 text-2xl font-semibold text-blue-900">Student Portal Login</h1>
-          <p class="text-sm text-gray-500 mt-1">Empowering Automation Careers</p>
-        </div>
+  <input type="email" placeholder="Enter Email" id="email" required>
+  <input type="password" placeholder="Enter Password" id="password" required>
+  <input type="password" placeholder="Re-enter Password" id="repassword" style="display:none;" required>
 
-        <!-- Error message (simple red text) -->
-        <div id="errorBox" class="text-red-600 text-sm mb-3 hidden"></div>
+  <div class="showpass">
+    <input type="checkbox" onclick="togglePass()" id="showPassBox">
+    <label for="showPassBox">&nbsp;Show Password</label>
+  </div>
 
-        <!-- Form -->
-        <form id="loginForm" class="space-y-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Email</label>
-            <input id="email" type="email" required
-                   class="mt-1 w-full border rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                   placeholder="you@example.com" />
-          </div>
+  <button id="loginBtn">Login</button>
+  <button id="signupBtn">Sign Up</button>
 
-          <div>
-            <label class="block text-sm font-medium text-gray-700">Password</label>
-            <div class="relative">
-              <input id="password" type="password" required
-                     class="mt-1 w-full border rounded p-3 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                     placeholder="Enter your password" />
-              <button type="button" id="togglePwd"
-                      class="absolute right-3 top-3 text-sm text-blue-600">Show</button>
-            </div>
-          </div>
+  <label style="display:block;margin-top:5px;">
+    <input type="checkbox" checked="checked"> Remember me
+  </label>
+  <p class="small-text"><a href="#" onclick="resetPassword()">Forgot password?</a></p>
 
-          <div class="flex items-center justify-between text-sm">
-            <div class="flex items-center gap-2">
-              <input id="remember" type="checkbox" class="h-4 w-4 text-blue-600" />
-              <label for="remember" class="text-gray-700">Remember me</label>
-            </div>
-            <button id="forgotBtn" type="button" class="text-blue-600 hover:underline">Forgot Password?</button>
-          </div>
+  <p id="message"></p>
+</div>
 
-          <!-- Buttons -->
-          <div class="space-y-3">
-            <button id="loginBtn" type="submit"
-                    class="w-full rounded-md px-4 py-2 font-semibold text-white bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 flex items-center justify-center gap-3">
-              <svg id="spinner" class="hidden animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 00-8 8h4z"></path>
-              </svg>
-              <span id="loginBtnText">Login</span>
-            </button>
+<script type="module">
+  // ================== Firebase Config ==================
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import { 
+    getAuth, 
+    signInWithEmailAndPassword, 
+    createUserWithEmailAndPassword, 
+    sendEmailVerification,
+    sendPasswordResetEmail,
+    onAuthStateChanged
+  } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
 
-            <button id="googleBtn" type="button"
-                    class="w-full rounded-md px-4 py-2 border border-gray-200 flex items-center justify-center gap-3">
-              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5" alt="google" />
-              Sign in with Google
-            </button>
-          </div>
+  const firebaseConfig = {
+    apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
+    authDomain: "jobsure-115fa.firebaseapp.com",
+    projectId: "jobsure-115fa",
+    storageBucket: "jobsure-115fa.firebasestorage.app",
+    messagingSenderId: "575119834568",
+    appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd",
+    measurementId: "G-6KTNMMZHG9"
+  };
 
-          <p class="text-center text-sm mt-2">Don't have an account? <a href="student-registration.html" class="text-blue-600">Create Account</a></p>
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  // ======================================================
 
-          <!-- Resend verification (hidden by default) -->
-          <div id="verifySection" class="mt-3 text-sm text-gray-700 hidden">
-            <div id="verifyMsg" class="text-gray-700 mb-2"></div>
-            <button id="resendBtn" type="button" class="text-sm text-blue-600 hover:underline">Resend Verification Email</button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </main>
+  const msg = document.getElementById('message');
+  const emailInput = document.getElementById('email');
+  const passInput = document.getElementById('password');
+  const rePassInput = document.getElementById('repassword');
+  const loginBtn = document.getElementById('loginBtn');
+  const signupBtn = document.getElementById('signupBtn');
 
-  <!-- Footer -->
-  <footer class="py-6 text-center text-sm text-gray-600">
-    © 2025 JobSure Automation Training
-  </footer>
+  window.togglePass = function() {
+    const type = (passInput.type === "password") ? "text" : "password";
+    passInput.type = rePassInput.type = type;
+  }
 
-  <!-- Firebase Auth logic -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-app.js";
-    import {
-      getAuth,
-      signInWithEmailAndPassword,
-      GoogleAuthProvider,
-      signInWithPopup,
-      sendPasswordResetEmail,
-      sendEmailVerification,
-      signOut
-    } from "https://www.gstatic.com/firebasejs/10.13.0/firebase-auth.js";
-
-    // Firebase config (your project)
-    const firebaseConfig = {
-      apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
-      authDomain: "jobsure-115fa.firebaseapp.com",
-      projectId: "jobsure-115fa",
-      storageBucket: "jobsure-115fa.firebasestorage.app",
-      messagingSenderId: "575119834568",
-      appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-
-    // Elements
-    const loginForm = document.getElementById('loginForm');
-    const emailEl = document.getElementById('email');
-    const pwdEl = document.getElementById('password');
-    const errorBox = document.getElementById('errorBox');
-    const loginBtn = document.getElementById('loginBtn');
-    const loginBtnText = document.getElementById('loginBtnText');
-    const spinner = document.getElementById('spinner');
-    const togglePwd = document.getElementById('togglePwd');
-    const googleBtn = document.getElementById('googleBtn');
-    const forgotBtn = document.getElementById('forgotBtn');
-    const verifySection = document.getElementById('verifySection');
-    const verifyMsg = document.getElementById('verifyMsg');
-    const resendBtn = document.getElementById('resendBtn');
-
-    // Simple helper to show simple red error text (clean)
-    function showError(msg) {
-      errorBox.textContent = msg;
-      errorBox.classList.remove('hidden');
+  // Auto-login if verified
+  onAuthStateChanged(auth, (user)=>{
+    if(user && user.emailVerified){
+      window.location.href = "student-registration.html";
     }
-    function hideError() {
-      errorBox.textContent = '';
-      errorBox.classList.add('hidden');
+  });
+
+  // LOGIN
+  loginBtn.onclick = async () => {
+    try {
+      const userCred = await signInWithEmailAndPassword(auth, emailInput.value, passInput.value);
+      if(!userCred.user.emailVerified){
+        msg.style.color = "red";
+        msg.textContent = "⚠ Email not verified! Please check your inbox.";
+        return;
+      }
+      msg.style.color = "green";
+      msg.textContent = "✅ Login Successful!";
+      setTimeout(()=> window.location.href = "student-registration.html", 800);
+    } catch(e) { 
+      msg.style.color="red"; 
+      msg.textContent="❌ "+e.message; 
     }
+  }
 
-    // Loader toggle
-    function setLoading(isLoading) {
-      if (isLoading) {
-        spinner.classList.remove('hidden');
-        loginBtnText.textContent = 'Please wait...';
-        loginBtn.disabled = true;
-      } else {
-        spinner.classList.add('hidden');
-        loginBtnText.textContent = 'Login';
-        loginBtn.disabled = false;
-      }
+  // SIGNUP
+  signupBtn.onclick = async () => {
+    rePassInput.style.display = "block"; 
+    if(passInput.value !== rePassInput.value){
+      msg.style.color = "red"; 
+      msg.textContent = "⚠ Passwords do not match!";
+      return;
     }
+    try {
+      const userCred = await createUserWithEmailAndPassword(auth, emailInput.value, passInput.value);
+      await sendEmailVerification(userCred.user);
+      msg.style.color = "green"; 
+      msg.textContent = "✅ Account Created! Check your email for verification.";
 
-    // Map Firebase errors to simple red text (clean)
-    function friendlyError(code) {
-      switch (code) {
-        case 'auth/wrong-password': return 'Incorrect password';
-        case 'auth/user-not-found': return 'No account found with this email';
-        case 'auth/invalid-email': return 'Enter a valid email';
-        case 'auth/too-many-requests': return 'Too many attempts. Try again later';
-        default: return 'Login failed';
-      }
+      // Wait for verification
+      const checkEmailVerified = setInterval(async ()=>{
+        await userCred.user.reload();
+        if(userCred.user.emailVerified){
+          clearInterval(checkEmailVerified);
+          msg.style.color="green"; 
+          msg.textContent="✅ Email Verified! Redirecting...";
+          setTimeout(()=> window.location.href="student.html", 800);
+        }
+      }, 3000);
+
+    } catch(e){ 
+      msg.style.color="red"; 
+      msg.textContent="❌ "+e.message; 
     }
+  }
 
-    // Toggle password show/hide
-    togglePwd.addEventListener('click', () => {
-      if (pwdEl.type === 'password') { pwdEl.type = 'text'; togglePwd.textContent = 'Hide'; }
-      else { pwdEl.type = 'password'; togglePwd.textContent = 'Show'; }
-    });
+  // RESET PASSWORD
+  window.resetPassword = async () => {
+    if(!emailInput.value){ 
+      msg.style.color="red"; 
+      msg.textContent="⚠ Please enter your email first."; 
+      return; 
+    }
+    try {
+      await sendPasswordResetEmail(auth, emailInput.value);
+      msg.style.color="green"; 
+      msg.textContent="✔ Password reset email sent!";
+    } catch(e){ 
+      msg.style.color="red"; 
+      msg.textContent="❌ "+e.message; 
+    }
+  }
+</script>
 
-    // Forgot password flow
-    forgotBtn.addEventListener('click', async () => {
-      hideError();
-      const email = emailEl.value.trim();
-      if (!email) { showError('Please enter your email to reset password'); return; }
-      setLoading(true);
-      try {
-        await sendPasswordResetEmail(auth, email);
-        showError('Password reset email sent. Check your inbox.');
-      } catch (err) {
-        showError(friendlyError(err.code || '') || 'Failed to send reset email');
-      } finally {
-        setLoading(false);
-      }
-    });
-
-    // Login submit
-    loginForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      hideError();
-      verifySection.classList.add('hidden');
-
-      const email = emailEl.value.trim();
-      const password = pwdEl.value;
-
-      if (!email || !password) { showError('Please fill required fields'); return; }
-
-      setLoading(true);
-      try {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
-        const user = userCredential.user;
-
-        // Check email verification
-        if (user.emailVerified) {
-          // Redirect to student dashboard
-          window.location.href = 'student.html';
-        } else {
-          // Not verified — show professional message (Option B)
-          showError('Your email is not verified. Please check your inbox and verify your account.');
-          verifyMsg.textContent = 'Your email is not verified.';
-          verifySection.classList.remove('hidden');
-
-          // keep user signed in for resend action (we will sign out after sending)
-        }
-      } catch (err) {
-        // Show simple red error text
-        showError(friendlyError(err.code || ''));
-      } finally {
-        setLoading(false);
-      }
-    });
-
-    // Resend verification email (attempts to resend to the signed-in user)
-    resendBtn.addEventListener('click', async () => {
-      hideError();
-      setLoading(true);
-      try {
-        // The current user might not be available (signed-out). We'll sign in silently using the entered credentials.
-        const email = emailEl.value.trim();
-        const password = pwdEl.value;
-        if (!email || !password) {
-          showError('Enter email & password above to resend verification');
-          setLoading(false);
-          return;
-        }
-
-        // Sign in to get the user object then send verification
-        const cred = await signInWithEmailAndPassword(auth, email, password);
-        const user = cred.user;
-        if (user.emailVerified) {
-          showError('Email is already verified. Redirecting...');
-          // sign out then redirect
-          await signOut(auth);
-          window.location.href = 'student.html';
-          return;
-        }
-
-        await sendEmailVerification(user);
-        showError('Verification link sent again. Please check your email.');
-        // sign out the temporary session so user must verify before login
-        await signOut(auth);
-      } catch (err) {
-        showError('Failed to resend verification. Try again.');
-      } finally {
-        setLoading(false);
-      }
-    });
-
-    // Google Sign-In
-    googleBtn.addEventListener('click', async () => {
-      hideError();
-      setLoading(true);
-      try {
-        const provider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, provider);
-        const user = result.user;
-        // Google accounts are considered verified by default
-        if (user.emailVerified) {
-          window.location.href = 'student.html';
-        } else {
-          // unlikely for Google, but handle gracefully
-          showError('Your email is not verified. Please verify your Google account email.');
-        }
-      } catch (err) {
-        showError('Login failed');
-      } finally {
-        setLoading(false);
-      }
-    });
-  </script>
 </body>
 </html>
