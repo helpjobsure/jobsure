@@ -23,7 +23,7 @@
       position: fixed;
       right: 18px;
       bottom: 15px;
-      z-index: 60;
+      z-Home : 60;
       width: 56px;
       height: 56px;
       border-radius: 999px;
@@ -44,7 +44,7 @@
   <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
 
-      <a href="index.html" class="flex items-center gap-3">
+      <a href="Home " class="flex items-center gap-3">
         <img src="logo.jpg" alt="JobSure Logo" class="w-12 h-12 object-cover rounded-md" />
         <div>
           <h1 class="text-lg font-semibold">Jobsure Automation</h1>
@@ -54,21 +54,21 @@
 
       <!-- Desktop Navbar -->
       <nav class="hidden lg:flex items-center gap-6 text-sm">
-        <a href="index.html" class="hover:text-indigo-600">Home</a>
-        <a href="courses.html" class="hover:text-indigo-600">Courses</a>
-        <a href="about.html" class="hover:text-indigo-600">About</a>
-        <a href="contact.html" class="hover:text-indigo-600">Contact</a>
+        <a href="Home " class="hover:text-indigo-600">Home</a>
+        <a href="courses" class="hover:text-indigo-600">Courses</a>
+        <a href="about" class="hover:text-indigo-600">About</a>
+        <a href="contact" class="hover:text-indigo-600">Contact</a>
 
         <a href="javascript:void(0)" onclick="openSearch()"
           class="px-3 py-2 rounded-md border border-slate-200 text-sm">
           Search
         </a>
 
-        <a href="student-login.html" class="px-3 py-2 bg-indigo-600 text-white rounded-full text-sm">
+        <a href="student-login" class="px-3 py-2 bg-indigo-600 text-white rounded-full text-sm">
           Student Login
         </a>
 
-        <a href="Organization-login.html" class="px-3 py-2 bg-indigo-600 text-white rounded-full text-sm">
+        <a href="Organization-login" class="px-3 py-2 bg-indigo-600 text-white rounded-full text-sm">
           Organization Login
         </a>
 
@@ -89,12 +89,12 @@
     <!-- Mobile Menu -->
     <div id="mobileMenu" class="lg:hidden hidden border-t bg-white">
       <div class="px-4 py-3 flex flex-col gap-2">
-        <a href="index.html" class="py-2">Home</a>
-        <a href="courses.html" class="py-2">Courses</a>
-        <a href="about.html" class="py-2">About</a>
-        <a href="contact.html" class="py-2">Contact</a>
-        <a href="student-login.html" class="py-2">Student Login</a>
-        <a href="Organization-login.html" class="py-2">Organization Login</a>
+        <a href="Home " class="py-2">Home</a>
+        <a href="courses" class="py-2">Courses</a>
+        <a href="about" class="py-2">About</a>
+        <a href="contact" class="py-2">Contact</a>
+        <a href="student-login" class="py-2">Student Login</a>
+        <a href="Organization-login" class="py-2">Organization Login</a>
         <a href="tel:+917798311756" class="py-2">Call Now: +91 7798311756</a>
       </div>
     </div>
@@ -116,10 +116,10 @@
           </p>
 
           <div class="mt-6 flex flex-wrap gap-3">
-            <a href="courses.html" class="px-5 py-3 bg-indigo-600 text-white rounded-full shadow-sm">View Courses</a>
-            <a href="contact.html" class="px-5 py-3 border border-slate-200 rounded-full text-slate-800">Enquire Now</a>
-            <a href="student-login.html" class="px-4 py-3 bg-slate-100 rounded-md">Student Login</a>
-            <a href="Organization-login.html" class="px-4 py-3 bg-slate-100 rounded-md">Organization Login</a>
+            <a href="courses" class="px-5 py-3 bg-indigo-600 text-white rounded-full shadow-sm">View Courses</a>
+            <a href="contact" class="px-5 py-3 border border-slate-200 rounded-full text-slate-800">Enquiry Now</a>
+            <a href="student-login" class="px-4 py-3 bg-slate-100 rounded-md">Student Login</a>
+            <a href="Organization-login" class="px-4 py-3 bg-slate-100 rounded-md">Organization Login</a>
           </div>
 
           <!-- Metrics -->
@@ -163,9 +163,9 @@
 
           <!-- Slider Dots -->
           <div class="absolute left-1/2 -translate-x-1/2 bottom-4 flex gap-2">
-            <button class="dot bg-indigo-600 w-3 h-3 md:w-4 md:h-4" data-index="0"></button>
-            <button class="dot bg-slate-300 w-3 h-3 md:w-4 md:h-4" data-index="1"></button>
-            <button class="dot bg-slate-300 w-3 h-3 md:w-4 md:h-4" data-index="2"></button>
+            <button class="dot bg-indigo-600 w-3 h-3 md:w-4 md:h-4" data-Home ="0"></button>
+            <button class="dot bg-slate-300 w-3 h-3 md:w-4 md:h-4" data-Home ="1"></button>
+            <button class="dot bg-slate-300 w-3 h-3 md:w-4 md:h-4" data-Home ="2"></button>
           </div>
         </div>
 
@@ -176,7 +176,7 @@
     <section class="max-w-6xl mx-auto px-4 py-12">
       <div class="flex items-center justify-between mb-6">
         <h3 class="text-2xl font-semibold">Popular Courses</h3>
-        <a href="courses.html" class="text-sm text-slate-600">View all courses →</a>
+        <a href="courses" class="text-sm text-slate-600">View all courses →</a>
       </div>
 
       <div id="coursesPreview" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
@@ -304,9 +304,9 @@
       <div>
         <h5 class="font-semibold mb-2">Quick Links</h5>
         <ul class="text-sm space-y-2 text-slate-300">
-          <li><a href="courses.html" class="hover:text-white">Courses</a></li>
-          <li><a href="about.html" class="hover:text-white">About</a></li>
-          <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+          <li><a href="courses" class="hover:text-white">Courses</a></li>
+          <li><a href="about" class="hover:text-white">About</a></li>
+          <li><a href="contact" class="hover:text-white">Contact</a></li>
         </ul>
       </div>
 
@@ -339,14 +339,14 @@
         { title: 'Placement-Focused Training & Internships', desc: 'Internship certificates, resume help and interview preparation — get industry ready.', img: 'service6.jpg' },
       ];
 
-      let index = 0;
+      let Home  = 0;
       const titleEl = document.getElementById('heroTitle');
       const descEl = document.getElementById('heroDesc');
       const imgEl = document.getElementById('heroImage');
       const dots = document.querySelectorAll('.dot');
 
       function show(i) {
-        index = i;
+        Home  = i;
         titleEl.textContent = slides[i].title;
         descEl.textContent = slides[i].desc;
         imgEl.src = slides[i].img;
@@ -357,7 +357,7 @@
 
       dots.forEach((d, i) => d.addEventListener('click', () => show(i)));
 
-      setInterval(() => show((index + 1) % slides.length), 6000);
+      setInterval(() => show((Home  + 1) % slides.length), 6000);
       show(0);
     })();
 

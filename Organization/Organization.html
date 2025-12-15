@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard - Jobsure</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.sheetjs.com/xlsx-latest/package/dist/xlsx.full.min.js"></script>
+  <style>
+    body { background: #f4f6f9; }
+    .navbar { background: #004080; }
+    .navbar-brand, .nav-link, .navbar-text { color: #fff !important; }
+    .card { margin: 15px; padding: 10px; border-radius: 10px; box-shadow: 0 2px 6px rgba(0,0,0,0.2); }
+    .table-container { overflow-x: auto; }
+    label { font-weight: bold; margin-top: 8px; }
+    .nav-link { background-color: #004080; color:white; margin-right:2px; border-radius:5px; }
+    .nav-link.active { font-weight: bold; }
+    h1.tab-header { background-color: LightGray; padding: 10px; border-radius:5px; }
+    h3.section-header { background-color: #e0e0e0; padding: 8px 10px; border-radius:5px; margin-top:20px; }
+    img.student-photo { width: 70px; height: 70px; border-radius: 50%; object-fit: cover; border: 2px solid #ccc; }
+    iframe.pdf-view { width: 100px; height: 100px; border: none; }
+    .small-note { font-size: 12px; color: #666; }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg">
+    <div class="container-fluid">
+      <a class="navbar-brand">Jobsure Automation Training Admin</a>
+      <button class="btn btn-danger ms-auto" id="logoutBtn">Logout</button>
+    </div>
+  </nav>
+
+  <div class="container mt-4">
+    <h2 class="text-center text-primary">Admin Dashboard</h2>
+
+    <ul class="nav nav-tabs mt-3">
+      <li class="nav-item"><button class="nav-link active" data-bs-toggle="tab" data-bs-target="#students">Students</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#invoice">Invoice</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#assignments">Assignments</button></li>
+      <li class="nav-item"><button class="nav-link" data-bs-toggle="tab" data-bs-target="#materials">Study Material</button></li>
+    </ul>
+
+    <div class="tab-content mt-3">
+
+    <!-- Students Tab -->
+<div class="tab-pane fade show active" id="students">
+  
+  <h1 class="tab-header">Students Registration Data</h1>
+
+  <!-- 🔥 ADD ALERT HERE -->
+  <div class="alert alert-warning d-flex justify-content-between align-items-center">
+    <div>
+      <b>Note:</b> If any student faced submission issue, they may have used Google Form.
+    </div>
+    <a href="https://forms.gle/Kt6ggY9kHssFW1uj9"
+       target="_blank"
+       class="btn btn-sm btn-outline-dark">
+       Open Google Form
+    </a>
+  </div>
+
+  <div class="table-container mt-2">
+    <table class="table table-bordered table-striped align-middle" id="studentTable">
+      <thead class="table-dark">
+        <tr>
+          <th>Email</th><th>Name</th><th>Gender</th><th>DOB</th><th>Mobile</th>
+          <th>SSC %</th><th>SSC Year</th><th>Medium</th>
+          <th>HSC %</th><th>HSC Year</th><th>Diploma %</th><th>Diploma Year</th>
+          <th>Grad Degree</th><th>Specialization</th><th>Grad Year</th><th>Grad %</th>
+          <th>College</th><th>University</th><th>IT Course</th><th>IT Institute</th>
+          <th>City</th><th>Relocate</th><th>Year Gap</th><th>Comm Skills</th>
+          <th>Declaration</th><th>Photo</th><th>CV</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <div class="d-flex gap-2 mt-2">
+    <button class="btn btn-success" id="exportExcel">Export Excel</button>
+    <div class="small-note align-self-center">Exports live data from Firestore</div>
+  </div>
+</div>
+
+
+      <!-- Invoice Tab -->
+      <div class="tab-pane fade" id="invoice">
+        <h1 class="tab-header">Generate Invoice</h1>
+        <form id="invoiceForm" class="mb-3">
+          <label>Student Name</label><input id="invName" class="form-control" required>
+          <label>Course</label><input id="invCourse" class="form-control" required>
+          <label>Duration</label><input id="invDuration" class="form-control" required>
+          <label>Course Fee (INR)</label><input id="invFee" class="form-control" required>
+          <button class="btn btn-success mt-2" type="submit">Generate Invoice</button>
+        </form>
+        <iframe id="invoiceFrame" style="width:100%; height:400px; border:1px solid #ccc;"></iframe>
+        <div class="mt-2">
+          <button class="btn btn-primary" id="downloadInvoice">Download PDF</button>
+          <button class="btn btn-secondary" id="printInvoice">Print</button>
+        </div>
+      </div>
+
+      <!-- Assignments Tab -->
+      <div class="tab-pane fade" id="assignments">
+        <h3 class="section-header">Assignments</h3>
+        <form id="assignmentForm">
+          <label>Course</label>
+          <select id="assignmentCourse" class="form-control" required>
+            <option value="">Select Course</option>
+            <option value="DCS">DCS</option>
+            <option value="PLC">PLC</option>
+            <option value="SM">SM</option>
+            <option value="SMSC">SMSC</option>
+            <option value="AutoCAD">AutoCAD</option>
+            <option value="HMI">HMI</option>
+            <option value="SCADA">SCADA</option>
+          </select>
+
+          <label>Title / Topic</label>
+          <input type="text" id="assignmentTitle" class="form-control" placeholder="Enter title/topic" required>
+
+          <label>Due Date</label>
+          <input type="date" id="assignmentDue" class="form-control">
+
+          <label>Upload File (PDF / PPT / XLSX)</label>
+          <input type="file" id="assignmentFile" class="form-control" accept=".pdf,.ppt,.pptx,.xls,.xlsx" required>
+
+          <button type="submit" class="btn btn-success mt-2">Upload Assignment</button>
+        </form>
+        <div id="uploadedAssignments" class="mt-3"></div>
+      </div>
+
+      <!-- Study Material Tab -->
+      <div class="tab-pane fade" id="materials">
+        <h3 class="section-header">Study Material</h3>
+        <form id="materialForm">
+          <label>Course</label>
+          <select id="materialCourse" class="form-control" required>
+            <option value="">Select Course</option>
+            <option value="DCS">DCS</option>
+            <option value="PLC">PLC</option>
+            <option value="SM">SM</option>
+            <option value="SMSC">SMSC</option>
+            <option value="AutoCAD">AutoCAD</option>
+            <option value="HMI">HMI</option>
+            <option value="SCADA">SCADA</option>
+          </select>
+
+          <label>Title / Topic</label>
+          <input type="text" id="materialTitle" class="form-control" placeholder="Enter title/topic" required>
+
+          <label>Due Date (optional)</label>
+          <input type="date" id="materialDue" class="form-control">
+
+          <label>Upload File (PDF / PPT / XLSX)</label>
+          <input type="file" id="materialFile" class="form-control" accept=".pdf,.ppt,.pptx,.xls,.xlsx" required>
+
+          <button type="submit" class="btn btn-success mt-2">Upload Material</button>
+        </form>
+        <div id="uploadedMaterials" class="mt-3"></div>
+      </div>
+
+    </div>
+  </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- FIREBASE INTEGRATION (ALL FIRESTORE + STORAGE) -->
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+  import {
+    getFirestore, collection, addDoc, getDocs, onSnapshot,
+    doc, updateDoc, deleteDoc, query, orderBy
+  } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+  import {
+    getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject
+  } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
+
+  // ----- YOUR FIREBASE CONFIG (from your message) -----
+  const firebaseConfig = {
+    apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
+    authDomain: "jobsure-115fa.firebaseapp.com",
+    projectId: "jobsure-115fa",
+    storageBucket: "jobsure-115fa.firebasestorage.app",
+    messagingSenderId: "575119834568",
+    appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd",
+    measurementId: "G-6KTNMMZHG9"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+  const storage = getStorage(app);
+
+  // DOM references
+  const tbody = document.querySelector("#studentTable tbody");
+  const exportBtn = document.getElementById("exportExcel");
+
+  // ---------- STUDENTS: Real-time load ----------
+  function renderStudentRow(id, s) {
+    return `
+      <tr id="row-${id}">
+        <td>${s.email || ''}</td>
+        <td>${s.fullName || s.name || ''}</td>
+        <td>${s.gender || ''}</td>
+        <td>${s.dob || ''}</td>
+        <td>${s.mobile || s.mobile1 || ''}</td>
+
+        <td>${s.ssc || s.sscPercent || ''}</td>
+        <td>${s.sscYear || ''}</td>
+        <td>${s.medium || s.sscMedium || ''}</td>
+
+        <td>${s.hsc || s.hscPercent || ''}</td>
+        <td>${s.hscYear || ''}</td>
+        <td>${s.diploma || s.diplomaPercent || ''}</td>
+        <td>${s.diplomaYear || ''}</td>
+
+        <td>${s.gradDegree || ''}</td>
+        <td>${s.specialization || s.gradSpec || ''}</td>
+        <td>${s.gradYear || ''}</td>
+        <td>${s.gradAgg || s.gradPercent || ''}</td>
+
+        <td>${s.college || s.gradCollege || ''}</td>
+        <td>${s.university || s.gradUniversity || ''}</td>
+        <td>${s.automationCourse || s.itCourse || ''}</td>
+        <td>${s.trainingInstitute || s.itInstitute || ''}</td>
+
+        <td>${s.city || ''}</td>
+        <td>${s.relocate || ''}</td>
+        <td>${s.yearGap || ''}</td>
+        <td>${s.commSkill || s.commSkills || ''}</td>
+
+        <td>${s.declaration ? 'Yes' : ''}</td>
+
+        <td>${s.photoURL ? `<img src="${s.photoURL}" class="student-photo" alt="Photo">` : '—'}</td>
+
+        <td>${s.cvURL ? `<a href="${s.cvURL}" target="_blank">View CV</a>` : '—'}</td>
+
+        <td>
+          <button class="btn btn-sm btn-primary" onclick="openEditForm('${id}')">Edit</button>
+          <button class="btn btn-sm btn-danger" onclick="deleteStudent('${id}')">Delete</button>
+        </td>
+      </tr>
+    `;
+  }
+
+  function loadStudentsRealtime() {
+    // Real-time listener on 'students' collection ordered by createdAt if exists
+    const q = query(collection(db, "students"), orderBy("createdAt", "desc"));
+    onSnapshot(q, (snap) => {
+      tbody.innerHTML = "";
+      snap.forEach(docItem => {
+        const s = docItem.data();
+        const id = docItem.id;
+        tbody.insertAdjacentHTML('beforeend', renderStudentRow(id, s));
+      });
+    }, (err) => {
+      console.error("Error loading students:", err);
+      alert("Error loading students. Check console.");
+    });
+  }
+
+  // Expose functions to window for inline onclick usage
+  window.deleteStudent = async (id) => {
+    if (!confirm("Are you sure you want to delete this student? This will remove the Firestore record and (optionally) storage files.")) return;
+
+    try {
+      // try delete storage files if paths present
+      const docRef = doc(db, "students", id);
+      const snap = await getDocs(query(collection(db, "students"))); // not ideal, but we need single doc - we'll fetch directly
+      // better: fetch single doc via getDoc
+      // but we didn't import getDoc earlier; so instead read via getDocs filtered - simpler to import getDoc
+    } catch (err) {
+      console.error(err);
+    }
+
+    // We'll implement proper single-doc fetch + storage deletion below (using getDoc)
+    try {
+      const { getDoc } = await import("https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js");
+      const docRef = doc(db, "students", id);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        alert("Document not found.");
+        return;
+      }
+      const data = docSnap.data();
+
+      // delete storage files if path fields exist
+      if (data.photoPath) {
+        try {
+          await deleteObject(storageRef(storage, data.photoPath));
+        } catch (e) {
+          console.warn("Could not delete photo from Storage (maybe path missing):", e.message);
+        }
+      }
+      if (data.cvPath) {
+        try {
+          await deleteObject(storageRef(storage, data.cvPath));
+        } catch (e) {
+          console.warn("Could not delete CV from Storage (maybe path missing):", e.message);
+        }
+      }
+
+      // delete firestore doc
+      await deleteDoc(docRef);
+      alert("Student deleted.");
+    } catch (err) {
+      console.error("Delete error:", err);
+      alert("Error deleting student. See console.");
+    }
+  };
+
+  // EDIT: open inline form in table (simple)
+  window.openEditForm = async (id) => {
+    try {
+      const { getDoc } = await import("https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js");
+      const docRef = doc(db, "students", id);
+      const snap = await getDoc(docRef);
+      if (!snap.exists()) { alert("No student found"); return; }
+      const s = snap.data();
+
+      // Build simple edit form replacing the table body temporarily
+      const editHTML = `
+        <tr id="edit-row">
+          <td colspan="28">
+            <h4>Edit Student</h4>
+            <form id="studentEditForm" class="row g-2">
+              <div class="col-md-4"><label class="form-label">Full Name</label><input class="form-control" id="e_fullName" value="${(s.fullName||s.name||'').replaceAll('"','&quot;')}" /></div>
+              <div class="col-md-4"><label class="form-label">Email</label><input class="form-control" id="e_email" value="${(s.email||'').replaceAll('"','&quot;')}" /></div>
+              <div class="col-md-4"><label class="form-label">Mobile</label><input class="form-control" id="e_mobile" value="${(s.mobile||s.mobile1||'')}" /></div>
+              <div class="col-md-4"><label class="form-label">City</label><input class="form-control" id="e_city" value="${(s.city||'')}" /></div>
+              <div class="col-12 mt-2">
+                <button type="submit" class="btn btn-success">Save</button>
+                <button type="button" class="btn btn-secondary" id="cancelEdit">Cancel</button>
+              </div>
+            </form>
+          </td>
+        </tr>
+      `;
+      // insert and scroll
+      tbody.insertAdjacentHTML('afterbegin', editHTML);
+      document.getElementById("cancelEdit").onclick = () => { document.getElementById("edit-row").remove(); };
+
+      document.getElementById("studentEditForm").addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const updated = {
+          fullName: document.getElementById("e_fullName").value,
+          email: document.getElementById("e_email").value,
+          mobile: document.getElementById("e_mobile").value,
+          city: document.getElementById("e_city").value,
+          updatedAt: new Date()
+        };
+        await updateDoc(docRef, updated);
+        alert("Updated successfully.");
+        document.getElementById("edit-row").remove();
+      });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      console.error(err);
+      alert("Error opening edit form.");
+    }
+  };
+
+  // ---------- Assignments: upload to Storage + Firestore ----------
+  const assignmentForm = document.getElementById("assignmentForm");
+  const uploadedAssignmentsDiv = document.getElementById("uploadedAssignments");
+
+  assignmentForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const course = document.getElementById("assignmentCourse").value;
+    const topic = document.getElementById("assignmentTitle").value;
+    const due = document.getElementById("assignmentDue").value;
+    const fileInput = document.getElementById("assignmentFile");
+    if (!fileInput.files.length) { alert("Select a file"); return; }
+    const file = fileInput.files[0];
+
+    try {
+      const path = `assignments/${Date.now()}_${file.name}`;
+      const refFile = storageRef(storage, path);
+      await uploadBytes(refFile, file);
+      const url = await getDownloadURL(refFile);
+
+      await addDoc(collection(db, "assignments"), {
+        course, topic, due, fileURL: url, filePath: path, createdAt: new Date()
+      });
+
+      assignmentForm.reset();
+      alert("Assignment uploaded.");
+      loadAssignments();
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed.");
+    }
+  });
+
+  async function loadAssignments() {
+    const snap = await getDocs(query(collection(db, "assignments"), orderBy("createdAt", "desc")));
+    if (snap.empty) { uploadedAssignmentsDiv.innerHTML = "<p>No assignments uploaded yet.</p>"; return; }
+    let html = "<ul>";
+    snap.forEach(d => {
+      const a = d.data();
+      html += `<li><b>${a.course}</b> - ${a.topic} ${a.due ? '(Due:' + a.due + ')' : ''} - <a href="${a.fileURL}" target="_blank">View / Download</a> <button class="btn btn-sm btn-danger ms-2" onclick="deleteAssignment('${d.id}')">Delete</button></li>`;
+    });
+    html += "</ul>";
+    uploadedAssignmentsDiv.innerHTML = html;
+  }
+  window.deleteAssignment = async (id) => {
+    if (!confirm("Delete assignment?")) return;
+    try {
+      const { getDoc } = await import("https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js");
+      const docRef = doc(db, "assignments", id);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data.filePath) {
+          try { await deleteObject(storageRef(storage, data.filePath)); } catch(e){ console.warn(e.message); }
+        }
+        await deleteDoc(docRef);
+        loadAssignments();
+      }
+    } catch (e) { console.error(e); alert("Error deleting assignment"); }
+  };
+
+  // ---------- Study Materials ----------
+  const materialForm = document.getElementById("materialForm");
+  const uploadedMaterialsDiv = document.getElementById("uploadedMaterials");
+
+  materialForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const course = document.getElementById("materialCourse").value;
+    const topic = document.getElementById("materialTitle").value;
+    const due = document.getElementById("materialDue").value;
+    const fileInput = document.getElementById("materialFile");
+    if (!fileInput.files.length) { alert("Select a file"); return; }
+    const file = fileInput.files[0];
+
+    try {
+      const path = `studymaterials/${Date.now()}_${file.name}`;
+      const refFile = storageRef(storage, path);
+      await uploadBytes(refFile, file);
+      const url = await getDownloadURL(refFile);
+
+      await addDoc(collection(db, "studymaterial"), {
+        course, topic, due, fileURL: url, filePath: path, createdAt: new Date()
+      });
+
+      materialForm.reset();
+      alert("Material uploaded.");
+      loadMaterials();
+    } catch (err) {
+      console.error(err);
+      alert("Upload failed.");
+    }
+  });
+
+  async function loadMaterials() {
+    const snap = await getDocs(query(collection(db, "studymaterial"), orderBy("createdAt", "desc")));
+    if (snap.empty) { uploadedMaterialsDiv.innerHTML = "<p>No materials uploaded yet.</p>"; return; }
+    let html = "<ul>";
+    snap.forEach(d => {
+      const m = d.data();
+      html += `<li><b>${m.course}</b> - ${m.topic} ${m.due ? '(Due:' + m.due + ')' : ''} - <a href="${m.fileURL}" target="_blank">View / Download</a> <button class="btn btn-sm btn-danger ms-2" onclick="deleteMaterial('${d.id}')">Delete</button></li>`;
+    });
+    html += "</ul>";
+    uploadedMaterialsDiv.innerHTML = html;
+  }
+  window.deleteMaterial = async (id) => {
+    if (!confirm("Delete material?")) return;
+    try {
+      const { getDoc } = await import("https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js");
+      const docRef = doc(db, "studymaterial", id);
+      const snap = await getDoc(docRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data.filePath) {
+          try { await deleteObject(storageRef(storage, data.filePath)); } catch(e){ console.warn(e.message); }
+        }
+        await deleteDoc(docRef);
+        loadMaterials();
+      }
+    } catch (e) { console.error(e); alert("Error deleting material"); }
+  };
+
+  // ---------- Export to Excel (SheetJS) ----------
+  exportBtn.addEventListener("click", async () => {
+    try {
+      const studentsSnap = await getDocs(query(collection(db, "students"), orderBy("createdAt", "desc")));
+      const rows = [];
+      studentsSnap.forEach(d => {
+        const s = d.data();
+        rows.push({
+          Email: s.email || '',
+          Name: s.fullName || s.name || '',
+          Mobile: s.mobile || s.mobile1 || '',
+          City: s.city || '',
+          'Grad %': s.gradAgg || s.gradPercent || '',
+          'College': s.college || s.gradCollege || '',
+          'University': s.university || s.gradUniversity || ''
+        });
+      });
+
+      const ws = XLSX.utils.json_to_sheet(rows);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Students");
+      XLSX.writeFile(wb, "StudentsData.xlsx");
+    } catch (e) {
+      console.error(e);
+      alert("Export failed.");
+    }
+  });
+
+  // ---------- Load on start ----------
+  loadStudentsRealtime();
+  loadAssignments();
+  loadMaterials();
+
+  // Logout behaviour (keeps as redirect to index)
+  document.getElementById("logoutBtn").onclick = () => {
+    window.location.href = "index";
+  };
+
+  // ---------- Invoice functions (unchanged) ----------
+  const invoiceForm = document.getElementById("invoiceForm");
+  const invoiceFrame = document.getElementById("invoiceFrame");
+  invoiceForm.addEventListener("submit", e => {
+  e.preventDefault();
+  
+  const student = invName.value || "Student";
+  const course = invCourse.value || "";
+  const duration = invDuration.value || "";
+  const fee = invFee.value || "0";
+
+  const invHTML = `
+  <div style="font-family:Arial, sans-serif; padding:40px; max-width:800px; margin:auto; border:1px solid #ddd;">
+    <div style="display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <img src="logo.png" style="height:50px;" alt="Logo"><br>
+        <b>Jobsure Automation Training</b><br>
+        Pune, Maharashtra - 411002<br>
+        Email: help.jobsure@hotmail.com | Ph: +91-7798311756
+      </div>
+      <div style="text-align:right;">
+        <h2 style="margin:0;">INVOICE</h2>
+        <p style="margin:0;">Invoice #: INV-${Date.now()}</p>
+        <p style="margin:0;">Date: ${new Date().toLocaleDateString()}</p>
+      </div>
+    </div>
+    
+    <hr style="margin:25px 0;">
+    
+    <div style="display:flex; justify-content:space-between;">
+      <div>
+        <b>Billed To:</b><br>
+        ${student}<br>
+        Course: ${course}<br>
+        Duration: ${duration}
+      </div>
+      <div style="text-align:right;">
+        <b>Amount (INR):</b><br>
+        ₹${fee}
+      </div>
+    </div>
+    
+    <table style="width:100%; border-collapse:collapse; margin-top:25px;" border="1" cellpadding="10">
+      <tr style="background:#f0f0f0;"><th>Description</th><th>Amount (INR)</th></tr>
+      <tr><td>${course} - ${duration}</td><td>₹${fee}</td></tr>
+      <tr><td><b>Total</b></td><td><b>₹${fee}</b></td></tr>
+    </table>
+    
+    <p style="margin-top:40px;">Note: This invoice confirms enrollment for training at Jobsure Automation Training.</p>
+    <p><b>Authorized Signatory</b><br>Ashwini H, Director</p>
+  </div>
+  `;
+
+  invoiceFrame.srcdoc = invHTML;
+});
+
+// Download PDF with A4 format
+document.getElementById("downloadInvoice").addEventListener("click", () => {
+  const element = invoiceFrame.contentDocument.body;
+  html2pdf()
+    .from(element)
+    .set({
+      margin: 10,
+      filename: `${invName.value || 'Student'}_Invoice.pdf`,
+      html2canvas: { scale: 2 },
+      jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    })
+    .save();
+});
+
+  document.getElementById("printInvoice").addEventListener("click", () => { 
+    invoiceFrame.contentWindow.print(); 
+});
+</script>
+
+<!-- html2pdf library -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+</body>
+</html>
+

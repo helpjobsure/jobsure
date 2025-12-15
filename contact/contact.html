@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Contact — JobSure Automation</title>
+
+  <!-- Tailwind (CDN) + Font -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <meta name="description" content="Contact JobSure Automation — PLC, DCS, SCADA, HMI, AutoCAD training. Enquire for course, fee & batch timings." />
+  <style>body { font-family: 'Poppins', sans-serif; }</style>
+</head>
+<body class="bg-gray-50">
+
+<!-- Header -->
+<header class="bg-white shadow sticky top-0 z-50">
+  <div class="max-w-7xl mx-auto px-6 py-3 flex items-center justify-between">
+    <a href="index" class="flex items-center gap-3">
+      <img src="images/logo.jpg" alt="JobSure Logo" class="w-12 h-12 rounded-lg object-cover">
+      <div>
+        <div class="text-blue-900 font-semibold">JobSure Automation</div>
+        <div class="text-xs text-gray-500">PLC · SCADA · DCS · HMI</div>
+      </div>
+    </a>
+
+    <nav class="hidden md:flex gap-6 text-gray-700 font-medium">
+      <a href="index">Home</a>
+      <a href="about">About</a>
+      <a href="courses">Courses</a>
+      <a href="contact" class="text-blue-600">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Page header -->
+<section class="max-w-7xl mx-auto px-6 py-8">
+  <div class="bg-gradient-to-r from-blue-50 to-white rounded-lg p-6">
+    <h1 class="text-2xl md:text-3xl font-bold text-blue-900">Get in Touch</h1>
+    <p class="text-gray-600 mt-1">Fill the form below — we'll reply by email and send you a WhatsApp message instantly.</p>
+  </div>
+</section>
+
+<!-- Main content -->
+<section class="max-w-7xl mx-auto px-6 pb-14 grid lg:grid-cols-2 gap-8">
+  <!-- Contact form card -->
+  <div class="bg-white rounded-lg shadow p-6">
+    <h2 class="text-xl font-semibold text-blue-900 mb-4">Send an Enquiry</h2>
+
+    <!-- ✅ Success Message Placeholder -->
+    <p id="successMsg" class="hidden bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-3">
+      ✅ Your enquiry has been sent successfully!
+    </p>
+
+    <form id="contactForm" class="space-y-4">
+      <input id="name" name="name" required placeholder="Your name" class="w-full border rounded p-3" />
+      <input id="email" name="email" type="email" required placeholder="Email address" class="w-full border rounded p-3" />
+      <input id="phone" name="phone" required placeholder="Phone number" class="w-full border rounded p-3" />
+
+      <select id="course" name="course" required class="w-full border rounded p-3">
+        <option value="">Select Course</option>
+        <option value="PLC">PLC</option>
+        <option value="SCADA">SCADA</option>
+        <option value="DCS">DCS</option>
+        <option value="HMI">HMI</option>
+        <option value="AutoCAD Electrical">AutoCAD Electrical</option>
+        <option value="Internship">Internship</option>
+        <option value="Other">Other</option>
+      </select>
+
+      <textarea id="message" name="message" placeholder="Your message (optional)" class="w-full border rounded p-3 h-28"></textarea>
+
+      <div class="flex items-start gap-3">
+        <input id="consent" type="checkbox" required class="mt-1" />
+        <label for="consent" class="text-sm text-gray-700">I allow JobSure Automation to store my submission and contact me.</label>
+      </div>
+
+      <div class="flex flex-col md:flex-row gap-3 mt-2">
+        <button id="sendBtn" type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded font-semibold">
+          Send Message
+        </button>
+
+        <a id="whatsappBtn" target="_blank" rel="noopener" class="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded font-semibold text-center">
+          Message on WhatsApp
+        </a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Info + Map -->
+  <div class="space-y-6">
+    <div class="bg-white rounded-lg shadow p-6">
+      <h3 class="text-lg font-semibold text-blue-900">Contact Info</h3>
+      <div class="mt-3 space-y-2 text-gray-700">
+        <div><strong>Phone:</strong> <a class="text-blue-700" href="tel:+917798311756">+91 7798311756</a></div>
+        <div><strong>Email:</strong> <a class="text-blue-700" href="mailto:helpjobsure@gmail.com">helpjobsure@gmail.com</a></div>
+        <div><strong>Location:</strong> Pune, Maharashtra</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 text-white text-center py-6">
+  <div class="max-w-7xl mx-auto px-6">
+    © 2025 JobSure Automation Training — All rights reserved.
+  </div>
+</footer>
+<!-- ✅ EmailJS Script -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+<script>
+  (function () {
+    emailjs.init("IvSeQMpfSU_RcesQb"); // ✅ Your Public Key
+  })();
+</script>
+
+<!-- ✅ Form + WhatsApp Logic -->
+<script>
+  const form = document.getElementById('contactForm');
+  const whatsappBtn = document.getElementById('whatsappBtn');
+  const successMsg = document.getElementById('successMsg');
+
+  // ✅ Build WhatsApp Message (Professional Style)
+  function buildWhatsAppMessage() {
+    const name = document.getElementById('name').value.trim() || "Student";
+    const course = document.getElementById('course').value || "Course";
+    return `Hello JobSure Automation Team,%0A%0AMy name is ${name}. I want to know more about your ${course} course.%0APlease share fees, duration and placement information.%0A%0AThank you.`;
+  }
+
+  // ✅ Update WhatsApp Link Dynamically
+  function updateWhatsAppLink() {
+    whatsappBtn.href = `https://wa.me/917798311756?text=${buildWhatsAppMessage()}`;
+  }
+  updateWhatsAppLink();
+
+  document.getElementById('name').addEventListener('input', updateWhatsAppLink);
+  document.getElementById('course').addEventListener('change', updateWhatsAppLink);
+
+  // ✅ Send Email Using EmailJS
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const templateParams = {
+      name: document.getElementById('name').value,
+      email: document.getElementById('email').value,
+      phone: document.getElementById('phone').value,
+      course: document.getElementById('course').value,
+      message: document.getElementById('message').value
+    };
+
+    emailjs.send("service_bw58d2g", "template_oj6reh7", templateParams)
+      .then(() => {
+        successMsg.classList.remove('hidden');
+        form.reset();
+        updateWhatsAppLink();
+        setTimeout(() => successMsg.classList.add('hidden'), 4000);
+      })
+      .catch(() => {
+        alert("❌ Failed to send. Please try again or message on WhatsApp.");
+      });
+  });
+</script>
+
+</body>
+</html>

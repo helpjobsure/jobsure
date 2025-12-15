@@ -5,6 +5,17 @@
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
+    ],
+    "rewrites": [
+      { "source": "/", "destination": "/index.html" },
+      { "source": "/home", "destination": "/index.html" },
+      { "source": "/about", "destination": "/about.html" },
+      { "source": "/contact", "destination": "/contact.html" },
+      { "source": "/courses", "destination": "/courses.html" },
+      { "source": "/organization", "destination": "/Organization.html" },
+      { "source": "/student-registration", "destination": "/student-registration.html" },
+      { "source": "/organization-login", "destination": "/Organization-login.html" },
+      { "source": "/student-login", "destination": "/student-login.html" }
     ]
   }
 }

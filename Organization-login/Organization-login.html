@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Login - Jobsure</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Tailwind Config for Glass Effect & Gradient -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          backgroundImage: {
+            'admin-gradient': 'linear-gradient(135deg, #004aad, #00b4d8)',
+          },
+        },
+      },
+    }
+  </script>
+
+</head>
+
+<body class="min-h-screen flex items-center justify-center bg-admin-gradient">
+
+  <!-- MAIN CARD -->
+  <div class="w-[360px] text-center text-white p-10 rounded-2xl 
+              bg-white/20 backdrop-blur-xl shadow-2xl animate-[fadeIn_0.8s_ease]">
+
+    <!-- LOGO -->
+    <div class="w-24 h-24 rounded-full mx-auto mb-4 bg-white/30 overflow-hidden flex items-center justify-center">
+      <img src="images/jobsure-logo.jpg" class="w-full h-full object-cover rounded-full">
+    </div>
+
+    <h2 class="text-2xl font-semibold tracking-wide mb-6">Admin Login</h2>
+
+    <!-- EMAIL -->
+    <input type="email" id="email" placeholder="Admin Email"
+      class="w-full p-3 rounded-lg bg-white/90 text-gray-800 mb-3 outline-none">
+
+    <!-- PASSWORD -->
+    <input type="password" id="password" placeholder="Password"
+      class="w-full p-3 rounded-lg bg-white/90 text-gray-800 mb-2 outline-none">
+
+    <!-- SHOW PASSWORD -->
+    <div class="text-left text-sm text-white/90 mb-3">
+      <input type="checkbox" onclick="togglePass()" class="mr-1"> Show Password
+    </div>
+
+    <!-- LOGIN BUTTON -->
+    <button onclick="login()" 
+      class="w-full bg-blue-600 hover:bg-blue-700 transition text-white font-semibold p-3 rounded-lg">
+      Login
+    </button>
+
+    <!-- LINKS -->
+    <div class="mt-4 text-sm">
+      <a onclick="forgotPassword()" class="underline cursor-pointer hover:text-gray-200">
+        Forgot Password?
+      </a>
+    </div>
+
+    <!-- MESSAGE -->
+    <p id="message" class="mt-4 text-sm"></p>
+
+  </div>
+
+  <!-- Tailwind Keyframes -->
+  <style>
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+
+  <!-- FIREBASE SCRIPT (UNCHANGED) -->
+  <script type="module">
+    import { auth } from "./firebase.js";
+    import { signInWithEmailAndPassword, sendPasswordResetEmail } 
+      from "https://www.gstatic.com/firebasejs/10.12.3/firebase-auth.js";
+
+    window.login = function() {
+      const email = document.getElementById("email").value.trim();
+      const pass = document.getElementById("password").value.trim();
+      const msg = document.getElementById("message");
+
+      msg.style.color = "white";
+      msg.textContent = "⏳ Logging in...";
+
+      signInWithEmailAndPassword(auth, email, pass)
+        .then(() => {
+          msg.style.color = "#bdfcb9";
+          msg.textContent = "✅ Login successful! Redirecting...";
+          setTimeout(() => {
+            window.location.href = "Organization";
+          }, 1000);
+        })
+        .catch(err => {
+          msg.style.color = "#ffbaba";
+          msg.textContent = "❌ " + err.message;
+        });
+    };
+
+    window.forgotPassword = function() {
+      const email = document.getElementById("email").value.trim();
+      const msg = document.getElementById("message");
+
+      if (!email) {
+        msg.style.color = "#ffbaba";
+        msg.textContent = "⚠ Please enter your email address first.";
+        return;
+      }
+
+      sendPasswordResetEmail(auth, email)
+        .then(() => {
+          msg.style.color = "#bdfcb9";
+          msg.textContent = "📩 Password reset link sent! Check your email.";
+        })
+        .catch(err => {
+          msg.style.color = "#ffbaba";
+          msg.textContent = "❌ " + err.message;
+        });
+    };
+  </script>
+
+  <script>
+    function togglePass() {
+      const p = document.getElementById("password");
+      p.type = (p.type === "password") ? "text" : "password";
+    }
+  </script>
+
+</body>
+</html>

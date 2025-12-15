@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Student Registration</title>
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style> body { font-family: "Poppins", sans-serif; } </style>
+
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    emailjs.init("IvSeQMpfSU_RcesQb");
+  });
+</script>
+
+</head>
+
+<body class="bg-slate-50 text-slate-800">
+
+  <main class="max-w-4xl mx-auto p-6">
+    <h1 class="text-3xl font-semibold mb-3">Student Registration — Jobsure Automation</h1>
+    <p class="text-sm text-slate-600 mb-6">Fill details carefully. Auto-save enabled.</p>
+
+    <div id="alert" class="hidden mb-4"></div>
+
+    <form id="regForm" class="space-y-6 bg-white p-6 rounded-xl shadow">
+      
+      <!-- Email + Full name -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>Email *</label>
+          <input id="email" type="email" required class="w-full border rounded p-2" />
+        </div>
+
+        <div>
+          <label>Full Name *</label>
+          <input id="fullName" type="text" required class="w-full border rounded p-2" />
+        </div>
+      </div>
+
+      <!-- Gender + DOB -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>Gender *</label>
+          <select id="gender" required class="w-full border rounded p-2">
+            <option value="">Select</option>
+            <option>Male</option>
+            <option>Female</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Date of Birth *</label>
+          <input id="dob" type="date" required class="w-full border rounded p-2" />
+        </div>
+      </div>
+
+      <!-- Mobile -->
+      <div>
+        <label>Mobile Number *</label>
+        <input id="mobile" type="tel" required class="w-full border rounded p-2" />
+      </div>
+
+      <!-- SSC -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>SSC % *</label>
+          <input id="ssc" type="number" step="0.01" required class="w-full border rounded p-2" />
+        </div>
+
+        <div>
+          <label>SSC Year of Passing *</label>
+          <input id="sscYear" type="number" required class="w-full border rounded p-2" />
+        </div>
+      </div>
+
+      <!-- Medium + HSC -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>School Medium *</label>
+          <select id="medium" class="w-full border rounded p-2" required>
+            <option>English</option>
+            <option>Marathi</option>
+            <option>Other</option>
+          </select>
+        </div>
+
+        <div>
+          <label>HSC %</label>
+          <input id="hsc" type="number" step="0.01" class="w-full border rounded p-2" />
+        </div>
+      </div>
+
+      <!-- Diploma + Degree -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>Diploma %</label>
+          <input id="diploma" type="number" step="0.01" class="w-full border rounded p-2" />
+        </div>
+
+        <div>
+          <label>Graduation Degree *</label>
+          <select id="gradDegree" required class="w-full border rounded p-2">
+            <option>BE/BTech</option>
+            <option>BSc</option>
+            <option>Other</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Specialization + GradYear -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>Specialization *</label>
+          <input id="specialization" required class="w-full border rounded p-2" />
+        </div>
+
+        <div>
+          <label>Graduation Year *</label>
+          <input id="gradYear" type="number" required class="w-full border rounded p-2" />
+        </div>
+      </div>
+
+      <!-- Aggregate -->
+      <div>
+        <label>Graduation Aggregate % *</label>
+        <input id="gradAgg" type="number" step="0.01" required class="w-full border rounded p-2" />
+      </div>
+
+      <!-- College -->
+      <div>
+        <label>College *</label>
+        <input id="college" required class="w-full border rounded p-2" />
+      </div>
+
+      <!-- University -->
+      <div>
+        <label>University *</label>
+        <input id="university" required class="w-full border rounded p-2" />
+      </div>
+
+      <!-- Automation Course -->
+      <div>
+        <label>Automation Course (optional)</label>
+        <input id="automationCourse" class="w-full border rounded p-2" />
+      </div>
+
+      <div>
+        <label>Training Institute (optional)</label>
+        <input id="trainingInstitute" class="w-full border rounded p-2" />
+      </div>
+
+      <!-- City + Relocate -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>Current City *</label>
+          <input id="city" required class="w-full border rounded p-2" />
+        </div>
+
+        <div>
+          <label>Ready to Relocate *</label>
+          <select id="relocate" class="w-full border rounded p-2" required>
+            <option>Anywhere in India</option>
+            <option>Within State</option>
+            <option>No</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Gap + Communication -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label>Year Gap *</label>
+          <select id="yearGap" required class="w-full border rounded p-2">
+            <option>No year gap</option>
+            <option>Yes</option>
+          </select>
+        </div>
+
+        <div>
+          <label>Communication Skill *</label>
+          <select id="commSkill" required class="w-full border rounded p-2">
+            <option>Poor</option>
+            <option>Average</option>
+            <option>Good</option>
+            <option>Excellent</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Files -->
+      <div>
+        <label>Attach CV *</label>
+        <input id="cvFile" type="file" accept=".pdf,.doc,.docx" required />
+      </div>
+
+      <div>
+        <label>Attach Photo *</label>
+        <input id="photoFile" type="file" accept="image/*" required />
+      </div>
+
+      <div>
+        <label class="flex items-center gap-2">
+          <input id="declaration" type="checkbox" required />
+          <span>I declare information is correct *</span>
+        </label>
+      </div>
+
+      <!-- Buttons -->
+      <div class="flex gap-3">
+        <button type="button" id="saveDraftBtn" class="px-4 py-2 bg-gray-200 rounded">Save Draft</button>
+        <button id="submitBtn" class="px-4 py-2 bg-indigo-600 text-white rounded">Submit</button>
+      </div>
+      <p class="text-sm text-slate-500 mt-4">
+  Facing any issue while submitting?
+  <a href="https://forms.gle/Kt6ggY9kHssFW1uj9"
+     target="_blank"
+     class="text-blue-600 underline font-medium">
+     Submit using Google Form
+  </a>
+</p>
+
+	<!-- Progress -->
+      <div id="progress" class="hidden mt-4">
+        <p class="text-sm">Uploading... <span id="progressText">0%</span></p>
+        <div class="w-full bg-slate-200 rounded h-2 mt-1">
+          <div id="progressBar" class="h-2 bg-indigo-600 rounded" style="width:0%"></div>
+        </div>
+      </div>
+
+    </form>
+  </main>
+
+  <!-- Firebase + Logic -->
+  <script type="module">
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
+    import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
+    import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-storage.js";
+
+    // =============================
+    // 🔥 Firebase Config
+    // =============================
+    const firebaseConfig = {
+      apiKey: "AIzaSyD19JkNIzaO1z7kLcoLD5V4x01-gObCPnA",
+      authDomain: "jobsure-115fa.firebaseapp.com",
+      projectId: "jobsure-115fa",
+      storageBucket: "jobsure-115fa.firebasestorage.app",
+      messagingSenderId: "575119834568",
+      appId: "1:575119834568:web:75bab1d7d3cb73ec4754fd",
+      measurementId: "G-6KTNMMZHG9"
+    };
+
+    // Init
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+	import { getAuth, onAuthStateChanged } 
+	from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+	const auth = getAuth(app);
+
+	onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    // login नसेल तर
+    window.location.href = "student-portal.html"; 
+  }
+});
+
+
+    // DOM
+    const form = document.getElementById("regForm");
+    const alertBox = document.getElementById("alert");
+    const progress = document.getElementById("progress");
+    const progressBar = document.getElementById("progressBar");
+    const progressText = document.getElementById("progressText");
+
+    const AUTO_SAVE_KEY = "jobsure_form_draft";
+
+    function showAlert(msg, type="success") {
+      alertBox.className = "";
+      alertBox.classList.remove("hidden");
+      alertBox.innerHTML = `<div class="p-3 rounded ${type==="success"
+        ? "bg-emerald-100 text-emerald-800"
+        : "bg-rose-100 text-rose-800"}">${msg}</div>`;
+    }
+
+    function saveDraft() {
+      const data = {};
+      document.querySelectorAll("input,select").forEach((el)=>{
+        if(el.type === "file") return;
+        if(el.type === "checkbox") data[el.id] = el.checked;
+        else data[el.id] = el.value;
+      });
+      localStorage.setItem(AUTO_SAVE_KEY, JSON.stringify(data));
+      showAlert("Draft saved locally");
+    }
+
+    function loadDraft() {
+      const saved = localStorage.getItem(AUTO_SAVE_KEY);
+      if(!saved) return;
+      const data = JSON.parse(saved);
+      Object.keys(data).forEach(id=>{
+        const el = document.getElementById(id);
+        if(!el) return;
+        if(el.type === "checkbox") el.checked = data[id];
+        else el.value = data[id];
+      });
+    }
+
+    document.getElementById("saveDraftBtn").onclick = saveDraft;
+    loadDraft();
+
+    // ========= FORM SUBMIT =========
+    form.addEventListener("submit", async (e)=>{
+      e.preventDefault();
+
+      const submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Submitting...";
+
+      try {
+        progress.classList.remove("hidden");
+        progressBar.style.width = "10%";
+
+        const uid = "stu_" + Date.now();
+
+        const cv = document.getElementById("cvFile").files[0];
+        const photo = document.getElementById("photoFile").files[0];
+
+        // ===== Upload CV =====
+ 	const cvPath = `students/${uid}/cv_${cv.name}`;
+	const cvRef = sRef(storage, cvPath);
+	await uploadBytes(cvRef, cv);
+	const cvURL = await getDownloadURL(cvRef);
+
+	// ===== Upload Photo =====
+	const photoPath = `students/${uid}/photo_${photo.name}`;
+	const photoRef = sRef(storage, photoPath);
+	await uploadBytes(photoRef, photo);
+	const photoURL = await getDownloadURL(photoRef);
+
+
+
+        progressBar.style.width = "70%";
+        progressText.textContent = "70%";
+
+        // Collect Form Data
+        const get = id => document.getElementById(id).value;
+        const data = {
+  	uid,
+  	email: get("email"),
+  	fullName: get("fullName"),
+  	gender: get("gender"),
+  	dob: get("dob"),
+  	mobile: get("mobile"),
+  	ssc: get("ssc"),
+  	sscYear: get("sscYear"),
+  	medium: get("medium"),
+  	hsc: get("hsc"),
+ 	 diploma: get("diploma"),
+  	gradDegree: get("gradDegree"),
+  	specialization: get("specialization"),
+ 	 gradYear: get("gradYear"),
+ 	 gradAgg: get("gradAgg"),
+ 	 college: get("college"),
+ 	 university: get("university"),
+  	automationCourse: get("automationCourse"),
+  	trainingInstitute: get("trainingInstitute"),
+  	city: get("city"),
+  	relocate: get("relocate"),
+  	yearGap: get("yearGap"),
+  	commSkill: get("commSkill"),
+  	cvURL,
+  	photoURL,
+  	cvPath,
+  	photoPath,
+  	declaration: document.getElementById("declaration").checked,
+  	createdAt: serverTimestamp()
+	};
+
+
+        // Firestore Save
+        await addDoc(collection(db, "students"), data);
+
+        progressBar.style.width = "90%";
+        progressText.textContent = "90%";
+
+        // Email to Student
+        await emailjs.send("service_bw58d2g", "template_oj6reh7", {
+          to_name: data.fullName,
+          to_email: data.email,
+          uid: data.uid,
+          cv_link: cvURL,
+          photo_link: photoURL,
+          message: `Hi ${data.fullName},
+
+Thanks for registering at Jobsure Automation.
+Your Registration ID: ${data.uid}
+
+Regards,
+Jobsure Team`
+        });
+
+        progressBar.style.width = "100%";
+        progressText.textContent = "100%";
+
+        // Final
+        localStorage.removeItem(AUTO_SAVE_KEY);
+        form.reset();
+
+        showAlert("Registration submitted successfully 🎉");
+
+        setTimeout(()=> window.location.href = "/Home ", 1500);
+
+    } catch (err) {
+  console.error(err);
+
+  showAlert(`
+    <strong>Submission failed.</strong><br/>
+    Please try again.<br/><br/>
+    <a href="https://forms.gle/Kt6ggY9kHssFW1uj9" 
+       target="_blank" 
+       class="underline font-semibold text-blue-700">
+       👉 Click here to submit using Google Form
+    </a>
+  `, "error");
+}
+ finally {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Submit";
+      }
+    });
+
+  </script>
+</body>
+</html>

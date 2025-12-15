@@ -29,7 +29,7 @@ tr:nth-child(even){background:#f9f9f9;}
 <nav class="navbar navbar-expand-lg">
   <div class="container-fluid">
     <span class="navbar-brand">Jobsure Dashboard</span>
-    <span class="btn-navbar" onclick="window.location.href='registration.html'">Registration</span>
+    <span class="btn-navbar" onclick="window.location.href='registration'">Registration</span>
     <span class="btn-navbar" onclick="showSection('profile')">Profile</span>
     <span class="btn-navbar" onclick="showSection('assignments')">Assignments</span>
     <span class="btn-navbar" onclick="showSection('study')">Study Material</span>
@@ -73,7 +73,7 @@ const loggedInUser = localStorage.getItem("loggedInUser");
 const students = JSON.parse(localStorage.getItem("studentsData")) || [];
 const currentStudent = students.find(s => s.email===loggedInUser);
 
-if(!currentStudent){ window.location.href="registration.html"; }
+if(!currentStudent){ window.location.href="registration"; }
 
 // 🔹 Sample assignments & study materials
 const assignments = JSON.parse(localStorage.getItem("assignments")) || [];
@@ -168,7 +168,7 @@ function displayStudyMaterials(){
 }
 
 // 🔹 Logout
-function logout(){ localStorage.removeItem("loggedInUser"); window.location.href="registration.html"; }
+function logout(){ localStorage.removeItem("loggedInUser"); window.location.href="registration"; }
 
 // 🔹 Close modal on outside click
 window.onclick=function(event){
