@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jobsure Automation Training — Industrial Automation Training</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    body { font-family: 'Poppins', sans-serif; }
+    .hero-min { min-height: 440px; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(6px); }
+    /* WhatsApp floating button */
+    .whatsapp-fab {
+      position: fixed;
+      right: 18px;
+      bottom: 15px;
+      z-index: 60;
+      width: 56px;
+      height: 56px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 6px 18px rgba(16,24,40,0.3);
+    }
+    /* small adjustments for slider dots */
+    .dot { width:10px;height:10px;border-radius:999px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800">
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="index.html" class="flex items-center gap-3">
+        <img src="/logo.jpg" alt="JobSure Logo" class="w-12 h-12 object-cover rounded-md" />
+        <div>
+          <h1 class="text-lg font-semibold">Jobsure Automation</h1>
+          <p class="text-xs text-slate-500">PLC · SCADA · DCS · HMI</p>
+        </div>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-6 text-sm">
+        <a href="index.html" class="hover:text-indigo-600">Home</a>
+        <a href="courses.html" class="hover:text-indigo-600">Courses</a>
+        <a href="about.html" class="hover:text-indigo-600">About</a>
+        <a href="contact.html" class="hover:text-indigo-600">Contact</a>
+        <a href="javascript:void(0)" class="px-3 py-2 rounded-md border border-slate-200 text-sm" onclick="openSearch()">Search</a>
+        <a href="student-login.html" class="px-3 py-2 bg-indigo-600 text-white rounded-full text-sm">Student Login</a>
+        <a href="Organization-login.html" class="px-3 py-2 bg-indigo-600 text-white rounded-full text-sm">Organization Login</a>
+        <a href="tel:+917798311756" class="ml-3 px-3 py-2 bg-emerald-500 text-white rounded-md text-sm">Call Now</a>
+      </nav>
+
+      <!-- mobile menu -->
+      <div class="lg:hidden flex items-center gap-3">
+        <a href="tel:+917798311756" class="text-slate-700">📞</a>
+        <button id="mobileMenuBtn" class="text-2xl">☰</button>
+      </div>
+    </div>
+
+    <!-- mobile dropdown -->
+    <div id="mobileMenu" class="lg:hidden hidden border-t bg-white">
+      <div class="px-4 py-3 flex flex-col gap-2">
+        <a href="index.html" class="py-2">Home</a>
+        <a href="courses.html" class="py-2">Courses</a>
+        <a href="about.html" class="py-2">About</a>
+        <a href="contact.html" class="py-2">Contact</a>
+        <a href="student-login.html" class="py-2">Student Login</a>
+        <a href="Organization-login.html" class="py-2">Organization Login</a>
+        <a href="tel:+917798311756" class="py-2">Call Now: +91 7798311756</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO: Slider (3 slides) -->
+  <main>
+    <section class="relative overflow-hidden bg-white hero-min">
+      <div class="max-w-6xl mx-auto px-4 py-12 grid md:grid-cols-2 gap-8 items-center">
+        <!-- left text -->
+        <div>
+          <h2 id="heroTitle" class="text-3xl md:text-4xl font-bold text-slate-800">Industrial Automation Training with Real Projects</h2>
+          <p id="heroDesc" class="mt-4 text-slate-600 max-w-xl">Hands-on PLC, SCADA, DCS & HMI training — live labs, projects and placement assistance to launch your automation career.</p>
+
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="courses.html" class="px-5 py-3 bg-indigo-600 text-white rounded-full shadow-sm">View Courses</a>
+            <a href="contact.html" class="px-5 py-3 border border-slate-200 rounded-full text-slate-800">Enquire Now</a>
+            <a href="student-login.html" class="px-4 py-3 bg-slate-100 rounded-md">Student Login</a>
+            <a href="Organization-login.html" class="px-4 py-3 bg-slate-100 rounded-md">Organization Login</a>
+          </div>
+
+         <div class="mt-8 grid grid-cols-3 gap-4 text-sm text-slate-600">
+ 	 <div class="text-center"><div class="text-2xl font-bold text-indigo-600">1200+</div><div>Students Trained</div></div>
+ 	 <div class="text-center"><div class="text-2xl font-bold text-indigo-600">350+</div><div>Placed</div></div>
+ 	 <div class="text-center"><div class="text-2xl font-bold text-indigo-600">10+</div><div>Industries</div></div>
+</div>
+
+<!-- ISO Certification & Job Assistance Section -->
+	<div class="mt-6 grid grid-cols-2 md:grid-cols-2 gap-6 text-center text-sm">
+  	<div class="bg-white rounded-xl shadow p-4">
+   	<h4 class="text-lg font-semibold text-indigo-600">ISO Certified Institute</h4>
+    	<p class="text-slate-600 mt-1">Recognized for Quality & Industry Standards</p>
+  </div>
+  	<div class="bg-white rounded-xl shadow p-4">
+    	<h4 class="text-lg font-semibold text-indigo-600">100% Job Assistance</h4>
+    	<p class="text-slate-600 mt-1">Get complete placement support after training</p>
+  </div>
+</div>
+
+
+        <!-- right image / slider -->
+        <div class="relative">
+          <div class="rounded-xl overflow-hidden shadow-lg">
+            <img id="heroImage" src="/banner1.png" alt="Automation Lab" class="w-full h-80 object-cover" />
+          </div>
+
+          <!-- slide indicators -->
+          <div class="absolute left-1/2 transform -translate-x-1/2 bottom-4 flex gap-2">
+            <button class="dot bg-indigo-600" data-index="0" aria-label="slide 1"></button>
+            <button class="dot bg-slate-300" data-index="1" aria-label="slide 2"></button>
+            <button class="dot bg-slate-300" data-index="2" aria-label="slide 3"></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Courses preview -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-2xl font-semibold">Popular Courses</h3>
+        <a href="courses.html" class="text-sm text-slate-600">View all courses →</a>
+      </div>
+
+      <div id="coursesPreview" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- main.js will populate cards here -->
+      </div>
+    </section>
+
+    <!-- Placed Students -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <h3 class="text-2xl font-semibold mb-6">Placed Students</h3>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        <!-- sample placed students, replace with real images -->
+        <article class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="/pratik.jpg" alt="Pratik" class="mx-auto w-28 h-28 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Pratik Patil</h4>
+          <p class="text-sm text-emerald-600">AutoCAD Engineer — 3 LPA</p>
+        </article>
+
+        <article class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="/anuja.jpg" alt="Anuja" class="mx-auto w-28 h-28 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Anuja M</h4>
+          <p class="text-sm text-emerald-600">DCS Software Engineer — 4.25 LPA</p>
+        </article>
+
+        <article class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="/rohit.jpg" alt="Rohit" class="mx-auto w-28 h-28 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Rohit Kadam</h4>
+          <p class="text-sm text-emerald-600">Project Engineer — 2.75 LPA</p>
+        </article>
+
+        <article class="bg-white rounded-xl shadow p-4 text-center">
+          <img src="/tejas.jpg" alt="Tejas" class="mx-auto w-28 h-28 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Tejas Shinare </h4>
+          <p class="text-sm text-emerald-600">Jr.Project Engineer — 3.75 LPA</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- Organizers -->
+    <section class="max-w-6xl mx-auto px-4 py-12 bg-white rounded-xl shadow">
+      <h3 class="text-2xl font-semibold mb-6">Our Organizers</h3>
+      <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div class="p-4 text-center">
+          <img src="/prashant.jpg" alt="Prashant" class="mx-auto w-24 h-24 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Prashant H.</h4>
+          <p class="text-sm text-slate-600">MD & Chairman</p>
+        </div>
+        <div class="p-4 text-center">
+          <img src="/ashwini.jpg" alt="ashwini" class="mx-auto w-24 h-24 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Ashwini H.</h4>
+          <p class="text-sm text-slate-600">Director</p>
+        </div>
+        <div class="p-4 text-center">
+          <img src="/priyanka.jpg" alt="priyanka" class="mx-auto w-24 h-24 object-cover rounded-full mb-3" />
+          <h4 class="font-semibold">Priyanka H.</h4>
+          <p class="text-sm text-slate-600">Head of Placement</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="max-w-6xl mx-auto px-4 py-12">
+      <h3 class="text-2xl font-semibold mb-4">Frequently Asked Questions</h3>
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-xl shadow p-4">
+          <h4 class="font-semibold text-indigo-600">Is the course fully online?</h4>
+          <p class="mt-2 text-sm text-slate-600">Yes — The course is conducted through live online classes and recorded support sessions.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-4">
+          <h4 class="font-semibold text-indigo-600">Do I need to pay before joining?</h4>
+          <p class="mt-2 text-sm text-slate-600">No — Pay-after-placement option available. Terms & conditions apply.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-4">
+          <h4 class="font-semibold text-indigo-600">What is the course duration?</h4>
+          <p class="mt-2 text-sm text-slate-600">Typical duration is 3 months. Part-time options may extend up to 6 months.</p>
+        </div>
+        <div class="bg-white rounded-xl shadow p-4">
+          <h4 class="font-semibold text-indigo-600">Who can join?</h4>
+          <p class="mt-2 text-sm text-slate-600">BE/B.Tech/Diploma students, freshers, technicians and working professionals.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Floating WhatsApp -->
+  <a class="whatsapp-fab bg-emerald-500 text-white" href="https://wa.me/917798311756" target="_blank" title="Chat on WhatsApp">
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" viewBox="0 0 24 24" fill="white"><path d="M20.52 3.48A11.92 11.92 0 0012 0C5.372 0 .1 5.372.1 12c0 2.116.554 4.183 1.603 6.013L0 24l6.207-1.601A11.907 11.907 0 0012 24c6.628 0 11.999-5.372 11.999-12 0-3.197-1.246-6.197-3.479-8.52zM12 22c-1.956 0-3.81-.502-5.444-1.45l-.387-.222-3.691.953.989-3.598-.25-.389A9.02 9.02 0 013 12c0-4.97 4.03-9 9-9s9 4.03 9 9-4.03 9-9 9z"/><path d="M17.472 14.382c-.297-.149-1.758-.868-2.03-.967-.273-.098-.472-.148-.672.149-.198.297-.768.967-.942 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.478-.883-.787-1.48-1.757-1.653-2.054-.173-.297-.018-.458.13-.606.134-.133.298-.347.448-.52.15-.173.2-.297.3-.496.099-.198.05-.372-.025-.52-.075-.149-.672-1.62-.92-2.218-.242-.58-.487-.502-.672-.512l-.573-.01c-.198 0-.52.074-.792.372s-1.04 1.015-1.04 2.479 1.065 2.876 1.213 3.074c.148.198 2.095 3.2 5.077 4.487 2.982 1.288 2.982.857 3.52.805.538-.05 1.758-.72 2.006-1.413.248-.693.248-1.287.173-1.413-.074-.125-.272-.198-.57-.347z"/></svg>
+  </a>
+
+  <!-- Footer -->
+<footer class="bg-slate-900 text-slate-200 mt-12">
+  <div class="max-w-6xl mx-auto px-4 py-10 grid md:grid-cols-3 gap-6">
+    <div>
+      <!-- All logos side by side -->
+      <div class="flex items-center gap-3 mb-2">
+        <img src="/logo.jpg" alt="Jobsure Logo" class="w-16 h-16 object-cover rounded-md" />
+        <img src="/iso.png" alt="ISO Certified Logo" class="w-16 h-16 object-cover rounded-md" />
+        <img src="/jobassitance.png" alt="Job Assistance Logo" class="w-16 h-16 object-cover rounded-md" />
+      </div>
+
+      <p class="text-sm">Jobsure Automation Training — Hands-on industrial automation training with placement assistance.</p>
+      <p class="text-sm mt-2">✅ ISO Certified Institute | 💼 100% Job Assistance</p>
+    </div>
+
+    <div>
+      <h5 class="font-semibold mb-2">Quick Links</h5>
+      <ul class="text-sm space-y-2 text-slate-300">
+        <li><a href="courses.html" class="hover:text-white">Courses</a></li>
+        <li><a href="about.html" class="hover:text-white">About</a></li>
+        <li><a href="contact.html" class="hover:text-white">Contact</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <h5 class="font-semibold mb-2">Contact</h5>
+      <p class="text-sm">Phone: +91 7798311756</p>
+      <p class="text-sm">Email: help.jobsure@hotmail.com</p>
+      <p class="text-xs text-slate-400 mt-4">© 2025 Jobsure Automation Training</p>
+    </div>
+  </div>
+</footer>
+
+
+
+  <!-- Scripts -->
+  <script src="firebase.js" type="module"></script>
+  <script src="main.js"></script>
+
+  <script>
+    // Mobile menu toggle
+    document.getElementById('mobileMenuBtn').addEventListener('click', ()=>{
+      const m = document.getElementById('mobileMenu');
+      m.classList.toggle('hidden');
+    });
+
+    // WhatsApp floating (already anchor) -- nothing else
+
+    // Hero slider (simple)
+    (function(){
+      const slides = [
+        {
+          title: 'Industrial Automation Training with Real Projects',
+          desc: 'Hands-on PLC, SCADA, DCS & HMI training — live labs, projects & placement assistance.',
+          img: '/banner1.png'
+        },
+        {
+          title: 'DCS & SCADA — Industry Oriented Courses',
+          desc: 'Learn Distributed Control Systems and Supervisory Control systems from working professionals.',
+          img: '/service1.jpg'
+        },
+        {
+          title: 'Placement-Focused Training & Internships',
+          desc: 'Internship certificates, resume help and interview preparation — get industry ready.',
+          img: '/service6.jpg'
+        }
+      ];
+      let idx = 0;
+      const titleEl = document.getElementById('heroTitle');
+      const descEl = document.getElementById('heroDesc');
+      const imgEl = document.getElementById('heroImage');
+      const dots = Array.from(document.querySelectorAll('.dot'));
+
+      function show(i){
+        const s = slides[i];
+        titleEl.textContent = s.title;
+        descEl.textContent = s.desc;
+        imgEl.src = s.img;
+        dots.forEach((d,di)=> d.classList.toggle('bg-indigo-600', di===i));
+        idx = i;
+      }
+      dots.forEach(d=> d.addEventListener('click', ()=> show(Number(d.dataset.index || d.dataset.index === 0 ? d.dataset.index : d.getAttribute('data-index')))));
+      // fix for dataset reading across browsers
+      document.querySelectorAll('.dot').forEach((d, i) => d.dataset.index = i);
+
+      setInterval(()=> show((idx+1) % slides.length), 6000);
+      show(0);
+    })();
+
+    // helper: open search stub
+    function openSearch(){
+      alert('Search coming soon — use Courses page.');
+    }
+  </script>
+</body>
+</html>
