@@ -10,13 +10,14 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
   <style> body { font-family: "Poppins", sans-serif; } </style>
 
-  <!-- EmailJS -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-      emailjs.init("IvSeQMpfSU_RcesQb"); /* Your Public Key */
-    });
-  </script>
+<!-- EmailJS -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    emailjs.init("IvSeQMpfSU_RcesQb");
+  });
+</script>
+
 </head>
 
 <body class="bg-slate-50 text-slate-800">
@@ -216,8 +217,16 @@
         <button type="button" id="saveDraftBtn" class="px-4 py-2 bg-gray-200 rounded">Save Draft</button>
         <button id="submitBtn" class="px-4 py-2 bg-indigo-600 text-white rounded">Submit</button>
       </div>
+      <p class="text-sm text-slate-500 mt-4">
+  Facing any issue while submitting?
+  <a href="https://forms.gle/Kt6ggY9kHssFW1uj9"
+     target="_blank"
+     class="text-blue-600 underline font-medium">
+     Submit using Google Form
+  </a>
+</p>
 
-      <!-- Progress -->
+	<!-- Progress -->
       <div id="progress" class="hidden mt-4">
         <p class="text-sm">Uploading... <span id="progressText">0%</span></p>
         <div class="w-full bg-slate-200 rounded h-2 mt-1">
@@ -252,6 +261,18 @@
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
     const storage = getStorage(app);
+	import { getAuth, onAuthStateChanged } 
+	from "https://www.gstatic.com/firebasejs/12.4.0/firebase-auth.js";
+
+	const auth = getAuth(app);
+
+	onAuthStateChanged(auth, (user) => {
+  if (!user) {
+    // login नसेल तर
+    window.location.href = "student-portal.html"; 
+  }
+});
+
 
     // DOM
     const form = document.getElementById("regForm");
@@ -313,18 +334,19 @@
         const cv = document.getElementById("cvFile").files[0];
         const photo = document.getElementById("photoFile").files[0];
 
-        // Upload CV
-        const cvRef = sRef(storage, `students/${uid}/cv_${cv.name}`);
-        await uploadBytes(cvRef, cv);
-        const cvURL = await getDownloadURL(cvRef);
+        // ===== Upload CV =====
+ 	const cvPath = `students/${uid}/cv_${cv.name}`;
+	const cvRef = sRef(storage, cvPath);
+	await uploadBytes(cvRef, cv);
+	const cvURL = await getDownloadURL(cvRef);
 
-        progressBar.style.width = "45%";
-        progressText.textContent = "45%";
+	// ===== Upload Photo =====
+	const photoPath = `students/${uid}/photo_${photo.name}`;
+	const photoRef = sRef(storage, photoPath);
+	await uploadBytes(photoRef, photo);
+	const photoURL = await getDownloadURL(photoRef);
 
-        // Upload Photo
-        const photoRef = sRef(storage, `students/${uid}/photo_${photo.name}`);
-        await uploadBytes(photoRef, photo);
-        const photoURL = await getDownloadURL(photoRef);
+
 
         progressBar.style.width = "70%";
         progressText.textContent = "70%";
@@ -332,33 +354,37 @@
         // Collect Form Data
         const get = id => document.getElementById(id).value;
         const data = {
-          uid,
-          email: get("email"),
-          fullName: get("fullName"),
-          gender: get("gender"),
-          dob: get("dob"),
-          mobile: get("mobile"),
-          ssc: get("ssc"),
-          sscYear: get("sscYear"),
-          medium: get("medium"),
-          hsc: get("hsc"),
-          diploma: get("diploma"),
-          gradDegree: get("gradDegree"),
-          specialization: get("specialization"),
-          gradYear: get("gradYear"),
-          gradAgg: get("gradAgg"),
-          college: get("college"),
-          university: get("university"),
-          automationCourse: get("automationCourse"),
-          trainingInstitute: get("trainingInstitute"),
-          city: get("city"),
-          relocate: get("relocate"),
-          yearGap: get("yearGap"),
-          commSkill: get("commSkill"),
-          cvURL,
-          photoURL,
-          createdAt: serverTimestamp()
-        };
+  	uid,
+  	email: get("email"),
+  	fullName: get("fullName"),
+  	gender: get("gender"),
+  	dob: get("dob"),
+  	mobile: get("mobile"),
+  	ssc: get("ssc"),
+  	sscYear: get("sscYear"),
+  	medium: get("medium"),
+  	hsc: get("hsc"),
+ 	 diploma: get("diploma"),
+  	gradDegree: get("gradDegree"),
+  	specialization: get("specialization"),
+ 	 gradYear: get("gradYear"),
+ 	 gradAgg: get("gradAgg"),
+ 	 college: get("college"),
+ 	 university: get("university"),
+  	automationCourse: get("automationCourse"),
+  	trainingInstitute: get("trainingInstitute"),
+  	city: get("city"),
+  	relocate: get("relocate"),
+  	yearGap: get("yearGap"),
+  	commSkill: get("commSkill"),
+  	cvURL,
+  	photoURL,
+  	cvPath,
+  	photoPath,
+  	declaration: document.getElementById("declaration").checked,
+  	createdAt: serverTimestamp()
+	};
+
 
         // Firestore Save
         await addDoc(collection(db, "students"), data);
@@ -391,12 +417,22 @@ Jobsure Team`
 
         showAlert("Registration submitted successfully 🎉");
 
-        setTimeout(()=> window.location.href = "index.html", 1500);
+        setTimeout(()=> window.location.href = "/Home ", 1500);
 
-      } catch (err) {
-        console.error(err);
-        showAlert("Error: " + err.message, "error");
-      } finally {
+    } catch (err) {
+  console.error(err);
+
+  showAlert(`
+    <strong>Submission failed.</strong><br/>
+    Please try again.<br/><br/>
+    <a href="https://forms.gle/Kt6ggY9kHssFW1uj9" 
+       target="_blank" 
+       class="underline font-semibold text-blue-700">
+       👉 Click here to submit using Google Form
+    </a>
+  `, "error");
+}
+ finally {
         submitBtn.disabled = false;
         submitBtn.textContent = "Submit";
       }
